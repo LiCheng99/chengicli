@@ -40,7 +40,12 @@ function debounce(fn, time) {
 }
 
 // 复制提醒
+// 注意：只有浏览器原生的「复制」动作才会触发 copy 事件。
+// 页面里用 navigator.clipboard.writeText() 的按钮不会触发（如宏程序页的「复制」），
+// 那些地方自己调 fomalNotify，并写 __fomalCopyToastOff 时间戳，
+// 免得剪贴板 API 失败退回 execCommand 时再叠一条通用提示。
 document.addEventListener("copy", function () {
+  if (window.__fomalCopyToastOff && Date.now() - window.__fomalCopyToastOff < 1500) return;
   debounce(function () {
     fomalNotify({
           title: "哎嘿！复制成功🍬",
@@ -390,7 +395,7 @@ function switchNightMode() {
 // OriginTitile 不能只在加载时抓一次：本站是 pjax 换页，换页后 document.title 已经是新页面的标题，
 // 这份「原始标题」不跟着更新的话，切走标签再切回来，两秒后会把标签改回【上一个页面】的标题（偶现）。
 var OriginTitile = document.title;
-var PRANK_TITLES = ['👀跑哪里去了~', '🐖抓到你啦～'];
+var PRANK_TITLES = ['chengicli', 'chengicli'];
 var titleTime;
 (function keepRealTitle() {
   function note() {
@@ -407,11 +412,11 @@ var titleTime;
 document.addEventListener('visibilitychange', function () {
   if (document.hidden) {
     //离开当前页面时标签显示内容
-    document.title = '👀跑哪里去了~';
+    document.title = 'chengicli';
     clearTimeout(titleTime);
   } else {
     //返回当前页面时标签显示内容
-    document.title = '🐖抓到你啦～';
+    document.title = 'chengicli';
     //两秒后变回正常标题
     titleTime = setTimeout(function () {
       titleTime = null;

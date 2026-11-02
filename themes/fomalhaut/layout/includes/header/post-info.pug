@@ -83,10 +83,6 @@
           +pvBlock('','','')
             span.waline-pageview-count(data-path=url_for(page.path))
               i.fa-solid.fa-spinner.fa-spin
-        else if commentUse[0] === 'Twikoo' && theme.twikoo.visitor
-          +pvBlock('','','')
-            span#twikoo_visitors
-              i.fa-solid.fa-spinner.fa-spin
         else if theme.busuanzi.page_pv
           +pvBlock('','post-meta-pv-cv','')
             span#busuanzi_value_page_pv —
@@ -132,11 +128,6 @@
             +countBlock
               a(href=url_for(page.path) + '#post-comment')
                 span.gitalk-comment-count
-                  i.fa-solid.fa-spinner.fa-spin
-          when 'Twikoo'
-            +countBlock
-              a(href=url_for(page.path) + '#post-comment')
-                span#twikoo-count
                   i.fa-solid.fa-spinner.fa-spin
           when 'Facebook Comments'
             +countBlock

@@ -11,15 +11,15 @@
  */
 #aside-calendar,
 #aside-countdown {
-  --cal-accent: var(--theme-color, #39c5bb);
+  --cal-accent: var(--theme-color, #FF1493);
 
   --cal-strong: #25706b;
   --cal-strong: color-mix(in srgb, var(--cal-accent) 62%, #000);
 
-  --cal-track: rgba(57, 197, 187, 0.15);
+  --cal-track: rgba(255, 20, 147, 0.15);
   --cal-track: color-mix(in srgb, var(--cal-accent) 15%, transparent);
 
-  --cal-fill: rgba(57, 197, 187, 0.34);
+  --cal-fill: rgba(255, 20, 147, 0.34);
   --cal-fill: color-mix(in srgb, var(--cal-accent) 34%, transparent);
 
   --cal-solid: #25706b;
@@ -35,10 +35,10 @@
   --cal-strong: #7ad7cf;
   --cal-strong: color-mix(in srgb, var(--cal-accent) 78%, #fff);
 
-  --cal-track: rgba(57, 197, 187, 0.22);
+  --cal-track: rgba(255, 20, 147, 0.22);
   --cal-track: color-mix(in srgb, var(--cal-accent) 22%, transparent);
 
-  --cal-fill: rgba(57, 197, 187, 0.44);
+  --cal-fill: rgba(255, 20, 147, 0.44);
   --cal-fill: color-mix(in srgb, var(--cal-accent) 44%, transparent);
 
   --cal-solid: #7ad7cf;
@@ -148,7 +148,7 @@
   background: var(--cal-solid);
   color: var(--cal-solid-ink);
   font-weight: 600;
-  box-shadow: 0 1px 4px rgba(57, 197, 187, 0.35);
+  box-shadow: 0 1px 4px rgba(255, 20, 147, 0.35);
   box-shadow: 0 1px 4px color-mix(in srgb, var(--cal-accent) 40%, transparent);
 }
 

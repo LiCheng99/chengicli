@@ -24,12 +24,12 @@ const paletteSource = section(cursor, 'const map = new Map();', 'class Cursor');
 // Independent ten-color oracle: expectations are not derived from implementation at runtime.
 const presets = {
   red: 'rgb(239, 90, 90)', orange: 'rgb(215, 146, 77)', yellow: 'rgb(196, 166, 74)',
-  green: 'rgb(57, 197, 187)', puregreen: 'rgb(77, 175, 135)', blue: 'rgb(74, 156, 199)',
+  green: 'rgb(255, 20, 147)', puregreen: 'rgb(77, 175, 135)', blue: 'rgb(74, 156, 199)',
   heoblue: 'rgb(82, 116, 207)', darkblue: 'rgb(113, 133, 156)',
   purepurple: 'rgb(147, 90, 205)', pink: 'rgb(237, 112, 155)'
 };
 const presetNames = {
-  red: '珊瑚红', orange: '暖杏橙', yellow: '蜂蜜金', green: '青绿', puregreen: '玉石绿',
+  red: '珊瑚红', orange: '暖杏橙', yellow: '蜂蜜金', green: '深粉红色', puregreen: '玉石绿',
   blue: '晴空蓝', heoblue: '柔靛蓝', darkblue: '雾蓝灰', purepurple: '紫罗兰', pink: '樱花粉'
 };
 const legacyPresets = { purple: 'purepurple', gray: 'darkblue', black: 'darkblue' };
@@ -169,7 +169,7 @@ for (const [id, rgb] of Object.entries(presets)) {
   });
 }
 test('four original accent colors retain their independent historical RGB oracle', () => {
-  const originals = { red: 'rgb(239, 90, 90)', green: 'rgb(57, 197, 187)',
+  const originals = { red: 'rgb(239, 90, 90)', green: 'rgb(255, 20, 147)',
     purepurple: 'rgb(147, 90, 205)', pink: 'rgb(237, 112, 155)' };
   for (const [id, rgb] of Object.entries(originals)) {
     assert.equal(presets[id], rgb);
@@ -261,7 +261,7 @@ test('cursor refresh counts follow RGB across custom updates, repeat events and 
   assertColor(h, 'rgb(68, 85, 102)');
   h.ctx.setCustomColor('#445566'); h.ctx.setColor('custom');
   assert.equal(h.calls.filter(call => call === 'cursor').length, 2, 'oninput/onchange repeat is cheap');
-  h.ctx.setCustomColor('#39C5BB');
+  h.ctx.setCustomColor('#FF1493');
   assert.equal(h.calls.filter(call => call === 'cursor').length, 3);
   h.ctx.setColor('green');
   assert.equal(h.calls.filter(call => call === 'cursor').length, 3, 'same RGB across keys is cheap');
@@ -288,7 +288,7 @@ for (const [index, value] of invalidHexes.entries()) {
 test('validThemeHex accepts only six-digit HEX and converter preserves channel boundaries', () => {
   const h = harness();
   for (const [hex, rgb] of [['#000000', 'rgb(0, 0, 0)'], ['#FFFFFF', 'rgb(255, 255, 255)'],
-    ['#0102Fe', 'rgb(1, 2, 254)'], ['#39c5bb', presets.green]]) {
+    ['#0102Fe', 'rgb(1, 2, 254)'], ['#FF1493', presets.green]]) {
     assert.equal(h.ctx.validThemeHex(hex), true);
     assert.equal(h.ctx.themeHexToRGB(hex), rgb);
     assert.equal(h.ctx.setCustomColor(hex), true); assertColor(h, rgb);
@@ -311,8 +311,8 @@ test('invalid saved custom falls back to green despite earlier valid custom pale
   const h = harness({ themeColor: 'custom', themeCustomColor: '#112233' });
   h.store.set('themeCustomColor', '#bad'); h.clear(); h.ctx.setColor('custom');
   assert.equal(h.store.get('themeColor'), 'green'); assertColor(h, presets.green); assertSelection(h, 'green');
-  assert.equal(h.nodes.get('customThemeInput').value, '#39c5bb');
-  assert.equal(h.nodes.get('customThemeChoice').style.getPropertyValue('--custom-theme-color'), '#39c5bb');
+  assert.equal(h.nodes.get('customThemeInput').value, '#FF1493');
+  assert.equal(h.nodes.get('customThemeChoice').style.getPropertyValue('--custom-theme-color'), '#FF1493');
   assert.deepEqual(h.writes, [['themeColor', 'green']]);
 });
 
@@ -338,8 +338,8 @@ test('sync invalid/missing HEX uses default picker color without writing setting
   for (const value of [undefined, '', '#abc', '#123456; color:red']) {
     const h = harness({ themeColor: 'green', ...(value === undefined ? {} : { themeCustomColor: value }) }); h.clear();
     const before = [...h.store]; h.ctx.syncThemeColorControls();
-    assert.equal(h.nodes.get('customThemeInput').value, '#39c5bb');
-    assert.equal(h.nodes.get('customThemeChoice').style.getPropertyValue('--custom-theme-color'), '#39c5bb');
+    assert.equal(h.nodes.get('customThemeInput').value, '#FF1493');
+    assert.equal(h.nodes.get('customThemeChoice').style.getPropertyValue('--custom-theme-color'), '#FF1493');
     assertSelection(h, 'green'); assert.deepEqual([...h.store], before); assert.deepEqual(h.writes, []);
   }
 });
@@ -347,7 +347,7 @@ test('initItem defaults themeCustomColor without requiring DOM or cursor globals
   const store = new Map([['themeCustomColor', '#abcdef'], ['themeColor', 'custom']]);
   const ctx = vm.createContext({ localStorage: { setItem: (key, value) => store.set(key, String(value)) } });
   vm.runInContext(defaultsSource, ctx); ctx.initItem();
-  assert.equal(store.get('themeColor'), 'green'); assert.equal(store.get('themeCustomColor'), '#39c5bb');
+  assert.equal(store.get('themeColor'), 'green'); assert.equal(store.get('themeCustomColor'), '#FF1493');
 });
 test('markup keeps ten accessible preset radios and puts custom picker last', () => {
   const h = harness(), markup = h.ctx.themeColorMarkup();

@@ -1,0 +1,27 @@
+# 音乐/聊天 API 服务（systemd 守护）
+# 安装：sudo cp deploy/music-api.service /etc/systemd/system/
+#       sudo systemctl daemon-reload && sudo systemctl enable --now music-api
+# 路径按实际项目目录改（用 `pwd` 在项目根目录取）
+[Unit]
+Description=Blog Music & Chat API Server
+After=network.target
+
+[Service]
+Type=simple
+# ↓↓↓ 改成你的项目根目录（里面有 api/ 和 tools/ 和 public/）↓↓↓
+WorkingDirectory=/var/www/blog
+ExecStart=/usr/bin/node tools/mpserve.cjs 8080 127.0.0.1
+Restart=always
+RestartSec=3
+Environment=NODE_ENV=production
+# AI 聊天接口的来源白名单（默认只放行 lichengic.com）。
+# 用 IP 访问站点时，把你的域名/IP 加进来，逗号分隔；填 * 表示全放行（不推荐）。
+Environment=AI_PROXY_ORIGINS=lichengic.com,47.102.186.147
+# 上游大模型的 API Key（聊天功能要用；不填则聊天返回「没配 key」的提示，别的功能不受影响）
+# Environment=DEEPSEEK_API_KEY=sk-xxxxxxxx
+
+StandardOutput=append:/var/log/music-api.log
+StandardError=append:/var/log/music-api.log
+
+[Install]
+WantedBy=multi-user.target

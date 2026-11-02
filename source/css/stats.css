@@ -17,16 +17,16 @@
  * ====================================================================== */
 
 #page:has(#posts-echart) {
-  --stats-accent: var(--theme-color, #39c5bb);
+  --stats-accent: var(--theme-color, #FF1493);
 
-  --stats-line: rgba(57, 197, 187, 0.16);
+  --stats-line: rgba(255, 20, 147, 0.16);
   --stats-line: color-mix(in srgb, var(--stats-accent) 16%, transparent);
-  --stats-line-strong: rgba(57, 197, 187, 0.34);
+  --stats-line-strong: rgba(255, 20, 147, 0.34);
   --stats-line-strong: color-mix(in srgb, var(--stats-accent) 34%, transparent);
 
-  --stats-soft: rgba(57, 197, 187, 0.07);
+  --stats-soft: rgba(255, 20, 147, 0.07);
   --stats-soft: color-mix(in srgb, var(--stats-accent) 7%, transparent);
-  --stats-soft-2: rgba(57, 197, 187, 0.14);
+  --stats-soft-2: rgba(255, 20, 147, 0.14);
   --stats-soft-2: color-mix(in srgb, var(--stats-accent) 14%, transparent);
 
   --stats-card-bg: var(--card-bg, #fff);

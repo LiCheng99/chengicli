@@ -26,7 +26,7 @@
 
 ## 验证结果
 - 两个 JS 的 node --check 通过；全部 Node 测试 250/250（新增主题色测试 94/94），git diff --check 通过。
-- npx hexo generate 成功。Chrome Agent Window 实测预设切换、刷新仍保留紫罗兰、恢复默认青绿、深/浅色显示和窄窗自动换行；实际 color label 热区 44×44px。
+- npx hexo generate 成功。Chrome Agent Window 实测预设切换、刷新仍保留紫罗兰、恢复默认深粉红色、深/浅色显示和窄窗自动换行；实际 color label 热区 44×44px。
 - 原生 color picker 的浏览器弹窗不属于网页 DOM，BrowserSkill fill 不支持 color 类型；未完成原生弹窗中的端到端选色手工测试，须用户复核。自定义值更新/保存/首帧恢复/鼠标与透明衍生色由真实函数 VM 回归验证。
 - 未修改任何预设 RGB 和 themes/ 源码，没有提交或推送。
 

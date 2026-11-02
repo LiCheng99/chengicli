@@ -87,7 +87,7 @@
     var v = '';
     try { v = String(getComputedStyle(document.documentElement).getPropertyValue('--theme-color') || '').trim(); } catch (e) {}
     var m = /#([0-9a-f]{6})/i.exec(v) || /#([0-9a-f]{3})/i.exec(v);
-    var hex = m ? m[1] : '39c5bb';
+    var hex = m ? m[1] : 'FF1493';
     if (hex.length === 3) hex = hex.replace(/./g, function (c) { return c + c; });
     return [parseInt(hex.slice(0, 2), 16) || 57, parseInt(hex.slice(2, 4), 16) || 197, parseInt(hex.slice(4, 6), 16) || 187];
   }

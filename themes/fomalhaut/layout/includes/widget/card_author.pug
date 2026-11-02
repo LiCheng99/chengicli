@@ -24,7 +24,8 @@ if theme.aside.card_author.enable
         .length-num= site.categories.length
 
     if theme.aside.card_author.button.enable
-      a#card-info-btn(href=theme.aside.card_author.button.link title="前往作者的Github")
+      //- title 用按钮自己的文字：原来是写死的「前往作者的Github」，换了用途（现在是微信二维码）就变成错误提示
+      a#card-info-btn(href=theme.aside.card_author.button.link title=theme.aside.card_author.button.text || '前往作者的Github')
         //- i(class=theme.aside.card_author.button.icon)
         span=theme.aside.card_author.button.text
         i.faa-passing.animated(style="padding-left:20px;display:inline-block;vertical-align:middle;")

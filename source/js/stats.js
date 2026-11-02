@@ -18,7 +18,7 @@
 (function () {
   'use strict'
 
-  // ===== 主题色读取与派生（与 /js/census.js 同一套写法）=====
+  // ===== 主题色读取与派生（与 /js/modules/settings.js 同一套写法）=====
 
   // 主题色由主题运行时写进 <style id="themeColor">，只能运行时读、不能写死
   function statsThemeRgb() {
@@ -34,7 +34,7 @@
       var n = parseInt(hex[1], 16)
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
     }
-    return [57, 197, 187] // 主题默认色 green，取不到变量时兜底
+    return [255, 20, 147] // 主题默认色 green，取不到变量时兜底
   }
 
   function statsCss(rgb) {

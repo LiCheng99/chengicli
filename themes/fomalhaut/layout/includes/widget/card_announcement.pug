@@ -10,5 +10,16 @@ if theme.aside.card_announcement.enable
       //-   svg.icon(style="height:23px;width:23px;fill:currentColor;position:relative;top:3px;animation: ccc 12s linear infinite;")
       //-     use(xlink:href='#icon-shezhi')
     .announcement_content!= theme.aside.card_announcement.content
-    //- 添加欢迎访客的信息
-    #welcome-info
+    //- 每日一言（24 秒一轮）＋ 鼠标移到卡片上就浮出 QQ 音乐播放器与歌词
+    //- 原来的「欢迎信息」（按 IP 显示地区/距离/IP）已于 2026-10-28 移除，见 docs/站点改动总览.md §7.9
+    //- 结构只放骨架，句子和歌词都由脚本填：source/js/daily-say.js（外观 source/css/daily-say.css）
+    #daily-say
+      .ds-head
+        svg.ds-ico(viewBox="0 0 24 24" width="15" height="15" aria-hidden="true")
+          path(d="M12 3v9.28a4.39 4.39 0 0 0-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z")
+        span.ds-title 每日一言·······悬停音乐
+        button.ds-music(type="button" title="打开音乐播放器" aria-label="打开音乐播放器")
+          svg(viewBox="0 0 24 24" width="14" height="14" aria-hidden="true")
+            path(d="M6 10h2v4H6zM10.5 6h2v12h-2zM15 8.5h2v7h-2z")
+      p.ds-quote 正在收集今天的句子…
+      p.ds-from

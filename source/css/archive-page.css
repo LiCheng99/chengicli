@@ -29,9 +29,27 @@
   --ar-line-strong: color-mix(in srgb, var(--font-color) 22%, transparent);
   --ar-soft: color-mix(in srgb, var(--font-color) 6%, transparent);
   --ar-dim: color-mix(in srgb, var(--font-color) 58%, transparent);
-  --ar-accent: var(--theme-color, #39c5bb);
+  --ar-accent: var(--theme-color, #FF1493);
   --ar-glass: color-mix(in srgb, var(--card-bg, #fff) 74%, transparent);
   --ar-nav-h: 0px;
+}
+
+/* 正文根的内边距：主题靠 `.layout > div:first-child:not(.recent-posts)` 给 50px 40px，
+   这条依赖「#archive 必须是 .layout 的第一个子元素」。模板里只要在它前面多一个
+   <link>/<script>，内边距就整个丢掉（2026-10-31 的归档页贴边事故）。
+   这里用 id 选择器显式补回同样的值，DOM 顺序再怎么变都不会再丢。 */
+#archive,
+#category,
+#tag {
+  padding: 50px 40px;
+}
+
+@media screen and (max-width: 768px) {
+  #archive,
+  #category,
+  #tag {
+    padding: 36px 14px;
+  }
 }
 
 /* ============================== 年度分布条 ============================== */

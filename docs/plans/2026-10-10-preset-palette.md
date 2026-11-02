@@ -7,7 +7,7 @@
 **Tech Stack:** 原生 JS/CSS/localStorage、Hexo、Node VM 测试与 Chrome Agent Window。
 
 ## 色板
-- green 青绿 #39C5BB（保留）
+- Deep pink 深粉红色 #FF1493（保留）
 - red 珊瑚红 #EF5A5A（保留）
 - purepurple 紫罗兰 #935ACD（保留）
 - pink 樱花粉 #ED709B（保留）
@@ -28,7 +28,7 @@
 ## 验证结果
 - 三个 JS node --check 通过，完整测试 275/275，其中主题色 119/119；git diff --check 通过。
 - npx hexo generate 成功（188 files generated）。
-- Chrome 8ca07e26 独立后台 Agent Window：真实十个radio逐一切换且对应名称/选中状态同步；蜂蜜金刷新后保留；深浅模式颜色可见，375px手机宽度自动6+5换行，无横向溢出；恢复默认重新选中青绿。
+- Chrome 8ca07e26 独立后台 Agent Window：真实十个radio逐一切换且对应名称/选中状态同步；蜂蜜金刷新后保留；深浅模式颜色可见，375px手机宽度自动6+5换行，无横向溢出；恢复默认重新选中深粉红色。
 - 旧键迁移/首屏/cursor SVG/CSS变量/资源版本/四原色不变由独立oracle及真实函数VM回归验证。原生自定义picker未改，此次只验证保留其控件及既有逻辑回归。
 - 额外备份并更新 tools/tests/cursor-effects.test.cjs 的旧蓝色SVG断言，其余已有改动保持。未改 themes/ 源码，没有commit/push/deploy。
 

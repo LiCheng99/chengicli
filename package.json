@@ -8,11 +8,13 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "hexo generate",
+    "build": "hexo generate && gulp",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "deploy:vercel": "node tools/deploy-vercel.js",
-    "server": "hexo server"
+    "server": "hexo server",
+    "build:clean": "hexo clean && hexo generate && gulp",
+    "minify": "gulp"
   },
   "hexo": {
     "version": "6.3.0"
@@ -27,12 +29,10 @@
     "hexo-baidu-url-submit": "0.0.6",
     "hexo-blog-encrypt": "^3.1.6",
     "hexo-butterfly-clock-anzhiyu": "^1.1.8",
-    "hexo-butterfly-envelope": "^1.0.15",
     "hexo-butterfly-swiper": "^1.0.12",
     "hexo-butterfly-tag-plugins-plus": "^1.0.17",
     "hexo-butterfly-wowjs": "^1.0.5",
     "hexo-deployer-git": "^3.0.0",
-    "hexo-filter-gitcalendar": "^1.0.9",
     "hexo-filter-nofollow": "^2.0.2",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-baidu-sitemap": "^0.1.9",

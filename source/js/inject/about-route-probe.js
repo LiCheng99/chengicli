@@ -1,7 +1,7 @@
 /* ==========================================================================
    关于页 · 线路实时延迟徽标  source/js/inject/about-route-probe.js
    --------------------------------------------------------------------------
-   作用：在 /personal/about/ 的线路卡（.ab2 [data-route-url]）右下角挂一枚
+   作用：在 /about/ 的线路卡（.ab2 [data-route-url]）右下角挂一枚
          「实时延迟」徽标，显示「本机 → 该线路」一次网络往返耗时（ms）。
          点徽标可单独重测，点「重测全部」按钮可整组重测；页面静置时会静默复测。
    探测：fetch(mode:"no-cors", cache:"no-store") + AbortController 超时，
@@ -66,6 +66,15 @@
     slot.textContent = text;
   }
 
+  function absUrl(u) {
+    try { return new URL(u, location.href).href; } catch (e) { return u; }
+  }
+
+  function isSameOrigin(url) {
+    /* 同源可以读 status，跨域只能 no-cors（status 恒为 0）；相对路径按同源算 */
+    try { return new URL(url, location.href).origin === location.origin; } catch (e) { return true; }
+  }
+
   function rtDuration(url) {
     if (!window.performance || !performance.getEntriesByName) { return 0; }
     var list = performance.getEntriesByName(url);
@@ -78,42 +87,56 @@
 
   function oneShot(url) {
     return new Promise(function (resolve) {
-      var bust = url + (url.indexOf("?") > -1 ? "&" : "?") + "__ab2=" + Math.random().toString(36).slice(2);
+      var target = absUrl(url);
+      var bust = target + (target.indexOf("?") > -1 ? "&" : "?") + "__ab2=" + Math.random().toString(36).slice(2);
+      var same = isSameOrigin(url);
       var ac = (typeof AbortController === "function") ? new AbortController() : null;
       var settled = false;
       var finish = function (v) { if (settled) { return; } settled = true; clearTimeout(timer); resolve(v); };
       var timer = setTimeout(function () {
         if (ac) { try { ac.abort(); } catch (e) {} }
-        finish(0);
+        finish({ ms: 0, status: -1 });
       }, CFG.timeout);
       var t0 = nowMs();
+      var opt = {
+        cache: "no-store",
+        credentials: "omit",
+        redirect: "follow",
+        signal: ac ? ac.signal : undefined
+      };
+      /* 跨域只能 no-cors（拿不到 status）；同源用默认模式，能读到 status 才能区分
+         「这条线路很慢」和「这条线路根本没这个资源（404）」——后者不是延迟问题 */
+      if (!same) { opt.mode = "no-cors"; }
       try {
-        fetch(bust, {
-          mode: "no-cors",
-          cache: "no-store",
-          credentials: "omit",
-          redirect: "follow",
-          signal: ac ? ac.signal : undefined
-        }).then(function () {
+        fetch(bust, opt).then(function (res) {
           var wall = nowMs() - t0;
           var rt = rtDuration(bust);
-          finish(Math.round(rt > 0 ? rt : wall));
-        }).catch(function () { finish(0); });
-      } catch (e) { finish(0); }
+          finish({ ms: Math.round(rt > 0 ? rt : wall), status: same ? res.status : 0 });
+        }).catch(function () { finish({ ms: 0, status: 0 }); });
+      } catch (e) { finish({ ms: 0, status: 0 }); }
     });
   }
 
   function measure(url, attempt) {
-    return oneShot(url).then(function (ms) {
-      if (ms > 0) { return ms; }
-      if (attempt + 1 >= CFG.attempts) { return 0; }
-      return new Promise(function (r) { setTimeout(r, CFG.retryDelay); }).then(function () {
+    return oneShot(url).then(function (r) {
+      if (r.ms > 0 || (r.status >= 400 && r.status < 500)) { return r; }
+      if (attempt + 1 >= CFG.attempts) { return r; }
+      return new Promise(function (rs) { setTimeout(rs, CFG.retryDelay); }).then(function () {
         return measure(url, attempt + 1);
       });
     });
   }
 
-  function judge(slot, ms) {
+  function judge(slot, r) {
+    var status = (r && r.status) || 0;
+    /* 404/403 说明这条线路上压根没有这个资源，不是「慢」，用中性灰显示 */
+    if (status >= 400) {
+      var tip = status === 404 ? "无此资源" : status === 403 ? "被拒绝" : "返回异常";
+      paint(slot, "is-off", status + " · " + tip);
+      slot.setAttribute("title", "这条线路返回了 HTTP " + status + "，测的不是延迟");
+      return;
+    }
+    var ms = r ? r.ms : 0;
     if (!ms) { paint(slot, "is-fail", "实时延迟 · 超时"); return; }
     var cls = ms <= CFG.okMs ? "is-ok" : (ms <= CFG.slowMs ? "is-slow" : "is-fail");
     paint(slot, cls, "实时延迟 " + ms + " ms");
@@ -136,9 +159,9 @@
         if (slot.getAttribute("data-busy") === "1") { return; }
         slot.setAttribute("data-busy", "1");
         paint(slot, "is-loading", "实时延迟 · 测试中…");
-        measure(card.url, 0).then(function (ms) {
+        measure(card.url, 0).then(function (r) {
           slot.removeAttribute("data-busy");
-          judge(slot, ms);
+          judge(slot, r);
         });
       });
     }
@@ -162,8 +185,8 @@
       var card = list[i++];
       var slot = ensureSlot(card);
       paint(slot, "is-loading", "实时延迟 · 测试中…");
-      measure(card.url, 0).then(function (ms) {
-        judge(slot, ms);
+      measure(card.url, 0).then(function (r) {
+        judge(slot, r);
         setTimeout(next, CFG.stagger);
       });
     })();

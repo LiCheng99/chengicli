@@ -9,6 +9,7 @@ public/
 .idea
 themes/fomalhaut/.git
 .ai-chat-key
+.env                  # 站长口令 / 邮箱授权码，绝不进仓库（模板见 .env.example）
 
 # ===== 2026-10-04 追加：本地调试残留与备份，不进仓库 =====
 # DSH 调试会话产生的临时文件、日志、浏览器 profile
@@ -27,3 +28,13 @@ bak/
 # 本地素材、检查产物
 images/
 cdn-check/
+
+# ===== 2026-10-28 追加：保密附件，绝不进公开仓库 =====
+# source/assets/drawings/ 里的图纸 PDF 与 NC 加工程序是外部单位的生产文件，
+# GitHub 仓库（fomalhaut1998/hexo-theme-fomalhaut）是公开的 —— 一旦 git add -A
+# 把它们提交上去，等于直接公开图纸，且 git 历史删不干净。
+# 注意：这条只防「误提交到源码仓库」，不等于保护线上 —— hexo generate 仍会把它们
+# 复制进 public/ 并随 Vercel 一起公开，那部分要另做鉴权（见 docs 里的记录）。
+source/assets/drawings/
+.vercel
+.env*

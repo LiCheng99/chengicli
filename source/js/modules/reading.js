@@ -107,8 +107,10 @@ var __fpsMonitor = (function () {
   }
   // 展示层单独排版；采样频率、阈值和启动/停止生命周期保持不变。
   // 状态色不再内联：只写 data-state（good/warn/low），颜色由 site-inject.css 一处定义。
+  // 顺序是「数值 → 标签 → 状态」：site-inject.css 把 #fps 排成竖排小胶囊时，
+  // 数值在上当主角、FPS 在下面当副标题（状态文字在这套竖排里隐藏，改由数值颜色表达）。
   function readout(value, status, state) {
-    return '<span class="fps-label">FPS</span><span class="fps-value">' + value + '</span>' +
+    return '<span class="fps-value">' + value + '</span><span class="fps-label">FPS</span>' +
       '<span class="fps-state" data-state="' + state + '">' + status + '</span>';
   }
   function write(output) {

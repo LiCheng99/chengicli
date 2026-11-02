@@ -1,9 +1,17 @@
 extends includes/layout.pug
 
 block content
+  //- 归档页专用（/archives/、/categories/*、/tags/* 列表共用这套 article-sort 改版）。
+  //- ⚠️ 这里的 <link> 必须放在 #archive **之后**：
+  //-   主题给正文根设内边距用的是 `.layout > div:first-child:not(.recent-posts)`，
+  //-   一旦在 #archive 前面插了 <link>，它就不是 :first-child，padding 会变成 0，
+  //-   整块内容贴边（2026-10-31 修过一次，别挪回去）。
+  //- 脚本不在这里写：它已经在 _config.fomalhaut.yml 的 inject.bottom 全局加载，
+  //- 这里再写一遍会重复执行两次。
   include ./includes/mixins/article-sort.pug
   #archive
     - const archiveLength = findArchiveLength(fragment_cache)
     .article-sort-title= _p('page.articles') + ' - ' + archiveLength
     +articleSort(page.posts)
     include includes/pagination.pug
+  link(rel='stylesheet' href=url_for('/css/archive-page.css') + '?v=20261031-fix')

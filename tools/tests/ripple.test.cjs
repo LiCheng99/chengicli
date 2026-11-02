@@ -193,7 +193,7 @@ test('CSS 契约：0×0 层 + 不参与命中 + z-index 低于光标 + 颜色跟
   const z = Number((layerRule[0].match(/z-index:(\d+)/) || [])[1]);
   assert.ok(z > 0 && z < CURSOR_Z, 'z-index ' + z + ' 必须低于 #cursor-position 的 ' + CURSOR_Z);
   assert.ok(css.includes('@keyframes ripple-out'));
-  assert.match(css, /color-mix\(in srgb, var\(--theme-color, #39c5bb\)/, '颜色从主题色派生，不写死青绿');
+  assert.match(css, /color-mix\(in srgb, var\(--theme-color, #FF1493\)/, '颜色从主题色派生，不写死深粉红色');
 });
 
 test('CSS 动画不超出模块的兜底回收时间（否则涟漪会在中途凭空消失）', () => {

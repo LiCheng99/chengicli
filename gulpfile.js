@@ -8,6 +8,9 @@ var htmlmin = require('gulp-html-minifier-terser');
 var htmlclean = require('gulp-htmlclean');
 // gulp-tester
 var terser = require('gulp-terser');
+// 文件拷贝兜底用（不依赖 terser/gulp 流，直接覆盖，确保第三方库完整）
+var fs = require('fs');
+var path = require('path');
 // 压缩js
 gulp.task('compress', () => {
   // 必须 return 这条 stream：不 return 的话 gulp 会认为任务已结束，
@@ -58,7 +61,24 @@ gulp.task('minify-html', () => {
     .pipe(gulp.dest('./public'))
 });
 
+// 兜底：hexo g 复制大文件（如 pdf.min.js / pdf.worker.min.js）时可能被百度同步盘、
+// 杀毒软件等并发读写干扰而截断。这里在压缩全部完成后，用 fs.copyFile 从 source
+// 强制覆盖到 public，保证这两个第三方 ESM 库始终以源文件的完整内容进入发布目录。
+// （terser 已通过 `!./public/**/*.min.js` 排除它们，不会二次压缩。）
+gulp.task('ensure-pdf-lib', function (done) {
+  var pairs = [
+    ['source/js/lib/pdf/pdf.min.js', 'public/js/lib/pdf/pdf.min.js'],
+    ['source/js/lib/pdf/pdf.worker.min.js', 'public/js/lib/pdf/pdf.worker.min.js']
+  ];
+  pairs.forEach(function (p) {
+    fs.mkdirSync(path.dirname(p[1]), { recursive: true });
+    fs.copyFileSync(p[0], p[1]);
+  });
+  done();
+});
+
 // 运行gulp命令时依次执行以下任务
-gulp.task('default', gulp.parallel(
-  'compress', 'minify-css', 'minify-html'
+gulp.task('default', gulp.series(
+  gulp.parallel('compress', 'minify-css', 'minify-html'),
+  'ensure-pdf-lib'
 ))

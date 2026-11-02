@@ -371,18 +371,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // toc元素點擊
-      $cardToc.addEventListener('click', e => {
-        e.preventDefault()
-        const target = e.target.classList
-        if (target.contains('toc-content')) return
-        const $target = target.contains('toc-link')
-          ? e.target
-          : e.target.parentElement
-        btf.scrollToDest(btf.getEleTop(document.getElementById(decodeURI($target.getAttribute('href')).replace('#', ''))), 300)
-        if (window.innerWidth < 900) {
-          window.mobileToc.close()
-        }
-      })
+      // 加个绑定标记：scrollFnToDo 会被 __fomalTocResync 二次调用（加密文章解密后要重抓
+      // 标题列表），不判重就会挂上两个 click 监听 —— 点一次目录跳两次，滚动动画会互相打架。
+      if (!$cardToc.__fomalClickBound) {
+        $cardToc.__fomalClickBound = true
+        $cardToc.addEventListener('click', e => {
+          e.preventDefault()
+          const target = e.target.classList
+          if (target.contains('toc-content')) return
+          const $target = target.contains('toc-link')
+            ? e.target
+            : e.target.parentElement
+          btf.scrollToDest(btf.getEleTop(document.getElementById(decodeURI($target.getAttribute('href')).replace('#', ''))), 300)
+          if (window.innerWidth < 900) {
+            window.mobileToc.close()
+          }
+        })
+      }
 
       autoScrollToc = item => {
         const activePosition = item.getBoundingClientRect().top
@@ -611,6 +616,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const $table = document.querySelectorAll('#article-container :not(.highlight) > table, #article-container > table')
     if ($table.length) {
       $table.forEach(item => {
+        // 这个选择器会匹配「.table-wrap > table」（.table-wrap 不是 .highlight），
+        // 所以本函数只要跑第二次就会再套一层 —— .table-wrap 是 overflow-x: scroll，
+        // 多一层就多画一条 8px 的水平滚动条（Windows 上无溢出时 thumb 会填满整条，
+        // 看起来就是表格底下多出一条灰线）。加密文章解密后本函数会被重复触发，
+        // 这里必须幂等，否则表格底部会出现两条线。
+        if (item.parentNode && item.parentNode.classList && item.parentNode.classList.contains('table-wrap')) return
         btf.wrap(item, 'div', { class: 'table-wrap' })
       })
     }
@@ -786,4 +797,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   refreshFn()
   unRefreshFn()
+
+  /* 给 source/js/unlock-secret.js 用：加密文章是「解密后」才把正文插进来的，
+     refreshFn 那一次（DOMContentLoaded / pjax:complete）扫到的正文标题列表是空的，
+     目录的滚动高亮就一直不亮。解密完成后调一次这里重抓即可。
+     只重抓目录，不重跑整个 refreshFn —— 那会重复绑定一堆监听。 */
+  window.__fomalTocResync = scrollFnToDo
 })

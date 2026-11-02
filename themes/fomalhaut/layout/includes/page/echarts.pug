@@ -1,4 +1,9 @@
-script(src='https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js')
+//- 本页专用：样式只在 /tags/ 加载（原来挂全站 head，每页白下载 9KB）
+//- data-pjax：pjax 切到本页后脚本会重新执行
+link(rel='stylesheet' href=url_for('/css/stats.css') + '?v=20261005')
+script(defer data-pjax src=url_for('/js/stats.js') + '?v=20261005')
+
+script(src='/External-link/js/echarts.min.js')
 
 //- 【2026-10-01 改】本布局现用于「文章统计」页（/tags/）：原 网站>文章统计 页 + 文章>标签 页 + 文章>分类 页 三页合并
 //- 图表标题统一写在图表外面（写法同「网站统计」页），图表内部不再画标题：titlePosition: 'outside'

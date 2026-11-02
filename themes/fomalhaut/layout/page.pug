@@ -1,7 +1,8 @@
 extends includes/layout.pug
 
 block content
-  #page
+  - var __pageCls = page.selectable ? 'is-selectable' : ''
+  #page(class=__pageCls)
     if top_img === false
       h1.page-title= page.title
 

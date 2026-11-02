@@ -40,7 +40,7 @@ function fail(status, message) { return json({ error: { message: message } }, st
  *   AI_PROXY_ALLOW_SUFFIXES  可选：改默认域名后缀，默认 example.com,example.com
  * 另外始终放行：localhost / 127.0.0.1 / ::1 / *.local（本地调试）
  * 与 *.vercel.app / *.pages.dev（平台预览域名）。 */
-const DEFAULT_SUFFIXES = 'example.com';
+const DEFAULT_SUFFIXES = 'lichengic.com';
 
 function normOrigin(s) {
   s = String(s == null ? '' : s).trim().replace(/\/+$/, '');
@@ -116,7 +116,7 @@ export function onRequestOptions() {
 export async function onRequestPost({ request, env }) {
   if (!originAllowed(request, env)) {
     return fail(403, '来源不在白名单：' + (request.headers.get('origin') || request.headers.get('referer') || '(空)') +
-      '。example.com / example.com 全家族本来就放行；别的域名要放行就加进 Cloudflare 环境变量 AI_PROXY_ORIGINS（逗号分隔，裸域名会自动补 https://）。');
+      '。licic.net / lichengic.com 全家族本来就放行；别的域名要放行就加进 Cloudflare 环境变量 AI_PROXY_ORIGINS（逗号分隔，裸域名会自动补 https://）。');
   }
   const key = String((env && env.DEEPSEEK_API_KEY) || '').trim();
   if (!key) {

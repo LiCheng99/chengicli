@@ -1,0 +1,408 @@
+/* ============================================================
+ * thread-table.css —— 螺纹规格速查页样式
+ * 只作用于 #article-container 内的 .tc-* 元素，不影响站内其它页面
+ * ============================================================ */
+
+#article-container .tc-wrap {
+  position: sticky;
+  top: 60px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  margin: 0 0 18px;
+  border-radius: 12px;
+  /* 跟卡片同一套透明度变量，美化设置里拖「不透明度」时这层也跟着变 */
+  background: var(--trans-light, var(--card-bg, #fff));
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .08);
+}
+
+[data-theme="dark"] #article-container .tc-wrap {
+  background: var(--trans-dark, var(--card-bg, #2b2b30));
+}
+
+/* ---------- 搜索框 ---------- */
+#article-container .tc-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(128, 128, 128, .09);
+  color: var(--font-color, #4c4948);
+}
+
+#article-container .tc-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+#article-container .tc-search input::-webkit-search-cancel-button { display: none; }
+
+#article-container .tc-clear {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(128, 128, 128, .25);
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s;
+}
+
+#article-container .tc-clear.is-show { opacity: 1; pointer-events: auto; }
+
+/* ---------- 分类按钮 ---------- */
+#article-container .tc-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#article-container .tc-cat {
+  padding: 5px 12px;
+  border: 1px solid rgba(128, 128, 128, .3);
+  border-radius: 20px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--font-color, #4c4948);
+  font-size: 13px;
+  font-family: inherit;
+  transition: all .18s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#article-container .tc-cat:hover {
+  border-color: var(--theme-color, #49b1f5);
+  color: var(--theme-color, #49b1f5);
+}
+
+#article-container .tc-cat.is-on {
+  border-color: var(--theme-color, #49b1f5);
+  background: var(--theme-color, #49b1f5);
+  color: #fff;
+}
+
+#article-container .tc-count {
+  font-size: 12px;
+  color: rgba(128, 128, 128, .9);
+}
+
+/* ---------- 区块 ---------- */
+#article-container .tc-sec { margin: 0 0 26px; }
+
+#article-container .tc-sec h2 {
+  margin: 0 0 4px !important;
+  padding-left: 10px;
+  border-left: 4px solid var(--theme-color, #49b1f5);
+  font-size: 19px;
+}
+
+#article-container .tc-note {
+  margin: 0 0 12px !important;
+  color: rgba(128, 128, 128, .95);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#article-container .tc-sub {
+  margin: 14px 0 8px !important;
+  font-size: 15px;
+  color: var(--font-color, #4c4948);
+}
+
+#article-container .tc-sec.is-hide { display: none; }
+
+/* ---------- 表格 ----------
+ * 注意：.tc-table 绝对不能设 overflow / max-height，
+ * 否则 thead 的 sticky 只会相对「表格内部」生效，
+ * 随整个页面滚动时表头照样跑掉。现在它是跟着浏览器视口吸顶的。
+ */
+#article-container .tc-table {
+  border: 1px solid rgba(128, 128, 128, .18);
+  border-radius: 10px;
+}
+
+/* 主题会自动给 <table> 套一层 .table-wrap（overflow-x: scroll），
+ * 这一层会让表头的 sticky 只相对表格自己生效、页面滚动时照样跑掉。
+ * 这里强制它不产生滚动上下文（JS 里还会直接把它拆掉）。
+ */
+#article-container .tc-table .table-wrap {
+  overflow: visible !important;
+  margin: 0;
+}
+
+#article-container .tc-table table {
+  width: 100%;
+  /* sticky + collapse 会让边框留在原地，必须用 separate */
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* --tc-top 由 thread-table.js 实时写入 = 顶部工具条的底边位置 */
+#article-container .tc-table th {
+  position: sticky;
+  top: var(--tc-top, 60px);
+  z-index: 3;
+  padding: 9px 12px;
+  text-align: left;
+  white-space: nowrap;
+  background: var(--theme-color, #49b1f5);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .35);
+}
+
+#article-container .tc-table thead tr th:first-child { border-top-left-radius: 10px; }
+#article-container .tc-table thead tr th:last-child { border-top-right-radius: 10px; }
+
+#article-container .tc-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(128, 128, 128, .12);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+#article-container .tc-table tbody tr:hover { background: rgba(128, 128, 128, .1); }
+
+#article-container .tc-table tbody tr:nth-child(even) { background: rgba(128, 128, 128, .05); }
+
+#article-container .tc-table tbody tr:nth-child(even):hover { background: rgba(128, 128, 128, .12); }
+
+#article-container .tc-table .tc-key {
+  color: var(--theme-color, #49b1f5);
+  font-weight: 700;
+}
+
+#article-container .tc-table tr.is-hide { display: none; }
+
+/* 搜索时高亮命中的首列 */
+#article-container .tc-table tr.is-hit .tc-key {
+  background: rgba(73, 177, 245, .16);
+  border-radius: 4px;
+}
+
+/* ---------- 列色彩区分 ----------
+ * 按表头含义给每一列上固定颜色：规格 / 大径 / 小径 / 牙高 / 螺距 / 底孔 / 每英寸牙数。
+ * 表头用实色，数据格用淡色底 + 左侧色条，整页各表配色统一（脚本见 thread-table.js）。
+ */
+#article-container .tc-table th.tc-col-key    { background: #5b6cff; }
+#article-container .tc-table th.tc-col-major  { background: #e4572e; }
+#article-container .tc-table th.tc-col-minor  { background: #f2a541; }
+#article-container .tc-table th.tc-col-height { background: #2fa84f; }
+#article-container .tc-table th.tc-col-pitch  { background: #3a8fd6; }
+#article-container .tc-table th.tc-col-drill  { background: #9b6dff; }
+#article-container .tc-table th.tc-col-tpi    { background: #4f9aa0; }
+
+#article-container .tc-table td.tc-col-key    { background: rgba(91, 108, 255, .12);  box-shadow: inset 3px 0 0 #5b6cff; }
+#article-container .tc-table td.tc-col-major  { background: rgba(228, 87, 46, .12);   box-shadow: inset 3px 0 0 #e4572e; }
+#article-container .tc-table td.tc-col-minor  { background: rgba(242, 165, 65, .15);  box-shadow: inset 3px 0 0 #f2a541; }
+#article-container .tc-table td.tc-col-height { background: rgba(47, 168, 79, .13);   box-shadow: inset 3px 0 0 #2fa84f; }
+#article-container .tc-table td.tc-col-pitch  { background: rgba(58, 143, 214, .13);  box-shadow: inset 3px 0 0 #3a8fd6; }
+#article-container .tc-table td.tc-col-drill  { background: rgba(155, 109, 255, .13); box-shadow: inset 3px 0 0 #9b6dff; }
+#article-container .tc-table td.tc-col-tpi    { background: rgba(79, 154, 160, .13);  box-shadow: inset 3px 0 0 #4f9aa0; }
+
+/* 暗色主题下淡色底再提一档，保证看得清 */
+[data-theme="dark"] #article-container .tc-table td.tc-col-key    { background: rgba(91, 108, 255, .22); }
+[data-theme="dark"] #article-container .tc-table td.tc-col-major  { background: rgba(228, 87, 46, .22); }
+[data-theme="dark"] #article-container .tc-table td.tc-col-minor  { background: rgba(242, 165, 65, .24); }
+[data-theme="dark"] #article-container .tc-table td.tc-col-height { background: rgba(47, 168, 79, .22); }
+[data-theme="dark"] #article-container .tc-table td.tc-col-pitch  { background: rgba(58, 143, 214, .22); }
+[data-theme="dark"] #article-container .tc-table td.tc-col-drill  { background: rgba(155, 109, 255, .22); }
+[data-theme="dark"] #article-container .tc-table td.tc-col-tpi    { background: rgba(79, 154, 160, .22); }
+
+/* ---------- 自定义螺纹：计算器 ---------- */
+#article-container .tc-calc {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  margin: 0 0 16px;
+  border: 1px dashed rgba(128, 128, 128, .35);
+  border-radius: 10px;
+}
+
+#article-container .tc-calc-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+#article-container .tc-calc label {
+  display: flex;
+  flex: 1 1 150px;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 132px;
+  color: rgba(128, 128, 128, .95);
+  font-size: 12px;
+}
+
+#article-container .tc-calc input,
+#article-container .tc-calc select {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgba(128, 128, 128, .3);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--font-color, #4c4948);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+
+#article-container .tc-calc input:focus,
+#article-container .tc-calc select:focus { border-color: var(--theme-color, #49b1f5); }
+
+#article-container .tc-calc input[type="range"] {
+  height: 34px;
+  padding: 0;
+  border: none;
+  accent-color: var(--theme-color, #49b1f5);
+}
+
+#article-container .tc-out {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#article-container .tc-out-item {
+  flex: 1 1 108px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  background: rgba(73, 177, 245, .1);
+  text-align: center;
+}
+
+#article-container .tc-out-item b {
+  display: block;
+  color: var(--theme-color, #49b1f5);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+#article-container .tc-out-item span {
+  color: rgba(128, 128, 128, .95);
+  font-size: 11.5px;
+}
+
+#article-container .tc-out.is-empty {
+  display: block;
+  padding: 10px 2px;
+  color: rgba(128, 128, 128, .9);
+  font-size: 13px;
+}
+
+#article-container .tc-save {
+  flex: 0 0 auto !important;
+  align-self: flex-start;
+}
+
+#article-container .tc-hint {
+  color: var(--theme-color, #49b1f5);
+  font-size: 13px;
+  min-height: 20px;
+}
+
+/* 删除按钮：内容用 ::after 生成，不进 textContent，免得干扰搜索 */
+#article-container .tc-del {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(128, 128, 128, .2);
+  color: var(--font-color, #4c4948);
+  font-size: 13px;
+  line-height: 1;
+}
+
+#article-container .tc-del::after { content: "×"; }
+#article-container .tc-del:hover { background: #e74c3c; color: #fff; }
+
+#article-container .tc-unit {
+  color: var(--theme-color, #49b1f5);
+  font-size: 12.5px;
+}
+
+/* ---------- 底部说明 ---------- */
+#article-container .tc-foot {
+  padding-top: 16px;
+  border-top: 1px solid rgba(128, 128, 128, .18);
+}
+
+#article-container .tc-foot h2 {
+  margin: 0 0 10px !important;
+  font-size: 18px;
+}
+
+#article-container .tc-foot ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+#article-container .tc-foot li {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+#article-container .tc-foot code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(128, 128, 128, .15);
+  font-size: 13px;
+}
+
+#article-container .tc-disclaimer {
+  margin: 0 !important;
+  color: rgba(128, 128, 128, .9);
+  font-size: 12.5px;
+}
+
+/* ---------- 手机适配 ---------- */
+@media screen and (max-width: 768px) {
+  #article-container .tc-wrap { top: 56px; padding: 10px; }
+  /* 手机上最多 7 列，压缩字号和间距避免横向溢出。
+   * 注意：这里不能给 .tc-table 加 overflow-x，否则表头 sticky 会失效。 */
+  #article-container .tc-table th,
+  #article-container .tc-table td {
+    padding: 5px 4px;
+    font-size: 11px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  #article-container .tc-table th { letter-spacing: 0; }
+  #article-container .tc-sec h2 { font-size: 17px; }
+  #article-container .tc-out-item { flex: 1 1 84px; }
+  #article-container .tc-out-item b { font-size: 16px; }
+}
+
+/* ---------- 跟随站点自定义鼠标 ----------
+ * 同 macro-gen.css：cursor:pointer 会盖掉 cursor.js 注入的圆点光标，
+ * 特效开着就整块 inherit，让圆点接管（悬停时圆点自己会放大）。
+ */
+html.beauty-cursor-on #article-container,
+html.beauty-cursor-on #article-container * {
+  cursor: inherit;
+}

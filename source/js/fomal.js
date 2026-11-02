@@ -31,7 +31,7 @@
  *     randomPost / switchNightMode / toggleWinbox
  *       —— themes/fomalhaut/layout/includes/rightmenu.pug
  *     share        —— themes/fomalhaut/layout/includes/third-party/share/share-js.pug
- *     setColor     —— source/js/census.js 会调它
+ *     setColor     —— 美化设置面板（换主题色）会调它
  *     randomPost   —— _config.fomalhaut.yml 里以字符串形式引用
  *   注意：btf.scrollToDest(...) 是主题自带 main.js 上的方法，不是本项目的全局函数。
  *

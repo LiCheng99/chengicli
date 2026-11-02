@@ -487,7 +487,7 @@ function fpsSpan(e, color) {
   return span;
 }
 
-for (const color of ['#bd0000', 'red', 'orange', '#9338e6', '#08b7e4', '#39c5bb']) {
+for (const color of ['#bd0000', 'red', 'orange', '#9338e6', '#08b7e4', '#FF1493']) {
   for (const type of ['childList', 'characterData']) {
     test('cursor FPS pure text ' + color + ' span ' + type + ' preserves same-target CSS cache', () => {
       const { e, custom } = cachedCustom();
@@ -517,7 +517,7 @@ for (const kind of ['unknown node lists', 'mixed button', 'extra class', 'extra 
   test('cursor FPS ' + kind + ' is structural and conservatively clears semantic cache', () => {
     const { e, custom } = cachedCustom();
     const fps = e.body.appendChild(new e.Element()); fps.id = 'fps';
-    const span = fps.appendChild(fpsSpan(e, '#39c5bb'));
+    const span = fps.appendChild(fpsSpan(e, '#FF1493'));
     const button = new e.Element('button');
     let record = { target: fps, type: 'childList', addedNodes: [span], removedNodes: [] };
     if (kind === 'unknown node lists') record = { target: fps, type: 'childList' };
@@ -525,10 +525,10 @@ for (const kind of ['unknown node lists', 'mixed button', 'extra class', 'extra 
     if (kind === 'extra class') span.setAttribute('class', 'clickable');
     if (kind === 'extra aria') span.setAttribute('aria-label', 'FPS');
     if (kind === 'unknown color') span.setAttribute('style', 'color: blue;');
-    if (kind === 'extra cursor style') span.setAttribute('style', 'color: #39c5bb; cursor: pointer;');
+    if (kind === 'extra cursor style') span.setAttribute('style', 'color: #FF1493; cursor: pointer;');
     if (kind === 'element child') span.appendChild(new e.Element('button'));
     if (kind === 'nested text') {
-      const inner = span.appendChild(fpsSpan(e, '#39c5bb'));
+      const inner = span.appendChild(fpsSpan(e, '#FF1493'));
       record = { target: inner.childNodes[0], type: 'characterData' };
     }
     if (kind === 'span childList') record = { target: span, type: 'childList', addedNodes: [e.document.createTextNode('61')], removedNodes: [] };
@@ -551,7 +551,7 @@ for (const kind of ['unknown node lists', 'mixed button', 'extra class', 'extra 
 test('cursor FPS span reparented into and out of an internal button clears cached semantic identity', () => {
   const e = setup({ cats: false });
   const fps = e.body.appendChild(new e.Element()); fps.id = 'fps';
-  const span = fps.appendChild(fpsSpan(e, '#39c5bb'));
+  const span = fps.appendChild(fpsSpan(e, '#FF1493'));
   const button = fps.appendChild(new e.Element('button'));
   move(e, span); e.settle();
   assert.equal(e.cursor.cursor.classList.contains('hover'), false);

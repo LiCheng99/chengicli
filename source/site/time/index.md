@@ -1,6 +1,6 @@
 ---
 title: 旧时光
-date: 2022-08-31 20:00:00
+date: 2023-08-31 20:00:00
 comments: false
 ---
 
@@ -64,7 +64,7 @@ comments: false
 
 1. 美化面板分区：原来的滑条堆拆成「氛围特效 / 互动挂件 / 布局与部件」三块 `bf-panel`，两列网格、面板变窄时自动单列
 2. 关掉即真正停下：猫咪挂件（`nekoOn`）与听话鼠标（`cursorOn`）各一个开关、默认开启；关闭时清掉时钟定时器与 `requestAnimationFrame`、断开 `MutationObserver`、指针热路径提前返回，不再「关了还在算」
-3. 主题色支持自定义（`settings.js`）：面板新增原生取色圈（视觉直径 24px、热区 44px、环宽 3px），值以严格校验的六位 HEX 存进 `themeCustomColor`，首帧校验不合法就回落默认青绿
+3. 主题色支持自定义（`settings.js`）：面板新增原生取色圈（视觉直径 24px、热区 44px、环宽 3px），值以严格校验的六位 HEX 存进 `themeCustomColor`，首帧校验不合法就回落默认深粉红色
 4. 预设色板整理为十一色：删掉紫 / 灰 / 黑三个旧选项、补上抹茶绿；旧键自动迁移（`purple → purepurple`、`gray` / `black → darkblue`），375px 宽自动 6+5 换行
 5. 字体设置预览化（新增 `source/js/modules/appearance-fonts.js`）：阅读 5 / 个性 3 / 代码 4 三组，正文与代码各一块实时预览；只对合法 key 请求 `document.fonts.load`、12 秒超时、最新请求胜、失败不写偏好可重试；「恢复默认」只重置两个字体键
 6. 背景设置预览化（新增 `source/js/modules/appearance-backgrounds.js`）：32 张壁纸 + 8 个渐变 + 7 个纯色 + 8 个 API 图全保留；图库 / 色彩 / 自定义一级，图库再分四类，打开分类才给 `<img>` 赋 `src`；切换走 `Image` 预加载 + 12 秒超时 + token 取消，失败保留旧图

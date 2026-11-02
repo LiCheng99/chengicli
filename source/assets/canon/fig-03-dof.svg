@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="'Noto Sans SC','Microsoft YaHei',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="barG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0c3b8"/>
+      <stop offset="1" stop-color="#cf4b36"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="760" fill="#ffffff"/>
+
+  <text x="60" y="62" font-size="26" font-weight="700" fill="#1b1f27">同一距离，光圈从 1.8 收到 8，清晰范围有多厚</text>
+  <text x="60" y="96" font-size="17" fill="#7b8494">条件：R50 + RF50mm F1.8，对焦在 3 米处，APS-C 弥散圆按 0.019mm 计算</text>
+
+  <!-- 坐标轴 -->
+  <line x1="140" y1="600" x2="880" y2="600" stroke="#c8cfda" stroke-width="2"/>
+  <g font-size="15" fill="#7b8494" text-anchor="middle">
+    <text x="140" y="628">2.0 m</text>
+    <text x="325" y="628">2.5 m</text>
+    <text x="510" y="628">3.0 m</text>
+    <text x="695" y="628">3.5 m</text>
+    <text x="880" y="628">4.0 m</text>
+  </g>
+  <g stroke="#c8cfda" stroke-width="1.5">
+    <line x1="325" y1="592" x2="325" y2="600"/><line x1="510" y1="592" x2="510" y2="600"/>
+    <line x1="695" y1="592" x2="695" y2="600"/>
+  </g>
+
+  <!-- 对焦面 -->
+  <line x1="510" y1="176" x2="510" y2="600" stroke="#1b1f27" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="510" y="160" font-size="16" font-weight="700" fill="#1b1f27" text-anchor="middle">对焦面 3.0 m（眼睛）</text>
+
+  <!-- 行 -->
+  <g>
+    <!-- f/1.8 -->
+    <text x="60" y="248" font-size="20" font-weight="700" fill="#cf4b36">f/1.8</text>
+    <rect x="140" y="226" width="740" height="30" rx="15" fill="#f4f1ee"/>
+    <rect x="466" y="226" width="92" height="30" rx="15" fill="url(#barG)"/>
+    <circle cx="466" cy="241" r="5" fill="#cf4b36"/><circle cx="558" cy="241" r="5" fill="#cf4b36"/>
+    <text x="920" y="247" font-size="17" fill="#3a4250">2.88 – 3.13 m</text>
+    <text x="1140" y="247" font-size="17" font-weight="700" fill="#cf4b36" text-anchor="end">25 cm</text>
+    <text x="580" y="288" font-size="14" fill="#a04a3a">← 全开就是这个厚度：鼻尖到耳后</text>
+
+    <!-- f/2.8 -->
+    <text x="60" y="348" font-size="20" font-weight="700" fill="#b8563f">f/2.8</text>
+    <rect x="140" y="326" width="740" height="30" rx="15" fill="#f4f1ee"/>
+    <rect x="443" y="326" width="140" height="30" rx="15" fill="#d97f66"/>
+    <text x="920" y="347" font-size="17" fill="#3a4250">2.82 – 3.20 m</text>
+    <text x="1140" y="347" font-size="17" font-weight="700" fill="#b8563f" text-anchor="end">38 cm</text>
+
+    <!-- f/4 -->
+    <text x="60" y="448" font-size="20" font-weight="700" fill="#9c6a58">f/4.0</text>
+    <rect x="140" y="426" width="740" height="30" rx="15" fill="#f4f1ee"/>
+    <rect x="417" y="426" width="204" height="30" rx="15" fill="#c99a86"/>
+    <text x="920" y="447" font-size="17" fill="#3a4250">2.75 – 3.30 m</text>
+    <text x="1140" y="447" font-size="17" font-weight="700" fill="#9c6a58" text-anchor="end">55 cm</text>
+
+    <!-- f/8 -->
+    <text x="60" y="548" font-size="20" font-weight="700" fill="#7b8494">f/8.0</text>
+    <rect x="140" y="526" width="740" height="30" rx="15" fill="#f4f1ee"/>
+    <rect x="340" y="526" width="418" height="30" rx="15" fill="#b9c0c9"/>
+    <text x="920" y="547" font-size="17" fill="#3a4250">2.54 – 3.67 m</text>
+    <text x="1140" y="547" font-size="17" font-weight="700" fill="#6b7480" text-anchor="end">113 cm</text>
+  </g>
+
+  <line x1="60" y1="670" x2="1140" y2="670" stroke="#e3e7ee" stroke-width="2"/>
+  <text x="60" y="708" font-size="17" fill="#3a4250">越靠近，景深掉得越快：同样 f/1.8，对焦从 3 米挪到 1 米，清晰范围从 25 cm 缩到 3 cm。</text>
+  <text x="60" y="740" font-size="17" fill="#6b7480">所以小痰盂拍特写必须对眼睛，拍半身才有容错——这也是它“难用”和“好出片”的分界线。</text>
+</svg>

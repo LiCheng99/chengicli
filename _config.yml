@@ -1,318 +1,284 @@
-# Hexo Configuration
-## Docs: https://hexo.io/docs/configuration.html
-## Source: https://github.com/hexojs/hexo/
+# ============================================================
+# Hexo 站点主配置文件
+# 官方文档：https://hexo.io/docs/configuration.html
+# 说明：# 号开头的都是注释，不会被程序读取，随便改。
+#      改完本文件必须执行 hexo clean && hexo generate 才会生效。
+# ============================================================
 
-# Site
-title: Demo
-subtitle:
-description: "一个基于 Hexo + Fomalhaut 主题的演示站点"
-keywords: "Hexo,Butterfly,Fomalhaut,博客,主题,卡片式UI"
-author: Demo
-language: zh-CN
-timezone: ""
+# ---------- 本地预览服务器 ----------
+server:
+  port: 4444          # 本地预览端口，浏览器访问 http://localhost:4444
+  host: 0.0.0.0     # 监听地址；localhost=只能本机访问，0.0.0.0=允许手机/平板同WiFi访问
 
-# abbrlink config
+# ---------- 站点基本信息 ----------
+title: "chengicli"      # 博客标题，显示在浏览器标签页和首页左上角
+subtitle:             # 副标题，显示在标题下方（可留空）
+description: "一个基于 Hexo + Fomalhaut 打造的CNC网站"  # 站点描述，搜索引擎抓取用
+keywords: "Hexo,Butterfly,Fomalhaut,博客,主题,卡片式UI"   # 站点关键词，SEO 用
+author: "chengicli"     # 作者名，显示在文章底部版权信息
+language: zh-CN       # 语言，zh-CN=简体中文（决定界面提示文字的语言）
+timezone: "Asia/Shanghai"  # 时区，中国填 Asia/Shanghai（留空则用电脑系统时区）
+
+# ---------- 文章链接缩写（abbrlink 插件）----------
+# 作用：把文章链接变成不含中文的固定短链接，如 /posts/a3f2c1b0.html
 abbrlink:
-  alg: crc32 #support crc16(default) and crc32
-  rep: hex #support dec(default) and hex
+  alg: crc32          # 算法：crc16 或 crc32，二选一，别填其他值
+  rep: hex            # 进制：hex=十六进制（较短），dec=十进制
 
-# URL
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://example.com/
-permalink: posts/:abbrlink.html
-permalink_defaults:
+# ---------- URL 与链接规则 ----------
+url: https://www.lichengic.com/      # 正式域名（Vercel 绑定 www.lichengic.com）
+                                   #  不改成自己域名会导致站内链接、RSS、SEO 全是错的
+permalink: posts/:abbrlink.html    # 文章永久链接格式，依赖上面的 abbrlink，别乱改
+permalink_defaults:                # 链接里的变量默认值，一般留空
 pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
+  trailing_index: true   # true=生成 /about/index.html；false=生成 /about.html
+  trailing_html: true    # true=保留 .html 后缀；false=去掉后缀（需要服务器配合）
 
-# Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-# 指定不渲染某些页面
+# ---------- 目录结构 ----------
+source_dir: source         # 源文件目录：文章、页面、图片都放这里
+public_dir: public         # 生成目录：hexo generate 的产物，上传服务器就传它里面的内容
+tag_dir: tags              # 标签页路径，默认 /tags/
+archive_dir: archives      # 归档页路径，默认 /archives/
+category_dir: categories   # 分类页路径，默认 /categories/
+code_dir: downloads/code   # 代码文件存放目录（用 codeblock 标签时用到）
+i18n_dir: :lang            # 多语言目录，:lang 会被替换成语言代码
+
+# ---------- 不参与渲染的文件 ----------
+# 这些文件会被原样复制到 public/，不做模板渲染
+# 原因：它们含有会被渲染引擎误解析的语法（如 {{ }}、<% %>）
 skip_render:
-  - 'js/tag-map/*' # leaflet / proj4 第三方库原文件，原样复制，不做 Nunjucks 渲染
-  - 'js/ai-chat.js' # AI 助手前端本体（含大段 CSS/JS 字面量），原样复制，不做 Nunjucks 渲染
-  - 'box/astronomy/voyager.html' # 旅行者号交互星图，是完整独立页面（自带样式与脚本），由 index.md 用 iframe 引入，原样复制
+  - 'js/tag-map/*'                    # leaflet / proj4 第三方库原文件
+  - 'js/ai-chat.js'                   # AI 助手前端本体（含大段 CSS/JS 字面量）
+  - 'astronomy/voyager.html'          # 旅行者号交互星图，独立完整页面（原 box/astronomy/）
 
-# Writing
-new_post_name: :year-:month-:day-:title.md # File name of new posts
-default_layout: post
-titlecase: false # Transform title into titlecase
+# ---------- 写作设置 ----------
+new_post_name: :year-:month-:day-:title.md  # 新建文章的文件名格式
+default_layout: post        # 新建文件默认布局：post=文章 / page=页面 / draft=草稿
+titlecase: false            # 是否把标题自动转成首字母大写（中文博客建议 false）
 external_link:
-  enable: true # Open external links in new tab
-  field: site # Apply to the whole site
-  exclude: ""
-filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
-future: true
+  enable: true              # 站外链接是否在新标签页打开
+  field: site               # 作用范围：site=全站 / post=仅文章
+  exclude: ""               # 排除的域名，多个用逗号分隔
+filename_case: 0            # 文件名大小写：0=不改 / 1=小写 / 2=大写
+render_drafts: false        # 是否渲染草稿（source/_drafts 里的）
+post_asset_folder: false    # 新建文章时是否同时创建同名文件夹（放该文的图片用）
+relative_link: false        # 是否用相对链接（一般用 false，避免分页出错）
+future: true                # 是否显示日期晚于当前时间的文章（定时发布用）
+
+# ---------- 代码高亮 ----------
 highlight:
-  enable: true
-  line_number: true
-  auto_detect: true
-  tab_replace: ""
-  wrap: true
-  hljs: false
+  enable: true        # 开启代码高亮
+  line_number: true   # 显示行号
+  auto_detect: true   # 自动识别代码语言（代码块没写语言时）
+  tab_replace: ""     # 把 Tab 替换成几个空格，留空则不替换
+  wrap: true          # 代码过长时自动换行
+  hljs: false         # 是否用 highlight.js 的类名（本主题用 false）
 prismjs:
-  enable: false
-  preprocess: true
-  line_number: true
-  tab_replace: ""
+  enable: false       # 是否改用 prismjs 渲染（与上面 highlight 二选一，别都开）
+  preprocess: true    # 预处理（prismjs 专用）
+  line_number: true   # 显示行号
+  tab_replace: ""     # Tab 替换，留空不替换
 
+# ---------- 数学公式 ----------
 math:
-  engine: "mathjax"
+  engine: "mathjax"   # 公式引擎：mathjax 或 katex
   mathjax:
-    src: custom_mathjax_source
+    src: custom_mathjax_source   # MathJax 的 CDN 地址
     config:
-      # MathJax config
+      # MathJax 详细配置，一般留空即可
 
-# 音乐插件
+# ---------- 音乐播放器插件 ----------
 aplayer:
-  meting: true
-  asset_inject: false
+  meting: true        # 启用 meting 接口（可直接播网易云/QQ音乐的歌单）
+  asset_inject: false # 是否自动注入 CSS/JS（主题已自带就设 false）
 
-# Home page setting
-# path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
-# order_by: Posts order. (Order by date descending by default)
+# ---------- 首页设置 ----------
 index_generator:
-  path: ""
-  per_page: 9
-  order_by: -date
+  path: ""            # 首页路径，留空=站点根目录
+  per_page: 9         # 首页每页显示几篇文章；0=不分页，全部显示
+  order_by: -date     # 排序：-date=按日期倒序（新的在前）
 
-# Archive page setting
-## 归档页 /archives/ 的每页篇数（与首页 index_generator.per_page 互不影响；缺省时 Hexo 默认 10）
-## 卡片为 3 列布局，12 篇 = 4 行整、无残缺行
+# ---------- 归档页设置 ----------
 archive_generator:
-  per_page: 12
-  yearly: true
-  monthly: true
-  daily: false
-  order_by: -date
+  per_page: 12        # 归档页每页篇数（12 = 3列×4行，正好铺满不残缺）
+  yearly: true        # 生成年度归档
+  monthly: true       # 生成月度归档
+  daily: false        # 生成每日归档（一般不需要，会很杂）
+  order_by: -date     # 排序：新的在前
 
-# Category & Tag
-default_category: uncategorized
-category_map:
-tag_map:
+# ---------- 分类与标签 ----------
+default_category: uncategorized  # 文章没写分类时归入的默认分类名
+category_map:                    # 分类名映射，如 "Hexo: hexo" 把 Hexo 统一成 hexo
+tag_map:                         # 标签名映射，用法同上
 
-# Metadata elements
-## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-meta_generator: true
+# ---------- 页面元数据 ----------
+meta_generator: true  # 是否在页面头部输出 <meta name="generator" content="Hexo">
+                      #  设 false 可以隐藏"本站由 Hexo 驱动"，略微提升安全
 
-# Date / Time format
-## Hexo uses Moment.js to parse and display date
-## You can customize the date format as defined in
-## http://momentjs.com/docs/#/displaying/format/
-date_format: YYYY-MM-DD
-time_format: HH:mm:ss
-## updated_option supports 'mtime', 'date', 'empty'
-updated_option: "mtime"
+# ---------- 日期时间格式 ----------
+date_format: YYYY-MM-DD   # 日期显示格式
+time_format: HH:mm:ss     # 时间显示格式
+updated_option: "mtime"   # 文章"更新时间"取哪个值
+                          #  mtime=文件最后修改时间 / date=front-matter 里的 date / empty=不显示
 
-# Pagination
-## Set per_page to 0 to disable pagination
-per_page: 10
-pagination_dir: page
+# ---------- 分页 ----------
+per_page: 10          # 全局默认每页条数（分类页、标签页未单独设置时用这个）
+                      #  设 0 = 关闭分页
+pagination_dir: page  # 分页目录名，第2页路径形如 /page/2/
 
-# Include / Exclude file(s)
-## include:/exclude: options only apply to the 'source/' folder
-include:
-exclude:
-ignore:
+# ---------- 文件包含 / 排除 ----------
+# 注意：这三项只对 source/ 目录生效
+include:              # 强制包含的文件（默认被忽略的如 .htaccess 可在这里加）
+exclude:              # 排除的文件（不会复制到 public/）
+ignore:               # 忽略的文件（连处理都不处理）
 
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: fomalhaut
+# ---------- 主题 ----------
+theme: fomalhaut      # 当前使用的主题名，对应 themes/ 下的文件夹名
+                      #  ★本主题的详细配置在根目录的 _config.fomalhaut.yml，不是这里
 
-# Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
+# ---------- 一键部署 ----------
+# 文档：https://hexo.io/docs/one-command-deployment
+# 执行 hexo deploy 时把 public/ 推到下面配置的地址
 deploy:
-  - type: git
-    repository: https://github.com/yourname/yourname.github.io.git # 这个Github仓库用自动部署即可
-    branch: main
-  - type: baidu_url_submitter
+  - type: git                                             # 部署方式：git
+    repository: https://github.com/yourname/yourname.github.io.git   # ★改成你的仓库地址
+    branch: main                                          # 推送到的分支
+  - type: baidu_url_submitter                             # 部署时顺便把新链接推给百度
   # - type: git
   #   #repo改为repo: git@域名:/var/repo/hexo.git
   #   repo: git@127.0.0.1:/var/repo/hexo.git
   #   branch: main
 
-# hexo-algolia(匹配标题)
-# algolia:
-#   applicationID: YOUR_ALGOLIA_APP_ID
-#   apiKey: YOUR_ALGOLIA_SEARCH_KEY
-#   indexName: your_index_name
-
-# hexo-algoliasearch(可以匹配内容)
+# ---------- Algolia 搜索 ----------
+# 需要先去 algolia.com 注册（免费版够用），否则站内搜索不可用
 algolia:
-  appId: "YOUR_ALGOLIA_APP_ID"
-  apiKey: "YOUR_ALGOLIA_SEARCH_KEY"
-  adminApiKey: "YOUR_ALGOLIA_ADMIN_KEY"
-  chunkSize: 5000
-  indexName: "your_index_name"
-  fields:
-    - content:strip:truncate,0,30000
-    - excerpt:strip
-    - gallery
-    - permalink
-    - photos
-    - slug
-    - tags
-    - title
+  appId: "XAPS1H9C4E"          # ★Application ID
+  apiKey: "f23ce571987ecaf56e6fe0c2c9cfc9f3"     # ★Search-Only API Key（可公开的那个）
+  adminApiKey: "278c30877251569331df902dc6b96ac6" # ★Admin API Key（保密，只在本机用）
+  chunkSize: 5000                       # 单条记录大小上限（字节），别改
+  indexName: "chengicli"          # ★索引名，随便起，记住就行
+  fields:                               # 要建立索引的字段
+    - content:strip:truncate,0,3000      # 正文（去掉HTML标签，截前3000字符；Algolia免费版单条记录上限10KB）
+    - excerpt:strip:truncate,0,500       # 摘要（截前500字符，防止长摘要超限）
+    - gallery                           # 相册
+    - permalink                         # 永久链接
+    - photos                            # 图片
+    - slug                              # 别名
+    - tags                              # 标签
+    - title                             # 标题
 
-# 首页轮播图
-# hexo-butterfly-swiper
-# see https://akilar.top/posts/8e1264d1/
+# ---------- 首页轮播图 ----------
+# 插件 hexo-butterfly-swiper，参考 https://akilar.top/posts/8e1264d1/
 swiper:
-  enable: false # 开关（需要自建 gitcalendar 数据仓库，见 README「GitHub 贡献日历」）
-  priority: 1 #过滤器优先权
-  enable_page: / # 应用页面
-  timemode: date #date/updated
-  layout: # 挂载容器类型
-    type: id
-    name: recent-posts
-    index: 0
-  default_descr: 再怎么看我也不知道怎么描述它的啦！
-  swiper_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css #swiper css依赖
-  swiper_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js #swiper js依赖
-  custom_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css # 适配主题样式补丁
-  custom_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js # swiper初始化方法
+  enable: false        # 是否开启轮播（true=开启）
+  priority: 1         # 过滤器优先级，数字越小越先执行
+  enable_page: /      # 在哪个页面生效，/ =仅首页
+  timemode: date      # 排序依据：date=发布时间 / updated=更新时间
+  layout:             # 挂载到页面哪个位置
+    type: id          # 按 id 定位
+    name: recent-posts  # 容器 id
+    index: 0          # 插在该容器内的第几个位置（0=最前面）
+  default_descr: 再怎么看我也不知道怎么描述它的啦！  # 文章没写描述时的默认文案
+  swiper_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css  # 轮播 CSS
+  swiper_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js    # 轮播 JS
+  custom_css: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css # 适配主题的样式补丁
+  custom_js: https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js   # 初始化脚本
 
-# 本地搜索
+# ---------- 本地搜索（XML 方式）----------
 search:
-  path: search.xml
-  field: post
-  content: true
+  path: search.xml    # 生成的搜索索引文件名
+  field: post         # 搜索范围：post=仅文章 / page=仅页面 / all=全部
+  content: true       # 是否把正文也纳入搜索（true 能搜到正文内容，但索引会变大）
 
-# Extensions
-## Plugins: http://hexo.io/plugins/
-#RSS订阅
+# ---------- 文章加密（hexo-blog-encrypt）----------
+# 作用：正文用 AES 加密后写进 HTML，访问者必须输密码才能看到内容。
+# 记住一句话：它只保护「文章页面里的内容」，不保护附件文件（PDF/NC），
+# 附件要用服务器目录密码（宝塔 → 网站 → 目录保护）才拦得住，见下方说明。
+encrypt:
+  # 全局默认提示语（单篇文章可在 front-matter 里单独覆盖）
+  abstract: 本文内容已加密，需要密码才能查看
+  message: 请输入密码
+  wrong_pass_message: 密码不对，请重新输入
+  wrong_hash_message: 密码正确，但内容可能已更新，仍可查看
+  theme: default
+  # 按标签批量加密：文章只要带上这个标签就自动上锁，不用每篇写 password
+  # 想换密码就改下面 password 的值，然后 hexo clean && hexo g
+  tags:
+    - name: 内部资料
+      password: 260424
+
+# ---------- RSS 订阅 ----------
 plugin:
-  - hexo-generator-feed
-#Feed Atom
+  - hexo-generator-feed   # 声明启用 RSS 生成插件
 feed:
-type: atom
-path: atom.xml
-limit: 20
+  type: atom          # 订阅格式：atom 或 rss2
+  path: atom.xml      # 生成的文件名，访问地址 https://你的域名/atom.xml
+  limit: 20           # 最多包含多少篇文章；0 或留空=全部
+  # 用自带的“安全版”RSS 模板：加密文章（front-matter 带 password）不会进订阅源
+  # 文件在 templates/atom-safe.xml，删掉本行则恢复插件默认模板
+  template: templates/atom-safe.xml
 
-# 站点地图
+# ---------- 站点地图（SEO 用）----------
 sitemap:
-  path: sitemap.xml
+  path: sitemap.xml         # 通用站点地图，给 Google/Bing 用
 baidusitemap:
-  path: baidusitemap.xml
+  path: baidusitemap.xml    # 百度专用站点地图，格式和上面不同
 
-# 主动推送百度，被百度收录
+# ---------- 百度主动推送 ----------
+# 让百度更快收录新文章，需先在百度站长平台拿到 token
 baidu_url_submit:
-  count: 10 # 提交最新的10个链接
-  host: https://example.com # 百度站长平台中注册的域名
-  token: YOUR_BAIDU_TOKEN # 秘钥，百度站长平台 > 推送接口 > 接口调用地址中token字段
-  path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里，不用改
+  count: 10                     # 每次提交最新的几条链接
+  host: https://www.lichengic.com/  # ★改成你在百度站长平台注册的域名
+  token: YOUR_BAIDU_TOKEN       # ★改成你的推送 token
+  path: baidu_urls.txt          # 待推送链接暂存文件，不用改
 
+# ---------- nofollow（SEO）----------
 nofollow:
-  enable: false
-  field: site
-  exclude: ""
+  enable: false       # 是否给站外链接加 rel="nofollow"（告诉搜索引擎别追踪）
+  field: site         # 作用范围：site=全站 / post=仅文章
+  exclude: ""         # 排除的域名（自己的其他站点可填进来）
 
-# github提交日志
-# hexo-filter-gitcalendar
-# see https://akilar.top/posts/1f9c68c9/
-gitcalendar:
-  enable: true # 开关
-  priority: 5 #过滤器优先权
-  enable_page: /site/census/ # 应用页面
-  # butterfly挂载容器
-  layout: # 挂载容器类型
-    type: id
-    name: gitZone
-    index: 0
-  # volantis挂载容器
-  # layout:
-  #   type: class
-  #   name: l_main
-  #   index: 0
-  # matery挂载容器
-  # layout:
-  #   type: id
-  #   name: indexCard
-  #   index: 0
-  # mengd挂载容器
-  # layout:
-  #   type: class
-  #   name: content
-  #   index: 0
-  # simplemode: true
-  user: yourname # git用户名
-  apiurl: "https://gitcalendar.example.com" # 你的 gitcalendar 服务地址
-  jsonurl: "https://cdn.jsdelivr.net/gh/yourname/gitcalendar-data@main/data.json" # 方案B：GitHub Action 定时更新的数据
-  minheight:
-    pc: 320px #桌面端最小高度
-    mibile: 0px #移动端最小高度
-  # 这里只作兜底：前端 gitcalendar.js 里的 git_theme_palette() 会读 --theme-color 实时生成
-  # 一套同色系调色板（[0] 空白天用中性灰，[1]~[9] 主题色由浅到深）；
-  # 只有读不到 --theme-color 时才会用到下面这套写死的颜色。
-  color: "['#d9e0df', '#c6e0dc', '#a8dcd4', '#9adcd2', '#89ded1', '#77e0d0', '#5fdecb', '#47dcc6', '#39dcc3', '#1fdabe', '#00dab9']"
-  # "['rgb(145, 145, 145, 0.2)', '#c6ecc1', '#a0e2bb', '#1fc7b6', '#70c5d3', '#60a2ce', '#507ac9', '#4356c5', '#423cc4', '#5b3abc', '#7138b6']" # 冷色系温度色调
-  # "['rgb(145, 145, 145, 0.2)', '#c6ecc1', '#a0e2bb', '#1fc7b6', '#70c5d3', '#60a2ce', '#507ac9', '#4356c5', '#423cc4', '#5b3abc', '#7138b6']" # 冷色系温度色调
-  # "['#ebedf0', '#cdefec', '#a9e4de', '#1fc7b6', '#65cfc5', '#4dc8bb', '#39bbae', '#319d93', '#278178', '#216962', '#1b5852']" #蒂芙尼蓝色调
-  # "['#e4dfd7', '#f9f4dc', '#f7e8aa', '#f7e8aa', '#f8df72', '#fcd217', '#fcc515', '#f28e16', '#fb8b05', '#d85916', '#f43e06']" #橘黄色调
-  # color: "['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f']" #浅紫色调
-  # color: "['#ebedf0', '#f0fff4', '#dcffe4', '#bef5cb', '#85e89d', '#34d058', '#28a745', '#22863a', '#176f2c', '#165c26', '#144620']" #翠绿色调
-  # color: "['#ebedf0', '#f1f8ff', '#dbedff', '#c8e1ff', '#79b8ff', '#2188ff', '#0366d6', '#005cc5', '#044289', '#032f62', '#05264c']" #天青色调
-  container: .recent-post-item(style='width:100%;height:auto;padding:10px;') #父元素容器，需要使用pug语法
-  gitcalendar_css: /css/gitcalendar.css #自托管，勿改回 CDN（2026-10-01）
-  gitcalendar_js: /js/gitcalendar.js #自托管 + 已打「失败也摘转圈」补丁
-
-# 新版的搜索插件
+# ---------- 搜索插件声明 ----------
 plugins:
-  - hexo-algoliasearch
+  - hexo-algoliasearch   # 启用 Algolia 搜索插件
 
-# 小冰分类磁贴
+# ---------- 首页分类磁贴 ----------
+# 首页顶部显示的一排分类小方块，★里面的分类名是原作者示例，请改成你自己的
 magnet:
-  enable: true
-  priority: 2
-  enable_page: /
-  type: categories
-  devide: 3
-  display:
-    - name: 算法
-      display_name: 算法学习笔记
-      icon: 🍡
-    - name: 计算机基础
-      display_name: 计算机基础笔记
-      icon: 🍼
-    - name: 魔改教程
-      display_name: 博客魔改教程
-      icon: 🍉
-    - name: Java基础
-      display_name: Java基础笔记
-      icon: 🍟
-    - name: 数据库
-      display_name: 数据库笔记
-      icon: 🍨
-    # - name: 演示
-    #   display_name: 案例演示笔记
-    #   icon: 🍥
-    - name: 嵌入式知识点总结
-      display_name: 嵌入式知识总结
-      icon: 🧀
+  enable: true        # 是否显示分类磁贴
+  priority: 2         # 过滤器优先级
+  enable_page: /      # 在哪个页面显示，/ =仅首页
+  type: categories    # 磁贴类型：categories=分类 / tags=标签
+  devide: 3           # 每行显示几个
+  display:            # ★分类列表，name 必须和文章 front-matter 里的分类完全一致
+    - name: 无锡元基              # 分类名（要和文章 front-matter 里写的一致）
+      display_name: 无锡元基 # 磁贴上显示的名字
+      icon: ⚙️                   # 图标，直接放 emoji
+    - name: 吴江海拓
+      display_name: 吴江海拓
+      icon: ⚙️
+    - name: 溧阳立源
+      display_name: 溧阳立源
+      icon: ⚙️
+    - name: CNC工艺
+      display_name: CNC工艺
+      icon: ⚙️
+    - name: 宜兴军工
+      display_name: 宜兴军工
+      icon: ⚙️
   color_setting:
-    text_color: black # 文字默认颜色
-    text_hover_color: white # 文字鼠标悬浮颜色
-    background_color: "#e9e9e9" # 文字背景默认颜色
-    background_hover_color: var(--text-bg-hover) # 文字背景悬浮颜色
+    text_color: black                    # 文字默认颜色
+    text_hover_color: white              # 鼠标悬停时文字颜色
+    background_color: "#e9e9e9"          # 磁贴默认背景色
+    background_hover_color: var(--text-bg-hover)  # 悬停背景色
   layout:
     type: id
-    name: recent-posts
+    name: recent-posts    # 挂载到首页文章列表容器的最前面
     index: 0
-  temple_html: '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet">${temple_html_item}</div></div>'
-  plus_style: ""
+  temple_html: '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet">${temple_html_item}</div></div>'  # 磁贴外层 HTML 模板
+  plus_style: ""          # 额外自定义 CSS，留空即可
 
-# 目录一级标题跳转
+# ---------- Markdown 渲染 ----------
 markdown:
   anchors:
-    level: 1
+    level: 1        # 从第几级标题开始生成锚点（1=只给 h1 生成，2=h1 和 h2）

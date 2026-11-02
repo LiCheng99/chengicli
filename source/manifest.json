@@ -1,6 +1,6 @@
 {
-  "name": "Demo",
-  "short_name": "Demo",
+  "name": "chengicli",
+  "short_name": "chengicli",
   "theme_color": "var(--theme-color)",
   "background_color": "var(--theme-color)",
   "display": "standalone",

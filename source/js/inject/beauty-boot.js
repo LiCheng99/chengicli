@@ -29,12 +29,12 @@
     tag("defineBg", ":root{--default-bg:" + bg + SAME + bg + ";--mobileday-bg:" + bg + ";--mobilenight-bg:" + bg + ";}");
   }
   // 2) 卡片透明度
-  tag("transPercent", ":root{--trans-light: rgba(250, 250, 250, " + def(ls("transNum"), "98") + "%) !important; --trans-dark: rgba(28, 28, 28, " + def(ls("transNum"), "98") + "%) !important} ");
+  tag("transPercent", ":root{--trans-light: rgba(250, 250, 250, " + def(ls("transNum"), "97") + "%) !important; --trans-dark: rgba(28, 28, 28, " + def(ls("transNum"), "97") + "%) !important} ");
   // 3) 背景滤镜
   if (def(ls("bgFilterOn"), "1") === "0") { tag("bgFilterParam", ":root{--bg-filter:none;}"); }
   else { var bfv = ls("bgFilterVal"); if (bfv) { tag("bgFilterParam", ":root{--bg-filter:" + bfv + ";}"); } }
   // 4) 主题色
-  var cmap = { red: "rgb(239, 90, 90)", orange: "rgb(215, 146, 77)", yellow: "rgb(196, 166, 74)", green: "rgb(57, 197, 187)", puregreen: "rgb(77, 175, 135)", blue: "rgb(74, 156, 199)", heoblue: "rgb(97, 106, 209)", matcha: "rgb(102, 179, 77)", darkblue: "rgb(113, 133, 156)", purepurple: "rgb(147, 90, 205)", pink: "rgb(237, 112, 155)" };
+  var cmap = { red: "rgb(239, 90, 90)", orange: "rgb(215, 146, 77)", yellow: "rgb(196, 166, 74)", green: "rgb(255, 20, 147)", puregreen: "rgb(77, 175, 135)", blue: "rgb(74, 156, 199)", heoblue: "rgb(97, 106, 209)", matcha: "rgb(102, 179, 77)", darkblue: "rgb(113, 133, 156)", purepurple: "rgb(147, 90, 205)", pink: "rgb(237, 112, 155)" };
   var tc = def(ls("themeColor"), "green");
   if (tc === "purple") tc = "purepurple";
   else if (tc === "gray" || tc === "black") tc = "darkblue";
@@ -53,7 +53,12 @@
   //     （见 source/css/site-inject.css 的 #rightside 块，2026-10-15 第三版），
   //     不再需要单独的 --theme-solid 计算。hover 仍是主题自带的浅橙 #FF7242。
   // 5) 字体
-  var ft = def(ls("font"), "LXGW");
+  var ft = def(ls("font"), "LXGW WenKai Screen");
+  // 10-29：正文默认字体换成霞鹜文楷**屏幕阅读版**（family 名 'LXGW WenKai Screen'）。
+  // 两个历史值都要迁移，否则首帧会先按旧名字排版（要等 settings.js 才纠正）：
+  //   'LXGW'        = 繁体字集单文件，简体独有字缺失，已废弃
+  //   'LXGW WenKai' = 今天上半天过渡用的简体分片版，已被 Screen 取代
+  if (ft === "LXGW" || ft === "LXGW WenKai") ft = "LXGW WenKai Screen";
   if (ft === "default") {
     // 系统默认字体栈：与 source/js/fomal.js 的 setFont 逐字一致。原来只写 -apple-system，
     // 这个关键字在 Windows 上不存在，会让只声明 var(--global-font) 的标题掉到浏览器默认字体。

@@ -557,7 +557,7 @@ const map = new Map();
 map.set('red', "rgb(239, 90, 90)"); // 珊瑚红 #EF5A5A
 map.set('orange', "rgb(215, 146, 77)"); // 暖杏橙 #D7924D
 map.set('yellow', "rgb(196, 166, 74)"); // 蜂蜜金 #C4A64A
-map.set('green', "rgb(57, 197, 187)"); // 青绿 #39C5BB
+map.set('green', "rgb(255, 20, 147)"); // 深粉红色 #FF1493
 map.set('puregreen', "rgb(77, 175, 135)"); // 玉石绿 #4DAF87
 map.set('blue', "rgb(74, 156, 199)"); // 晴空蓝 #4A9CC7
 map.set('heoblue', "rgb(97, 106, 209)"); // 柔靛蓝 #616AD1（2026-10-14：色相 224°→235°，与晴空蓝拉开）
@@ -571,6 +571,18 @@ function normalizeThemePreset(c) {
   if (c === 'gray' || c === 'black') return 'darkblue';
   return c;
 }
+/* 2026-10-27：去掉缓动拖尾，全站只保留一个实心指针（直径见下面 CURSOR_DOT）。
+ * 原来除了把系统指针换成小圆点，还会额外造一个 16px / 25% 透明度的 #cursor，
+ * 靠 0.2s ease 缓动跟在后面，看起来就是"鼠标后面一直有个浅色圆点在追"。
+ * 关掉后不再创建 #cursor / #cursor-position，也不再跑每帧的 hover 命中检测；
+ * 颜色跟随主题色的能力不受影响（那条 * {cursor:url(svg)} 仍在 create() 里更新）。
+ * 想恢复拖尾，把这个常量改成 true 即可。 */
+const CURSOR_TRAIL = false;
+
+/* 指针圆点直径（px）。想改大小只动这一个数：热区取中心，圆点和点击点自动对齐。
+ * 建议范围 8–20，太大容易挡字；10 是现在的值（偶数会渲染得更干净，比如 10 / 12）。 */
+const CURSOR_DOT = 10;
+
 class Cursor {
   constructor() {
     this.enabled = localStorage.getItem('cursorOn') !== '0';
@@ -585,6 +597,7 @@ class Cursor {
   }
 
   move(left, top) {
+    if (!this.layer) return;
     const value = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
     if (this.__transform !== value) {
       this.layer.style.transform = value;
@@ -593,36 +606,53 @@ class Cursor {
   }
 
   create() {
-    if (!this.cursor) {
-      // 位移与 #cursor.hover/active 的 scale 分层：保留原来的 16px 尺寸与 0.2s 缩放。
-      this.layer = document.createElement('div');
-      this.layer.id = 'cursor-position';
-      Object.assign(this.layer.style, { position: 'fixed', left: '0px', top: '0px',
-        width: '16px', height: '16px', pointerEvents: 'none', zIndex: '10086' });
-      this.cursor = document.createElement('div');
-      this.cursor.id = 'cursor';
-      this.cursor.classList.add('hidden');
-      this.cursor.style.left = '0px';
-      this.cursor.style.top = '0px';
-      this.layer.appendChild(this.cursor);
+    if (CURSOR_TRAIL) {
+      if (!this.cursor) {
+        // 位移与 #cursor.hover/active 的 scale 分层：保留原来的 16px 尺寸与 0.2s 缩放。
+        this.layer = document.createElement('div');
+        this.layer.id = 'cursor-position';
+        Object.assign(this.layer.style, { position: 'fixed', left: '0px', top: '0px',
+          width: '16px', height: '16px', pointerEvents: 'none', zIndex: '10086' });
+        this.cursor = document.createElement('div');
+        this.cursor.id = 'cursor';
+        this.cursor.classList.add('hidden');
+        this.cursor.style.left = '0px';
+        this.cursor.style.top = '0px';
+        this.layer.appendChild(this.cursor);
+      }
+      if (!this.layer.isConnected) document.body.appendChild(this.layer);
     }
-    if (!this.layer.isConnected) document.body.appendChild(this.layer);
     if (!this.scr) this.scr = document.createElement('style');
     const display = this.enabled ? '' : 'none';
-    if (this.layer.style.display !== display) this.layer.style.display = display;
+    if (this.layer && this.layer.style.display !== display) this.layer.style.display = display;
     // 原地改样式，不移除；任何时候都不能露出文字区域的系统 I 形光标。
     if (!this.scr.isConnected) document.body.appendChild(this.scr);
     const color = map.get(normalizeThemePreset(localStorage.getItem('themeColor'))) || map.get('green');
     if (this.color !== color) {
-      const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" width="8px" height="8px"><circle cx="4" cy="4" r="4" fill="' + color + '"/></svg>';
-      this.scr.textContent = '* {cursor: url("data:image/svg+xml,' + encodeURIComponent(svg) + '") 4 4, auto}';
+      /* 直径与热区都从 CURSOR_DOT 推导：改一个数，圆点和点击中心一起变，不会偏。
+       * 2026-10-28 修正：原来 half = Math.round(CURSOR_DOT / 2) 同时当圆心和半径用，
+       * 9px 时等于 cx=5 / r=5，圆的实际范围是 0..10，比 viewBox 的 0..9 大一圈，
+       * 右边和下边被裁掉 —— 光标看起来就是个圆角方块（用户反馈「鼠标不是圆的」）。
+       * 现在圆心取正中（DOT/2，允许 .5），半径留 0.5px 抗锯齿余量，圆一定内切在画布里。 */
+      const half = CURSOR_DOT / 2;
+      const r = Math.max(1, half - 0.5);
+      const hot = Math.round(half);
+      const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + CURSOR_DOT + ' ' + CURSOR_DOT +
+        '" width="' + CURSOR_DOT + 'px" height="' + CURSOR_DOT + 'px"><circle cx="' + half + '" cy="' + half +
+        '" r="' + r + '" fill="' + color + '"/></svg>';
+      this.scr.textContent = '* {cursor: url("data:image/svg+xml,' + encodeURIComponent(svg) + '") ' + hot + ' ' + hot + ', auto}';
       this.color = color;
     }
     // 插入/替换 CSS 文本会重新创建 CSSStyleSheet；必须最后设置 disabled。
     this.scr.disabled = !this.enabled;
+    // 给页面 CSS 一个"自定义鼠标开着"的钩子：
+    // 下面那条 * 选择器优先级最低，自带 cursor:pointer 的控件会把它顶掉、露出系统手型。
+    // 页面里（如宏程序页 / 螺纹页）用 html.beauty-cursor-on 判断，开了特效就交还给圆点。
+    document.documentElement.classList.toggle('beauty-cursor-on', this.enabled);
   }
 
   setClass(name, enabled) {
+    if (!this.cursor) return;
     if (this.cursor.classList.contains(name) !== enabled) this.cursor.classList.toggle(name, enabled);
   }
 
@@ -656,7 +686,7 @@ class Cursor {
   }
 
   invalidatePointer(hitTest, clearCache = true) {
-    if (!this.enabled) return;
+    if (!this.enabled || !CURSOR_TRAIL) return;
     // 观察器可能在一帧内多次投递：这里只标脏，统一在 render 重建一次。
     this.__pointerInvalid = this.__pointerInvalid || clearCache;
     this.__hoverDirty = true;
@@ -675,13 +705,13 @@ class Cursor {
     if (attrs === 'class,data-state') return /^(?:good|warn|low)$/.test(node.getAttribute('data-state') || '');
     // 兼容仍可能被缓存的旧版 reading.js：它给状态 span 内联写 color。
     return attrs === 'class,style' &&
-      /^\s*color\s*:\s*(?:#bd0000|red|orange|#9338e6|#08b7e4|#39c5bb)\s*;?\s*$/i.test(node.getAttribute('style'));
+      /^\s*color\s*:\s*(?:#bd0000|red|orange|#9338e6|#08b7e4|#FF1493)\s*;?\s*$/i.test(node.getAttribute('style'));
   }
 
   pointerMutation(record) {
     const target = record.target;
     if (target === this.scr || this.scr.contains(target) ||
-      target === this.layer || this.layer.contains(target)) return 0;
+      (this.layer && (target === this.layer || this.layer.contains(target)))) return 0;
     // 精确排除已知纯装饰数据；不能泛化为忽略所有 class / style / 文本变化。
     if (record.type === 'attributes' && record.attributeName === 'data-msg' &&
       target.nodeType === 1 && target.classList.contains('neko')) return 0;
@@ -795,13 +825,13 @@ class Cursor {
   }
 
   start() {
-    if (!this.enabled || this.__raf !== null || document.hidden || !this.pos.curr || this.cursor.classList.contains('hidden')) return;
+    if (!this.enabled || !this.cursor || this.__raf !== null || document.hidden || !this.pos.curr || this.cursor.classList.contains('hidden')) return;
     this.__raf = requestAnimationFrame(() => { this.__raf = null; this.render(); });
   }
 
   render() {
     const curr = this.pos.curr;
-    if (!this.enabled || !curr || document.hidden) return;
+    if (!this.enabled || !curr || !this.layer || document.hidden) return;
     // 样式读取必须在 transform / class 写入之前完成，且每帧只处理最后一个目标。
     if (this.__hoverDirty) {
       if (this.__hitTest) {

@@ -24,14 +24,12 @@
  *   293  @font-face 字体引入（正文 7 款 + 代码块 4 款）：family 名同时是美化面板按钮 onclick 传的值，改名要三处一起改
  *   421  滚动时顶栏显示的标题 #page-name 居中
  *   487  首页文章卡片 / 页面底色 / 明暗遮罩 / 目录 / 超链接 / 代码框 / 鼠标样式……主题默认样式的第一轮覆盖（本文件最大的一段）
- *   666  Twikoo 评论区（输入框高度 / 表情面板 / 气泡 / 夜间配色）
  *   891  h1~h6 标题前的风车图标：速度 / 颜色 / hover 反向
  *   979  B 站 iframe 16:9 自适应、图片模糊渐显 imgblur、背景滤镜
  *   1139  标题增强、全局宽度、侧栏宽度、平板适配
  *   1297  美化设置面板 .winbox / 背景图墙 .bgbox（与 source/js/modules/settings.js 强耦合）
  *   1427  侧栏个人卡片背景图（浅色 springBg.png / 深色 aurora.webp）
- *   1481  APlayer 播放器美化（圆角 / 浅色底 / 主题色滚动条 / 歌词遮罩）
- *   1679  音乐页：歌单来源 / 简介 / 热评
+ *   1481  APlayer 播放器美化（圆角 / 中性玻璃底 / 主题色进度条 / 歌词遮罩）
  *   1771  设置面板里「背景图片链接」输入框的 placeholder
  *   1811  HEO 加载动画头像
  *   1823  顶栏常驻与导航栏标题
@@ -45,19 +43,17 @@
  *   2892  自定义页脚 #ft（站点统计 / 友链 / 格言 / 广告位占位）
  *   3055  手机侧栏、代码行号、右侧栏宽度、齿轮箭头圆角、作者状态
  *   3174  页脚波浪动画 .main-hero-waves-area
- *   3253  图片圆角与边框、twikoo 聚焦、友链描述、目录、diff
+ *   3253  图片圆角与边框、友链描述、目录、diff
  *   3348  夜间友链字色、信息卡彩带、霓虹灯发光字 keyframes、按钮、分割线、必应壁纸、转圈颜色
  *   3640  侧栏显隐 / 侧栏位置（CSS 变量驱动，配合美化面板）
  *   3669  置顶文章角标 post-sticky-badge（含 prefers-reduced-motion 降级）
  *   3756  侧栏个人信息卡片改版：玻璃拟态 + 马克笔名字（2026-02-16）
  *   3937  美化面板：手机端排布 .opt/.bgp/.colorRow/.picbtn + 恢复默认设置与切换背景按钮主题色化 + 面板打开时 #rightside 让位
  * ----------------------------------------------------------------------------
- * 【媒体查询索引】@media 共 26 条（按出现顺序；括号里是断点与它管的东西）
+ * 【媒体查询索引】@media 共 24 条（按出现顺序；括号里是断点与它管的东西）
  *   259  max-width: 768px              html / #mscrollbar：手机端隐藏系统滚动条，改用自绘条
  *   428  max-width: 768px              center#name-container：顶栏标题居中
  *   659  max-width: 500px              #cursor：小屏鼠标跟随
- *   714  max-width: 768px              Twikoo 表情（Menhera 系列）大小
- *   842  min-width: 1024px             Twikoo 评论卡片宽度与头像
  *   1038  max-width: 900px              .aside-content 侧栏宽度
  *   1098  max-width: 1200px             .site-card 友链卡
  *   1103  max-width: 900px              .site-card 友链卡
@@ -80,10 +76,8 @@
  *   3748  prefers-reduced-motion: reduce（裸语法）关闭置顶角标流光动画
  *   4020  max-width: 768px              美化面板：开关行 / 滤镜参数 / 主题色圈 / 字体按钮（手机端重排）
  * ----------------------------------------------------------------------------
- * 【动画索引】@keyframes 共 19 个（含 -webkit- 前缀版）
+ * 【动画索引】@keyframes 共 17 个（含 -webkit- 前缀版）
  *   466  sub_menus                       主题 _global/function.styl 同名动画的覆盖版：把 translateX(-50%) 写进关键帧，居中不被动画吃掉
- *   870  -webkit-keyframes tk-extras-fadeInTwikoo 评论「设备信息」淡入（.tk-content:hover + .tk-extras）
- *   880  tk-extras-fadeIn                同上（无前缀版）
  *   902  -webkit-keyframes ccc           风车旋转（h1::before ~ h6::before）
  *   912  ccc                             同上（无前缀版）
  *   1003  imgblur                         首页头图 / 背景从模糊到清晰（#page-header, #web_bg）
@@ -101,15 +95,15 @@
  *   3448  light_5px                       霓虹灯发光字（5px 档），同上
  *   3731  post-sticky-shine               置顶角标流光
  * ----------------------------------------------------------------------------
- * 【字体索引】@font-face 共 6 个，全部为开源可商用字体（OFL），源码统一走 cdn.jsdelivr.net 的 @fontsource/*
- *   常规字体 3 款：LXGW（霞鹜文楷，默认）· SourceHanSerif（思源宋体）· LXGWNeoXiHei（霞鹜新晰黑）
+ * 【字体索引】@font-face 共 5 个，全部为开源可商用字体（OFL），源码统一走 cdn.jsdelivr.net 的 @fontsource/*
+ *   常规字体 2 款：SourceHanSerif（思源宋体）· LXGWNeoXiHei（霞鹜新晰黑）
  *   代码字体 3 款：JetBrainsMono · FiraCode · SourceCodePro
+ *   ⚠ 霞鹜文楷（LXGW WenKai）**不在本文件**：10-29 起改用官方分片版（97 个 unicode-range 分片），
+ *     由 _config.fomalhaut.yml 的 inject 段以 <link rel="stylesheet"> 引入，原因见下方「字体引入」一节。 
  *   想换成自己的字体：改本文件末尾「字体引入」一节的 src 即可，family 名保持不变最省事。
  * ----------------------------------------------------------------------------
  * 【已知问题 / 坑】（P3 盘点确认的现状；本次只清理死代码，没有改行为）
  *   1. 同一个选择器被拆散在多处 —— 改之前先 Ctrl+F 全找一遍，找到第一个不算数：
- *        · .el-textarea__inner（@594 背景图 / @3363 圆角）
- *        · [data-theme="dark"] .tk-master .tk-content（@654 边框 / @682 底色文字）
  *        · [data-theme="dark"] #aside-content > .card-widget.card-info（@1282 背景图 / @3739 阴影）
  *        · #card-info-btn（@1319 主题色底 / @3712 玻璃按钮，后者覆盖）
  *        · #card-info-btn:hover（@1324 / @3724）
@@ -154,7 +148,7 @@
   --color-yellow: rgb(194, 205, 90);
   --color-purepurple: rgb(147, 90, 205);
   --color-blue: rgb(102, 204, 255);
-  --color-green: rgb(57, 197, 187);
+  --color-green: rgb(255, 20, 147);
   --color-puregreen: rgb(90, 205, 130);
   --color-pink: rgb(237, 112, 155);
   --color-darkblue: rgb(97, 100, 159);
@@ -282,29 +276,77 @@
 }
 
 /* 字体引入
-   常规（正文）字体 3 款 + 代码块字体 3 款，**全部为开源可商用字体**（SIL OFL 1.1），
+   常规（正文）字体 2 款 + 代码块字体 3 款，**全部为开源可商用字体**（SIL OFL 1.1），
    统一走公共 CDN（jsDelivr 上的 @fontsource/* 包），不依赖任何自建对象存储。
+   （霞鹜文楷原来也在这里，10-29 挪到了 inject 段的官方分片版，见下面那段注释。）
    family 名 = 美化设置面板按钮 onclick 传的值 = localStorage.font / codeFont 的值，
    也是 _config.fomalhaut.yml 里 font-family / code-font-family 引用的名字，改名时这几处要一起改。
    *** 想换成自己的字体：把下面的 src 换成你自己的 woff2 地址即可，family 名保持不变最省事。 *** */
+/* 【10-29 停用】霞鹜文楷的 @font-face 不再写在这里。
+   原来的 src 指向 @fontsource/lxgw-wenkai-tc（**繁体字集**），简体独有字「这/个/说/爱/认/识/过/经…」
+   一个都缺，浏览器逐字回落到微软雅黑 —— 一句话里两种字形混排，就是「有的字有字体、有的没加载」的真凶。
+   现在改用官方分片版 `lxgw-wenkai-webfont`（97 个 unicode-range 分片，family 名是 'LXGW WenKai'），
+   由 _config.fomalhaut.yml 的 inject 段用 <link rel="stylesheet"> 引入，改哪里、为什么，见 docs 第 7.16 节。
+   ⚠ 不要再在这里重新声明 font-family: LXGW —— 那个名字已经没有任何地方引用了，写了也不会被下载。
 @font-face {
   font-family: LXGW;
-  /* 霞鹜文楷（LXGW WenKai）· SIL OFL 1.1 */
-  src: url(https://cdn.jsdelivr.net/npm/@fontsource/lxgw-wenkai-tc@5/files/lxgw-wenkai-tc-chinese-traditional-400-normal.woff2);
+  src: url(/External-link/css/fonts/lxgw-wenkai-tc-chinese-traditional-400-normal.woff2);
   font-display: swap;
 }
+*/
 
 @font-face {
   font-family: SourceHanSerif;
   /* 思源宋体（Noto Serif SC）· SIL OFL 1.1 */
-  src: url(https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-sc@5/files/noto-serif-sc-chinese-simplified-400-normal.woff2);
+  src: url(/External-link/css/fonts/noto-serif-sc-chinese-simplified-400-normal.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: LXGWNeoXiHei;
   /* 霞鹜新晰黑 → 同族思源黑体（Noto Sans SC）替代 · SIL OFL 1.1 */
-  src: url(https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-sc@5/files/noto-sans-sc-chinese-simplified-400-normal.woff2);
+  src: url(/External-link/css/fonts/noto-sans-sc-chinese-simplified-400-normal.woff2);
+  font-display: swap;
+}
+
+/* —— 装饰字体 3 款（美化面板「个性装饰」折叠区）——
+   ⚠ 10-29 这段是恢复回来的：这三款原来指向 https://data-static.netdun.net/Fomalhaut/fonts/…（作者早期对象存储），
+   那个子域名的 DNS 记录已经消失（nslookup 直接 NXDOMAIN），所以点了永远「字体未能加载」。
+   作者现在的对象存储是 Bitiful：https://sourcebucket.s3.bitiful.net/fonts/（他的站点 www.fomal.cc 也 preconnect 到这里），
+   三款原版文件都在，文件名换成了中文：
+     筑紫A丸2.0.woff2   1.52 MB   ← 原 ZhuZiAWan2.woff2
+     汉仪唐美人.woff2    2.12 MB   ← 原 HYTangMeiRen55W.woff2
+     甜甜圈海报.woff2    1.45 MB   ← 原 甜甜圈海报字体.woff2
+   src 是三级链，浏览器按顺序取第一个能加载的：
+     ① local(...)      本机装过原版字体 → 直接用，零流量
+     ② 作者对象存储    原版字形（要的就是它）
+     ③ /fonts/*-substitute.woff2   站内自托管的免费商用近似体（OFL），只在前两级都拿不到时才用
+   为什么 ③ 要留着：a) 上游是别人的存储，哪天再失效不会一断就变系统字体；
+   b) 原版是商业字体（筑紫A丸=Fontworks、汉仪唐美人=汉仪、甜甜圈海报=商用），站内不再分发原文件。
+   family 名保持 ZhuZiAWan / HYTMR / TTQHB —— 它同时是 localStorage.font、面板按钮 id、这里的 family，
+   改名会连带老访客的选择一起失效。
+   ▶ 想彻底离线：把三个原版文件放进 source/fonts/，把 ② 或 ③ 换成 url(/fonts/文件名.woff2)。
+   ▶ 站内正文新增大量生僻字后重裁兜底体：node tools/font-subset.js（说明见文件头）。 */
+@font-face {
+  font-family: ZhuZiAWan;
+  src: local("筑紫A丸ゴシック"), local("筑紫 A 丸ゴシック"),
+       url("/External-link/css/fonts/zhuziawan-2.0.woff2") format("woff2"),
+       url(/fonts/round-substitute.woff2) format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: HYTMR;
+  src: local("汉仪唐美人"), local("HYTangMeiRen 55W"),
+       url("/External-link/css/fonts/hytangmeiren.woff2") format("woff2"),
+       url(/fonts/script-substitute.woff2) format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: TTQHB;
+  src: url("/External-link/css/fonts/ttqhb.woff2") format("woff2"),
+       url(/fonts/poster-substitute.woff2) format("woff2");
   font-display: swap;
 }
 
@@ -315,21 +357,21 @@
 @font-face {
   font-family: JetBrainsMono;
   /* JetBrains Mono · SIL OFL 1.1 */
-  src: url(https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5/files/jetbrains-mono-latin-400-normal.woff2);
+  src: url(/External-link/css/fonts/jetbrains-mono-latin-400-normal.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: FiraCode;
   /* Fira Code · SIL OFL 1.1 */
-  src: url(https://cdn.jsdelivr.net/npm/@fontsource/fira-code@5/files/fira-code-latin-400-normal.woff2);
+  src: url(/External-link/css/fonts/fira-code-latin-400-normal.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: SourceCodePro;
   /* Source Code Pro · SIL OFL 1.1 */
-  src: url(https://cdn.jsdelivr.net/npm/@fontsource/source-code-pro@5/files/source-code-pro-latin-400-normal.woff2);
+  src: url(/External-link/css/fonts/source-code-pro-latin-400-normal.woff2);
   font-display: swap;
 }
 
@@ -616,231 +658,6 @@ div#archive {
 @media screen and (max-width: 500px) {
   #cursor {
     display: none !important;
-  }
-}
-
-/* twikoo评论美化 */
-/* 自定义twikoo评论输入框高度 */
-#twikoo .el-textarea textarea {
-  min-height: 120px !important;
-  background-size: 90px;
-}
-
-/* 自定义表情优化 */
-#twikoo .OwO-body {
-  max-width: 100% !important;
-}
-/* 选择某个框 #twikoo .OwO .OwO-body .OwO-items:nth-child(1) */
-#twikoo .OwO .OwO-body .OwO-items {
-  max-height: 250px !important;
-}
-
-.OwO .OwO-body .OwO-items-image .OwO-item {
-  max-width: calc(9% - 10px);
-  box-sizing: content-box;
-}
-.OwO .OwO-body .OwO-items-image .OwO-item[title|="Heybox"],
-.OwO .OwO-body .OwO-items-image .OwO-item[title|="Tieba"],
-.OwO .OwO-body .OwO-items-show .OwO-item[title*="bilibili"] {
-  max-width: calc(7% - 10px) !important;
-  box-sizing: content-box;
-}
-
-#twikoo .OwO-items li img {
-  width: 100% !important;
-}
-
-.tk-comment .vemoji[alt|="Menhera"],
-.tk-comment .tk-owo-emotion[alt*="Menhera"],
-.tk-comment .vemoji[alt|="Snow"],
-.tk-comment .tk-owo-emotion[alt*="Snow"],
-.tk-comment .vemoji[alt|="Sweetie"],
-.tk-comment .tk-owo-emotion[alt*="Sweetie"],
-.tk-comment .vemoji[alt|="Tsuri"],
-.tk-comment .tk-owo-emotion[alt*="Tsuri"],
-.tk-comment .vemoji[alt|="Yurui"],
-.tk-comment .tk-owo-emotion[alt*="Yurui"] {
-  max-width: 120px !important;
-  max-height: 120px !important;
-  width: 120px;
-  margin: 8px 1px;
-  display: block !important;
-}
-
-/* 手机端适配 */
-@media screen and (max-width: 768px) {
-  .tk-comment .vemoji[alt|="Menhera"],
-  .tk-comment .tk-owo-emotion[alt*="Menhera"],
-  .tk-comment .vemoji[alt|="Snow"],
-  .tk-comment .tk-owo-emotion[alt*="Snow"],
-  .tk-comment .vemoji[alt|="Sweetie"],
-  .tk-comment .tk-owo-emotion[alt*="Sweetie"],
-  .tk-comment .vemoji[alt|="Tsuri"],
-  .tk-comment .tk-owo-emotion[alt*="Tsuri"],
-  .tk-comment .vemoji[alt|="Yurui"],
-  .tk-comment .tk-owo-emotion[alt*="Yurui"] {
-    max-width: calc(100% - 30px) !important;
-    max-height: calc(100% - 30px) !important;
-  }
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Menhera"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Snow"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Sweetie"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Tsuri"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Yurui"] {
-    max-width: calc(33% - 10px);
-    box-sizing: border-box;
-  }
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Heybox"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="bilibili"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Tieba"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="QQ"] {
-    max-width: calc(18% - 10px) !important;
-    box-sizing: content-box;
-  }
-}
-
-/* 右下角闭眼 */
-.el-textarea__inner {
-  background-image: url(/assets/open.webp) !important;
-}
-.el-textarea__inner:focus {
-  background-image: url(/assets/close.webp) !important;
-}
-
-/* 调整楼中楼样式 ，整体左移，贴合气泡化效果 */
-.tk-replies {
-  left: -70px;
-  width: calc(100% + 70px);
-}
-/* 头像宽度调整 rem单位与全局字体大小挂钩，需配合自己情况调整大小以保证头像显示完整*/
-.tk-replies .tk-avatar {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-}
-.tk-replies .tk-avatar img {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-}
-/* 回复框左移，避免窄屏时出框 */
-.tk-comments-container .tk-submit {
-  position: relative;
-  left: -70px;
-}
-/* 评论块气泡化修改 */
-.tk-content {
-  background: #8d6ca3;
-  padding: 10px;
-  color: #fff;
-  border-radius: 10px;
-  font-size: 16px !important;
-  width: fit-content;
-  max-width: 100%;
-  position: relative !important;
-  overflow: visible !important;
-  max-height: none !important;
-}
-/* 修复图片出框 */
-.tk-content img {
-  max-width: 100% !important;
-}
-/* 修复过长文本出框 */
-.tk-content pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-.tk-content a {
-  color: #eeecaa; /*默认模式超链接配色*/
-}
-
-.tk-master .tk-content {
-  background: #29b19e;
-  color: #fff; /*默认模式博主气泡字体配色*/
-  width: fit-content;
-  max-width: 100%;
-  border: 0.5px solid #c3c3c3;
-}
-
-[data-theme="dark"] .tk-master .tk-content {
-  border: 0.5px solid #535353;
-}
-
-.tk-master .tk-content a {
-  color: #eeecaa;
-}
-
-.tk-row[data-v-d82ce9a0] {
-  max-width: 100%;
-  width: fit-content;
-}
-.tk-avatar {
-  border-radius: 50%;
-  margin-top: 10px;
-}
-
-/* 夜间模式配色，具体比照上方默认模式class */
-[data-theme="dark"] .tk-content {
-  background: #3a2c44;
-  color: #fff;
-}
-[data-theme="dark"] .tk-content a {
-  color: #dfa036;
-}
-[data-theme="dark"] .tk-content::before {
-  border-right: 15px solid #000;
-}
-[data-theme="dark"] .tk-master .tk-content {
-  background: #26453a;
-  color: #fff;
-}
-[data-theme="dark"] .tk-master .tk-content a {
-  color: #dfa036;
-}
-/* 自适应内容 */
-@media screen and (min-width: 1024px) {
-  /* 设置宽度上限，避免挤压博主头像 */
-  .tk-content {
-    max-width: 75%;
-    width: fit-content;
-  }
-
-  .tk-master .tk-avatar {
-    position: relative;
-    /* left: calc(75% + 70px); */
-  }
-  .tk-master .tk-row[data-v-d82ce9a0] {
-    position: relative;
-    top: 0px;
-    left: calc(75% - 230px);
-  }
-}
-/* 设备名称常态隐藏，悬停评论时显示 */
-.tk-extras {
-  opacity: 0;
-}
-.tk-content:hover + .tk-extras {
-  -webkit-animation: tk-extras-fadeIn 0.5s linear;
-  animation: tk-extras-fadeIn 0.5s linear;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-}
-/* [P3 清理] 此处原有 @-moz-keyframes tk-extras-fadeIn（12 行）：Firefox 16+ / Opera 15+ 起已支持无前缀 @keyframes，删掉前缀版，无前缀版就在附近 */
-@-webkit-keyframes tk-extras-fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-    filter: none;
-  }
-}
-/* [P3 清理] 此处原有 @-o-keyframes tk-extras-fadeIn（12 行）：Firefox 16+ / Opera 15+ 起已支持无前缀 @keyframes，删掉前缀版，无前缀版就在附近 */
-@keyframes tk-extras-fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-    filter: none;
   }
 }
 
@@ -1190,67 +1007,6 @@ button#go-up:hover #percent {
   }
 }
 
-/* 评论区输入提示 */
-/* 设置文字内容 :nth-child(1)的作用是选择第几个 */
-.el-input.el-input--small.el-input-group.el-input-group--prepend:nth-child(
-    1
-  ):before {
-  content: "输入QQ号会自动获取昵称和头像🐧";
-}
-
-.el-input.el-input--small.el-input-group.el-input-group--prepend:nth-child(
-    2
-  ):before {
-  content: "收到回复将会发送到您的邮箱📧";
-}
-
-.el-input.el-input--small.el-input-group.el-input-group--prepend:nth-child(
-    3
-  ):before {
-  content: "可以通过昵称访问您的网站🔗";
-}
-
-/* 当用户点击输入框时显示 */
-.el-input.el-input--small.el-input-group.el-input-group--prepend:focus-within::before,
-.el-input.el-input--small.el-input-group.el-input-group--prepend:focus-within::after {
-  display: block;
-}
-
-/* 主内容区 */
-.el-input.el-input--small.el-input-group.el-input-group--prepend::before {
-  /* 先隐藏起来 */
-  display: none;
-  /* 绝对定位 */
-  position: absolute;
-  /* 向上移动60像素 */
-  top: -60px;
-  /* 文字强制不换行，防止left:50%导致的文字换行 */
-  white-space: nowrap;
-  /* 圆角 */
-  border-radius: 10px;
-  /* 距离左边50% */
-  left: 50%;
-  /* 然后再向左边挪动自身的一半，即可实现居中 */
-  transform: translate(-50%);
-  /* 填充 */
-  padding: 14px 18px;
-  background: #444;
-  color: #fff;
-}
-
-/* 小角标 */
-.el-input.el-input--small.el-input-group.el-input-group--prepend::after {
-  display: none;
-  content: "";
-  position: absolute;
-  /* 内容大小（宽高）为0且边框大小不为0的情况下，每一条边（4个边）都是一个三角形，组成一个正方形。
-    我们先将所有边框透明，再给其中的一条边添加颜色就可以实现小三角图标 */
-  border: 12px solid transparent;
-  border-top-color: #444;
-  left: 50%;
-  transform: translate(-50%, -48px);
-}
-
 /* 美化模块 */
 .winbox {
   border-radius: 12px;
@@ -1383,13 +1139,13 @@ button#go-up:hover #percent {
 
 /* 个人信息卡片背景图 */
 [data-theme="light"] #aside-content > .card-widget.card-info {
-  background-image: url(https://picsum.photos/id/1043/1920/1080);
+  background-image: url(/External-link/img/bg/picsum-1043.jpg);
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
 }
 [data-theme="dark"] #aside-content > .card-widget.card-info {
-  background-image: url(https://picsum.photos/id/1036/1920/1080);
+  background-image: url(/External-link/img/bg/picsum-1036.jpg);
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
@@ -1414,13 +1170,13 @@ button#go-up:hover #percent {
 }
 @keyframes huxi_dark {
   0% {
-    box-shadow: 0px 0px 1px 1px #39c5bb;
+    box-shadow: 0px 0px 1px 1px #FF1493;
   }
   50% {
-    box-shadow: 0px 0px 5px 5px #39c5bb;
+    box-shadow: 0px 0px 5px 5px #FF1493;
   }
   100% {
-    box-shadow: 0px 0px 1px 1px #39c5bb;
+    box-shadow: 0px 0px 1px 1px #FF1493;
   }
 }
 
@@ -1435,16 +1191,19 @@ button#go-up:hover #percent {
   transition: all 0.2s ease-in-out;
 }
 
-/* ===== APlayer 美化：圆角 / 主题浅色底 / 主题色滚动条 / 收窄（八音盒音乐空间） ===== */
+/* ===== APlayer 美化：圆角 / 中性玻璃底 / 主题色滚动条 / 收窄（八音盒音乐空间） =====
+   2026-10-30：底色从「主题色 7% 掺白」换成 --glass-bg（与正文卡片同一块玻璃）。
+   旧写法在粉主题下就是一整块淡粉，和作者 10-28 定的「主题色不上面」正面冲突；
+   主题色现在只留在进度条 / 滑块 / 播放按钮 / 当前行竖条 / 滚动条这些「实底或短线」上。 */
 #article-container .aplayer {
-  --aplayer-bg: color-mix(in srgb, var(--theme-color) 7%, #fff);
+  --aplayer-bg: var(--glass-bg);
   font-family: var(--global-font) !important;
   max-width: 720px;
   margin: 0 auto 26px !important;
   border-radius: 16px;
   background: var(--aplayer-bg);
-  border: 1px solid color-mix(in srgb, var(--theme-color) 18%, transparent);
-  box-shadow: 0 8px 24px -14px color-mix(in srgb, var(--theme-color) 70%, transparent);
+  border: var(--glass-bd);
+  box-shadow: var(--glass-shadow);
 }
 /* 封面与播放按钮 */
 #article-container .aplayer .aplayer-pic {
@@ -1453,29 +1212,30 @@ button#go-up:hover #percent {
   box-shadow: 0 2px 10px -3px color-mix(in srgb, var(--theme-color) 65%, transparent);
 }
 #article-container .aplayer .aplayer-pic .aplayer-button {
-  background: color-mix(in srgb, var(--theme-color) 88%, #fff);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--theme-color) 50%, transparent);
+  background: var(--theme-color);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--theme-color) 45%, transparent);
 }
 #article-container .aplayer .aplayer-pic .aplayer-button path {
-  fill: #fff;
+  fill: var(--on-theme, #fff);
 }
 /* 标题与作者 */
 #article-container .aplayer .aplayer-info .aplayer-music .aplayer-title {
   font-weight: 600;
+  color: var(--glass-ink);
 }
 #article-container .aplayer .aplayer-info .aplayer-music .aplayer-author {
-  color: color-mix(in srgb, var(--theme-color) 55%, #666);
+  color: var(--glass-dim);
 }
 /* 进度条与滑块 */
 #article-container .aplayer .aplayer-bar {
   height: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--theme-color) 18%, #fff);
+  background: var(--glass-veil);
 }
 #article-container .aplayer .aplayer-loaded {
   height: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--theme-color) 35%, #fff);
+  background: color-mix(in srgb, var(--glass-ink) 22%, transparent);
 }
 #article-container .aplayer .aplayer-played {
   height: 4px !important;
@@ -1490,12 +1250,12 @@ button#go-up:hover #percent {
   border: 2px solid #fff;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--theme-color) 45%, transparent);
 }
-/* 时间与图标 */
+/* 时间与图标：文字走正文色系，图标悬停才上主题色（明度差异比色相更耐看） */
 #article-container .aplayer .aplayer-time {
-  color: color-mix(in srgb, var(--theme-color) 50%, #888);
+  color: var(--glass-dim);
 }
 #article-container .aplayer .aplayer-time .aplayer-icon path {
-  fill: color-mix(in srgb, var(--theme-color) 65%, #666);
+  fill: var(--glass-dim);
 }
 #article-container .aplayer .aplayer-time .aplayer-icon:hover path {
   fill: var(--theme-color);
@@ -1503,7 +1263,7 @@ button#go-up:hover #percent {
 /* 音量条 */
 #article-container .aplayer .aplayer-volume-bar {
   border-radius: 999px;
-  background: color-mix(in srgb, var(--theme-color) 18%, #fff);
+  background: var(--glass-veil);
 }
 #article-container .aplayer .aplayer-volume {
   border-radius: 999px;
@@ -1511,7 +1271,7 @@ button#go-up:hover #percent {
 }
 /* 顶部与列表之间的分隔线 */
 #article-container .aplayer.aplayer-withlist .aplayer-info {
-  border-bottom: 1px solid color-mix(in srgb, var(--theme-color) 15%, transparent);
+  border-bottom: 1px solid var(--glass-veil);
 }
 /* 歌词遮罩：APlayer 默认用白色渐变（:before/:after），底色不再是白色后会露出两条白条，改成同底色 */
 #article-container .aplayer .aplayer-lrc:before {
@@ -1521,9 +1281,9 @@ button#go-up:hover #percent {
   background: linear-gradient(180deg, transparent 0, var(--aplayer-bg));
 }
 #article-container .aplayer .aplayer-lrc p {
-  color: color-mix(in srgb, var(--theme-color) 35%, #777);
+  color: var(--glass-dim);
 }
-/* 播放列表：圆角药丸行 + 很浅的主题色 */
+/* 播放列表：圆角药丸行，当前行只加中性底色 + 一根主题色竖条 */
 #article-container .aplayer .aplayer-list {
   padding: 4px 8px 8px;
 }
@@ -1538,15 +1298,16 @@ button#go-up:hover #percent {
   padding: 0 12px;
   border-top: none;
   border-radius: 10px;
-  color: #4a4a4a;
+  color: var(--glass-ink);
   transition: all 0.2s ease;
 }
+/* hover / 当前行都用中性底色：底色一旦掺主题色，粉主题就是满屏粉条（作者 10-28 明确否过） */
 #article-container .aplayer .aplayer-list ol li:hover {
-  background: color-mix(in srgb, var(--theme-color) 12%, #fff);
+  background: var(--glass-veil);
 }
 #article-container .aplayer .aplayer-list ol li.aplayer-list-light {
-  background: color-mix(in srgb, var(--theme-color) 18%, #fff);
-  color: color-mix(in srgb, var(--theme-color) 45%, #24413f);
+  background: color-mix(in srgb, var(--glass-ink) 9%, transparent);
+  color: var(--glass-ink);
   font-weight: 600;
 }
 #article-container .aplayer .aplayer-list ol li .aplayer-list-cur {
@@ -1556,10 +1317,10 @@ button#go-up:hover #percent {
   border-radius: 999px;
 }
 #article-container .aplayer .aplayer-list ol li .aplayer-list-index {
-  color: color-mix(in srgb, var(--theme-color) 40%, #999);
+  color: var(--glass-dim);
 }
 #article-container .aplayer .aplayer-list ol li .aplayer-list-author {
-  color: #999;
+  color: var(--glass-dim);
 }
 /* 播放列表滚动条：主题色系 */
 #article-container .aplayer .aplayer-list::-webkit-scrollbar,
@@ -1592,138 +1353,7 @@ button#go-up:hover #percent {
     scrollbar-color: color-mix(in srgb, var(--theme-color) 55%, #fff) color-mix(in srgb, var(--theme-color) 10%, transparent);
   }
 }
-/* 夜间模式 */
-[data-theme="dark"] #article-container .aplayer {
-  --aplayer-bg: color-mix(in srgb, var(--theme-color) 14%, #1c1c1c);
-  filter: none;
-  color: #e6e6e6;
-  background: var(--aplayer-bg);
-  border-color: color-mix(in srgb, var(--theme-color) 28%, transparent);
-  box-shadow: 0 8px 24px -16px #000;
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-info .aplayer-music .aplayer-author {
-  color: color-mix(in srgb, var(--theme-color) 40%, #bbb);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-bar {
-  background: color-mix(in srgb, var(--theme-color) 25%, #242424);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-loaded {
-  background: color-mix(in srgb, var(--theme-color) 45%, #242424);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-lrc p {
-  color: color-mix(in srgb, var(--theme-color) 30%, #9a9a9a);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-time {
-  color: color-mix(in srgb, var(--theme-color) 45%, #aaa);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-time .aplayer-icon path {
-  fill: color-mix(in srgb, var(--theme-color) 55%, #ccc);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-list ol li {
-  color: #cfcfcf;
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-list ol li:hover {
-  background: color-mix(in srgb, var(--theme-color) 22%, #1c1c1c);
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-list ol li.aplayer-list-light {
-  background: color-mix(in srgb, var(--theme-color) 30%, #1c1c1c);
-  color: #fff;
-}
-[data-theme="dark"] #article-container .aplayer .aplayer-list ol li .aplayer-list-author {
-  color: #9a9a9a;
-}
 
-/* ===== 音乐页：歌单来源 / 简介 / 热评 ===== */
-#article-container .music-note {
-  max-width: 720px;
-  margin: -8px auto 26px;
-  padding: 14px 18px 16px;
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--theme-color) 6%, #fff);
-  border: 1px solid color-mix(in srgb, var(--theme-color) 16%, transparent);
-  font-size: 14px;
-  line-height: 1.9;
-  color: #4a4a4a;
-}
-#article-container .music-note-head {
-  font-size: 13px;
-  line-height: 1.8;
-  color: color-mix(in srgb, var(--theme-color) 50%, #777);
-}
-#article-container .music-note-tag {
-  display: inline-block;
-  margin-right: 8px;
-  padding: 0 9px;
-  border-radius: 999px;
-  font-size: 12px;
-  line-height: 20px;
-  color: #fff;
-  background: var(--theme-color);
-}
-#article-container .music-note-id {
-  display: inline-block;
-  margin-left: 4px;
-  padding: 0 9px;
-  border-radius: 999px;
-  font-size: 12px;
-  line-height: 20px;
-  color: var(--theme-color);
-  background: color-mix(in srgb, var(--theme-color) 12%, transparent);
-  text-decoration: none;
-  transition: background .2s;
-}
-#article-container .music-note-id:hover {
-  color: var(--theme-color);
-  background: color-mix(in srgb, var(--theme-color) 24%, transparent);
-}
-#article-container .music-note-desc {
-  margin: 10px 0 12px;
-}
-#article-container .music-note-quote {
-  margin: 0;
-  padding: 10px 14px;
-  border-radius: 0 12px 12px 0;
-  background: color-mix(in srgb, var(--theme-color) 8%, transparent);
-  font-size: 13.5px;
-  line-height: 1.85;
-  color: #555;
-}
-#article-container .music-note-quote cite {
-  display: block;
-  margin-top: 8px;
-  font-size: 12px;
-  font-style: normal;
-  color: color-mix(in srgb, var(--theme-color) 45%, #999);
-}
-#article-container .music-note-sub {
-  margin: 0 0 10px;
-  font-size: 12px;
-  letter-spacing: .5px;
-  color: color-mix(in srgb, var(--theme-color) 60%, #8a8a8a);
-}
-#article-container .music-note-quotes {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-[data-theme="dark"] #article-container .music-note-sub {
-  color: color-mix(in srgb, var(--theme-color) 45%, #999);
-}
-[data-theme="dark"] #article-container .music-note {
-  background: color-mix(in srgb, var(--theme-color) 12%, #1c1c1c);
-  border-color: color-mix(in srgb, var(--theme-color) 22%, transparent);
-  color: #cfcfcf;
-}
-[data-theme="dark"] #article-container .music-note-head {
-  color: color-mix(in srgb, var(--theme-color) 40%, #aaa);
-}
-[data-theme="dark"] #article-container .music-note-quote {
-  background: color-mix(in srgb, var(--theme-color) 14%, #1c1c1c);
-  color: #c8c8c8;
-}
-[data-theme="dark"] #article-container .music-note-quote cite {
-  color: color-mix(in srgb, var(--theme-color) 35%, #999);
-}
 
 /* 背景图片链接输入框placeholder*/
 input#pic-link::-webkit-input-placeholder {
@@ -1977,8 +1607,7 @@ input[name="colors"] {
 }
 a.article-meta__tags:hover,
 a.article-meta__categories:hover,
-a.blog-slider__title:hover,
-.tk-footer a:hover {
+a.blog-slider__title:hover {
   color: var(--theme-color) !important;
 }
 
@@ -2646,7 +2275,7 @@ li.categoryBar-list-item {
   display: none;
   width: 100px;
   height: 100px;
-  background-image: url("https://bu.dusays.com/2022/07/20/62d812d95e6f5.png");
+  background-image: url("/External-link/img/painting/62d812d95e6f5.png");
   background-size: contain;
   z-index: 9999;
   position: absolute;
@@ -3189,12 +2818,6 @@ i.fas.fa-cog.right_side {
   border: 0.5px solid #80808030;
 }
 
-/* twikoo评论框聚焦边框颜色 */
-#twikoo .el-textarea textarea:focus,
-.twikoo .el-input__inner:focus {
-  border-color: var(--theme-color) !important;
-}
-
 /* 友链描述 */
 .flink-desc {
   font-size: 1.1em;
@@ -3238,7 +2861,7 @@ figure.highlight pre .deletion {
   padding: 1rem;
   position: relative;
   border-radius: 12px;
-  background-image: url(https://tuchuang.voooe.cn/images/2023/01/02/tunian.webp);
+  background-image: url(/External-link/img/festival/newyear.webp);
   background-size: cover;
   background-position: center;
 }
@@ -3299,7 +2922,7 @@ figure.highlight pre .deletion {
 
 /* 信息卡片彩带 */
 /* .author_top:hover {
-  background: url(https://tuchuang.voooe.cn/images/2023/01/02/snow.gif);
+  background: url(/External-link/img/festival/snow.gif);
   background-size: cover;
 } */
 
@@ -3337,7 +2960,7 @@ figure.highlight pre .deletion {
     text-shadow: #ed709b 0 0 15px;
   }
   87.5% {
-    text-shadow: #39c5bb 0 0 15px;
+    text-shadow: #FF1493 0 0 15px;
   }
   100% {
     text-shadow: #5636ed 0 0 15px;
@@ -3370,7 +2993,7 @@ figure.highlight pre .deletion {
     text-shadow: #ed709b 0 0 10px;
   }
   87.5% {
-    text-shadow: #39c5bb 0 0 10px;
+    text-shadow: #FF1493 0 0 10px;
   }
   100% {
     text-shadow: #5636ed 0 0 10px;
@@ -3403,7 +3026,7 @@ figure.highlight pre .deletion {
     text-shadow: #ed709b 0 0 5px;
   }
   87.5% {
-    text-shadow: #39c5bb 0 0 5px;
+    text-shadow: #FF1493 0 0 5px;
   }
   100% {
     text-shadow: #5636ed 0 0 5px;
@@ -3416,36 +3039,6 @@ figure.highlight pre .deletion {
 }
 [data-theme="dark"] .menu_word {
   text-shadow: var(--menu-shadow);
-}
-
-/* 评论按钮 */
-.el-button--primary {
-  background-color: var(--theme-color) !important;
-  border-color: transparent !important;
-}
-.el-button--primary.is-disabled,
-.el-button--primary.is-disabled:active,
-.el-button--primary.is-disabled:focus,
-.el-button--primary.is-disabled:hover {
-  background-color: var(--high-trans-color) !important;
-}
-
-.twikoo .el-button:not(.el-button--primary):not(.el-button--text):active,
-.twikoo .el-button:not(.el-button--primary):not(.el-button--text):focus,
-.twikoo .el-button:not(.el-button--primary):not(.el-button--text):hover {
-  color: var(--theme-color) !important;
-  background-color: rgba(64, 158, 255, 0.063);
-  border-color: var(--high-trans-color) !important;
-}
-
-.tk-icon.__comments,
-.tk-action-icon,
-.tk-action-count,
-.tk-nick-link:hover {
-  color: var(--theme-color) !important;
-}
-.el-textarea__inner {
-  border-radius: 8px !important;
 }
 
 /* 分割线 */
@@ -3517,26 +3110,6 @@ hr:before {
 #unsplashBox::before {
   left: 15px;
   content: "Unsplash随机壁纸";
-}
-
-/* 评论区圆角 */
-.tk-meta-input .el-input .el-input-group__prepend {
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
-}
-.el-input-group--prepend .el-input__inner {
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-/* Twikoo底部小字样式 */
-.tk-footer {
-  font-size: 0.9em;
-}
-
-.tk-footer a {
-  font-weight: bold;
-  color: #a591e0;
 }
 
 /* Github徽标 */
@@ -3852,7 +3425,7 @@ hr:before {
   height: .74em;
   background: rgba(9, 29, 37, .72);
   border: 1px solid rgba(127, 227, 218, .45);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, .45), inset 0 0 18px rgba(57, 197, 187, .18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .45), inset 0 0 18px rgba(255, 20, 147, .18);
 }
 [data-theme="dark"] #aside-content > .card-widget.card-info .author-info__description {
   color: rgba(242, 251, 251, .82);

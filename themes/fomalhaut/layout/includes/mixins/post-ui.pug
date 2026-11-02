@@ -98,10 +98,6 @@
 //-                   a(href=url_for(link) + '#post-comment')
 //-                     span.waline-comment-count(id=url_for(link))
 //-                       i.fa-solid.fa-spinner.fa-spin
-//-               when 'Twikoo'
-//-                 +countBlockInIndex
-//-                   a.twikoo-count(href=url_for(link) + '#post-comment')
-//-                     i.fa-solid.fa-spinner.fa-spin
 //-               when 'Facebook Comments'
 //-                 +countBlockInIndex
 //-                   a(href=url_for(link) + '#post-comment')
@@ -253,10 +249,6 @@ mixin postUI(posts)
                       a(href=url_for(link) + '#post-comment')
                         span.waline-comment-count(id=url_for(link))
                           i.fa-solid.fa-spinner.fa-spin
-                  when 'Twikoo'
-                    +countBlockInIndex
-                      a.twikoo-count(href=url_for(link) + '#post-comment')
-                        i.fa-solid.fa-spinner.fa-spin
                   when 'Facebook Comments'
                     +countBlockInIndex
                       a(href=url_for(link) + '#post-comment')

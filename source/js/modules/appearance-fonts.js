@@ -1,7 +1,13 @@
 /* 字体选择器：与 settings.js 的同步 setter 分离；只加载当前选择的字体。 */
+/* 默认正文 = 霞鹜文楷**屏幕阅读版**（'LXGW WenKai Screen'，GB 简体字集分片版）。
+   'LXGWScreen' 已删：全站没有任何 @font-face 声明它，点「恢复字体默认」会把 --global-font
+   写成一个不存在的名字 → 整站掉回系统字体（这也是「全站字体不一」的来源之一）。
+   10-29 补记：装饰三款（筑紫A丸 / 汉仪唐美人 / 甜甜圈海报）原本指向 data-static.netdun.net，
+   那个域名已经失效（DNS 都解析不到），所以它们一直是「点了没反应」。现在改为站内自托管
+   source/fonts/*-substitute.woff2（Google Fonts 开源字体裁子集，family 名沿用原来的），
+   见 themes/fomalhaut/source/css/_custom/custom.css 的 @font-face 段。 */
 var APPEARANCE_TEXT_FONTS = [
-  ['LXGWScreen', '霞鹜文楷Screen', '屏幕阅读 · 默认', 'reading'],
-  ['LXGW', '霞鹜文楷', '温润文楷 · 长文', 'reading'],
+  ['LXGW WenKai Screen', '霞鹜文楷Screen', '屏幕阅读 · 默认', 'reading'],
   ['LXGWNeoXiHei', '霞鹜新晰黑', '清晰黑体 · 技术文章', 'reading'],
   ['SourceHanSerif', '思源宋体', '书卷气 · 随笔', 'reading'],
   ['default', '系统默认', '无需下载 · 跟随设备', 'reading'],
@@ -9,11 +15,19 @@ var APPEARANCE_TEXT_FONTS = [
   ['HYTMR', '汉仪唐美人', '个性书写 · 标题', 'decorative'],
   ['TTQHB', '甜甜圈海报', '装饰字体 · 标题', 'decorative']
 ];
+/* 代码字体（10-29 与 settings.js 的 CODE_FONT_LIST 对齐）。
+   原来这里是 Monaco_1/Consolas_1/MapleMono_1/Hack_1 四个**系统**字体，而 settings.js 的白名单却是
+   JetBrainsMono/FiraCode/SourceCodePro 三个**webfont** —— 两份名单没有任何交集，后果是：
+   面板永远显示「当前 · 默认字体」、没有一项高亮；在面板里选什么都存不进去（重载就被白名单改回 JetBrainsMono）。
+   现在两份名单合在一起，默认仍是 JetBrains Mono（webfont，任何机器都一定有）。 */
 var APPEARANCE_CODE_FONTS = [
-  ['Monaco_1', 'Monaco', '经典等宽 · 默认'],
-  ['Consolas_1', 'Consolas', '清晰紧凑 · 等宽'],
-  ['MapleMono_1', 'Maple Mono', '柔和圆润 · 等宽'],
-  ['Hack_1', 'Hack', '辨识度优先 · 等宽']
+  ['JetBrainsMono', 'JetBrains Mono', '等宽 · 默认'],
+  ['FiraCode', 'Fira Code', '等宽 · 连字'],
+  ['SourceCodePro', 'Source Code Pro', '等宽 · 紧凑'],
+  ['Consolas_1', 'Consolas', '系统 · 清晰'],
+  ['Monaco_1', 'Monaco', '系统 · 经典'],
+  ['MapleMono_1', 'Maple Mono', '系统 · 圆润'],
+  ['Hack_1', 'Hack', '系统 · 辨识度']
 ];
 var appearanceFontStates = { text: { seq: 0, cancel: null }, code: { seq: 0, cancel: null } };
 var APPEARANCE_FONT_TIMEOUT = 12000;
@@ -96,11 +110,11 @@ function chooseAppearanceFont(key, kind) {
 }
 function resetAppearanceFonts() {
   cancelAppearanceFonts();
-  setFont('LXGWScreen');
-  setCodeFont('Monaco_1');
+  setFont('LXGW WenKai Screen');   // 10-29：原来写 'LXGWScreen'（不存在），一点就整站掉回系统字体
+  setCodeFont('JetBrainsMono');    // 10-29：原来恢复成 'Monaco_1'，Windows 上没装 Monaco 就等于把代码字体清空
   initAppearanceFonts();
   appearanceFontStatus('text', '已恢复霞鹜文楷Screen，仅重置字体。');
-  appearanceFontStatus('code', '已恢复Monaco，不影响背景、主题色及其他偏好。');
+  appearanceFontStatus('code', '已恢复 JetBrains Mono，不影响背景、主题色及其他偏好。');
 }
 function appearanceFontOptions(items, kind) {
   return items.map(function(f) {
@@ -112,7 +126,10 @@ function appearanceFontMarkup() {
   return '<section class="ap-panel ap-font-panel" aria-label="字体选择">' +
     '<div class="ap-section-head"><div><p class="ap-eyebrow">阅读的声音</p><p class="ap-hint">先看同一段文字，再选喜欢的字体；预览区随当前选择更新。</p></div><button type="button" class="ap-btn" onclick="resetAppearanceFonts()">恢复字体默认</button></div>' +
     '<h3 class="ap-subtitle">阅读优先</h3><div id="swfs" class="ap-font-grid">' + appearanceFontOptions(APPEARANCE_TEXT_FONTS.filter(function(f) { return f[3] === 'reading'; }), 'text') + '</div>' +
-    '<details class="ap-details"><summary>个性装饰 · 更适合标题与短句</summary><div class="ap-font-grid">' + appearanceFontOptions(APPEARANCE_TEXT_FONTS.filter(function(f) { return f[3] === 'decorative'; }), 'text') + '</div></details>' +
+    // 装饰字体：只有列表里真有 decorative 项才渲染这块折叠区（10-29 曾清空过一次，现在三项已接站内字体文件，故恢复）
+    (APPEARANCE_TEXT_FONTS.some(function(f) { return f[3] === 'decorative'; })
+      ? '<details class="ap-details"><summary>个性装饰 · 更适合标题与短句</summary><div class="ap-font-grid">' + appearanceFontOptions(APPEARANCE_TEXT_FONTS.filter(function(f) { return f[3] === 'decorative'; }), 'text') + '</div></details>'
+      : '') +
     '<div class="ap-preview"><p id="ap-text-current" class="ap-current"></p><p id="ap-text-preview" class="ap-text-sample">清风翻书，阅读让世界更清晰。<br>每一次停顿，都让文字有了呼吸。<br>Abc · 0123456789</p></div><p id="ap-text-status" class="ap-status" role="status" aria-live="polite"></p>' +
     '<h3 class="ap-subtitle">代码字体</h3><div id="swfs_code" class="ap-font-grid ap-code-grid">' + appearanceFontOptions(APPEARANCE_CODE_FONTS, 'code') + '</div>' +
     '<div class="ap-preview"><p id="ap-code-current" class="ap-current"></p><pre id="ap-code-preview" class="ap-code-sample">const greeting = "Hello, 世界";\n// 字形对比：0O · 1lI · {} [] ()\nconst values = [0, 1, 10];\nvalues.map(value =&gt; value + 1);</pre></div><p id="ap-code-status" class="ap-status" role="status" aria-live="polite"></p>' +

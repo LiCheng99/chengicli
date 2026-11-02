@@ -24,6 +24,9 @@ const PAIRS = [
   ['vercel.json', 'vercel.json'],
   ['functions/api/chat/completions.js', 'functions/api/chat/completions.js']
 ];
+// 注：api/music.js 已不再作为 Vercel/Cloudflare 函数部署（站点改用自己的云服务器）。
+// 它由通用站点服务器 tools/mpserve.cjs 直接从源码 api/music.js 加载，不再拷进 public/，
+// 避免 public/ 里留一份可被静态访问的源码。
 
 hexo.extend.filter.register('after_generate', function () {
   const base = hexo.base_dir || process.cwd();

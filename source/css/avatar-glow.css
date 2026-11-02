@@ -8,8 +8,8 @@
  *     [data-theme="light"] .avatar-img { animation: huxi_light 4s ease-in-out infinite }
  *     [data-theme="dark"]  .avatar-img { animation: huxi_dark  4s ease-in-out infinite }
  *     @keyframes huxi_light { 0%/100% { box-shadow: 0 0 1px 1px #9ff2d2 } 50% { box-shadow: 0 0 5px 5px #9ff2d2 } }
- *     @keyframes huxi_dark  { 结构同上，颜色 #39c5bb }
- *   两个颜色都是硬编码的：默认主题色恰好也是 #39c5bb，所以深色看着还行；一旦在右下角
+ *     @keyframes huxi_dark  { 结构同上，颜色 #FF1493 }
+ *   两个颜色都是硬编码的：默认主题色恰好也是 #FF1493，所以深色看着还行；一旦在右下角
  *   美化面板换成别的主题色，呼吸灯还是原来的绿/薄荷，跟主题对不上。
  *
  * 为什么是「新增文件」而不是改主题
@@ -22,7 +22,7 @@
  *     （压在白卡片上才看得见），深色直接用原色。
  *   · @keyframes 里每个 var() 都带兜底值 —— 不支持 color-mix() 的老浏览器会让自定义
  *     属性变成 guaranteed-invalid，var() 自动回落，整套 box-shadow 不会因此失效，
- *     观感退回原来的 #9ff2d2 / #39c5bb。
+ *     观感退回原来的 #9ff2d2 / #FF1493。
  *   · 峰值从原来一层紧贴光晕，扩成「紧贴环 + 外围柔光」两层：110px 的电脑端作者卡
  *     和 96px 的手机抽屉头像都更像"呼吸灯"，而不是一圈描边。
  *   · 时长/缓动维持主题的 4s ease-in-out infinite，节奏不变。
@@ -43,16 +43,16 @@
 
 :root {
   --ag-ring: #9ff2d2;
-  --ag-ring: color-mix(in srgb, var(--theme-color, #39c5bb) 58%, #ffffff);
-  --ag-halo: rgba(57, 197, 187, 0.3);
-  --ag-halo: color-mix(in srgb, var(--theme-color, #39c5bb) 30%, transparent);
+  --ag-ring: color-mix(in srgb, var(--theme-color, #FF1493) 58%, #ffffff);
+  --ag-halo: rgba(255, 20, 147, 0.3);
+  --ag-halo: color-mix(in srgb, var(--theme-color, #FF1493) 30%, transparent);
 }
 
 [data-theme="dark"] {
-  --ag-ring: #39c5bb;
-  --ag-ring: var(--theme-color, #39c5bb);
-  --ag-halo: rgba(57, 197, 187, 0.42);
-  --ag-halo: color-mix(in srgb, var(--theme-color, #39c5bb) 42%, transparent);
+  --ag-ring: #FF1493;
+  --ag-ring: var(--theme-color, #FF1493);
+  --ag-halo: rgba(255, 20, 147, 0.42);
+  --ag-halo: color-mix(in srgb, var(--theme-color, #FF1493) 42%, transparent);
 }
 
 /* 同名 @keyframes 后声明者胜 → 这两条盖掉 custom.css:1449-1469 的写死版本 */
@@ -60,25 +60,25 @@
   0%, 100% {
     box-shadow:
       0 0 1px 1px var(--ag-ring, #9ff2d2),
-      0 0 6px 1px var(--ag-halo, rgba(57, 197, 187, 0.3));
+      0 0 6px 1px var(--ag-halo, rgba(255, 20, 147, 0.3));
   }
   50% {
     box-shadow:
       0 0 5px 5px var(--ag-ring, #9ff2d2),
-      0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.3));
+      0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.3));
   }
 }
 
 @keyframes huxi_dark {
   0%, 100% {
     box-shadow:
-      0 0 1px 1px var(--ag-ring, #39c5bb),
-      0 0 6px 1px var(--ag-halo, rgba(57, 197, 187, 0.42));
+      0 0 1px 1px var(--ag-ring, #FF1493),
+      0 0 6px 1px var(--ag-halo, rgba(255, 20, 147, 0.42));
   }
   50% {
     box-shadow:
-      0 0 5px 5px var(--ag-ring, #39c5bb),
-      0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.42));
+      0 0 5px 5px var(--ag-ring, #FF1493),
+      0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.42));
   }
 }
 
@@ -137,13 +137,13 @@
 .card-widget .card-info-avatar::before {
   box-shadow:
     0 0 1px 1px var(--ag-ring, #9ff2d2),
-    0 0 6px 1px var(--ag-halo, rgba(57, 197, 187, 0.3));
+    0 0 6px 1px var(--ag-halo, rgba(255, 20, 147, 0.3));
   animation: ag-breathe-out 4s ease-in-out infinite;
 }
 .card-widget .card-info-avatar::after {
   box-shadow:
     0 0 5px 5px var(--ag-ring, #9ff2d2),
-    0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.3));
+    0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.3));
   animation: ag-breathe-in 4s ease-in-out infinite;
 }
 @keyframes ag-breathe-in {
@@ -171,12 +171,12 @@
     animation: none !important;
     box-shadow:
       0 0 5px 5px var(--ag-ring, #9ff2d2),
-      0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.3));
+      0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.3));
   }
   [data-theme="dark"] #sidebar-menus.open > .avatar-img {
     animation: none !important;
     box-shadow:
-      0 0 5px 5px var(--ag-ring, #39c5bb),
-      0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.42));
+      0 0 5px 5px var(--ag-ring, #FF1493),
+      0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.42));
   }
 }

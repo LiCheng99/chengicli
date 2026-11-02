@@ -1,0 +1,15 @@
+# Twikoo 私有部署（宝塔 + Docker）· 极简版
+# 不依赖 MongoDB：未配置 MONGODB_URI 时 Twikoo 用 lokijs 把数据存在容器 /data，
+# 这里挂到宿主的 ./data —— 重建/升级容器不会丢评论。
+services:
+  twikoo:
+    image: imaegoo/twikoo:latest
+    container_name: twikoo
+    restart: unless-stopped
+    environment:
+      - TWIKOO_THROTTLE=1000
+      - TWIKOO_DATA=/data
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./data:/data

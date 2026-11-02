@@ -7,192 +7,192 @@ var AP_BACKGROUND_CATALOG = [
     "id": "anime-1",
     "category": "anime",
     "name": "二次元 01",
-    "thumb": "https://picsum.photos/seed/yuanshen1/400/225",
-    "value": "url(https://picsum.photos/seed/yuanshen1/1920/1080)",
+    "thumb": "/External-link/img/bg/yuanshen1-thumb.jpg",
+    "value": "url(/External-link/img/bg/yuanshen1-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-2",
     "category": "anime",
     "name": "二次元 02",
-    "thumb": "https://picsum.photos/seed/dm15/400/225",
-    "value": "url(https://picsum.photos/seed/dm15/1920/1080)",
+    "thumb": "/External-link/img/bg/dm15-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm15-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-3",
     "category": "anime",
     "name": "二次元 03",
-    "thumb": "https://picsum.photos/seed/dm2/400/225",
-    "value": "url(https://picsum.photos/seed/dm2/1920/1080)",
+    "thumb": "/External-link/img/bg/dm2-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm2-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-4",
     "category": "anime",
     "name": "二次元 04",
-    "thumb": "https://picsum.photos/seed/dm7/400/225",
-    "value": "url(https://picsum.photos/seed/dm7/1920/1080)",
+    "thumb": "/External-link/img/bg/dm7-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm7-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-5",
     "category": "anime",
     "name": "二次元 05",
-    "thumb": "https://picsum.photos/seed/dm8/400/225",
-    "value": "url(https://picsum.photos/seed/dm8/1920/1080)",
+    "thumb": "/External-link/img/bg/dm8-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm8-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-6",
     "category": "anime",
     "name": "二次元 06",
-    "thumb": "https://picsum.photos/seed/dm3/400/225",
-    "value": "url(https://picsum.photos/seed/dm3/1920/1080)",
+    "thumb": "/External-link/img/bg/dm3-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm3-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-7",
     "category": "anime",
     "name": "二次元 07",
-    "thumb": "https://picsum.photos/seed/dm11/400/225",
-    "value": "url(https://picsum.photos/seed/dm11/1920/1080)",
+    "thumb": "/External-link/img/bg/dm11-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm11-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "anime-8",
     "category": "anime",
     "name": "二次元 08",
-    "thumb": "https://picsum.photos/seed/dm12/400/225",
-    "value": "url(https://picsum.photos/seed/dm12/1920/1080)",
+    "thumb": "/External-link/img/bg/dm12-thumb.jpg",
+    "value": "url(/External-link/img/bg/dm12-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-1",
     "category": "landscape",
     "name": "风景 01",
-    "thumb": "https://picsum.photos/seed/fj1/400/225",
-    "value": "url(https://picsum.photos/seed/fj1/1920/1080)",
+    "thumb": "/External-link/img/bg/fj1-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj1-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-2",
     "category": "landscape",
     "name": "风景 02",
-    "thumb": "https://picsum.photos/seed/fj2/400/225",
-    "value": "url(https://picsum.photos/seed/fj2/1920/1080)",
+    "thumb": "/External-link/img/bg/fj2-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj2-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-3",
     "category": "landscape",
     "name": "风景 03",
-    "thumb": "https://picsum.photos/seed/fj3/400/225",
-    "value": "url(https://picsum.photos/seed/fj3/1920/1080)",
+    "thumb": "/External-link/img/bg/fj3-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj3-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-4",
     "category": "landscape",
     "name": "风景 04",
-    "thumb": "https://picsum.photos/seed/fj4/400/225",
-    "value": "url(https://picsum.photos/seed/fj4/1920/1080)",
+    "thumb": "/External-link/img/bg/fj4-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj4-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-5",
     "category": "landscape",
     "name": "风景 05",
-    "thumb": "https://picsum.photos/seed/fj5/400/225",
-    "value": "url(https://picsum.photos/seed/fj5/1920/1080)",
+    "thumb": "/External-link/img/bg/fj5-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj5-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-6",
     "category": "landscape",
     "name": "风景 06",
-    "thumb": "https://picsum.photos/seed/fj6/400/225",
-    "value": "url(https://picsum.photos/seed/fj6/1920/1080)",
+    "thumb": "/External-link/img/bg/fj6-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj6-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-7",
     "category": "landscape",
     "name": "风景 07",
-    "thumb": "https://picsum.photos/seed/fj7/400/225",
-    "value": "url(https://picsum.photos/seed/fj7/1920/1080)",
+    "thumb": "/External-link/img/bg/fj7-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj7-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "landscape-8",
     "category": "landscape",
     "name": "风景 08",
-    "thumb": "https://picsum.photos/seed/fj8/400/225",
-    "value": "url(https://picsum.photos/seed/fj8/1920/1080)",
+    "thumb": "/External-link/img/bg/fj8-thumb.jpg",
+    "value": "url(/External-link/img/bg/fj8-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-1",
     "category": "pets",
     "name": "萌宠 01",
-    "thumb": "https://picsum.photos/seed/mc1/400/225",
-    "value": "url(https://picsum.photos/seed/mc1/1920/1080)",
+    "thumb": "/External-link/img/bg/mc1-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc1-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-2",
     "category": "pets",
     "name": "萌宠 02",
-    "thumb": "https://picsum.photos/seed/mc2/400/225",
-    "value": "url(https://picsum.photos/seed/mc2/1920/1080)",
+    "thumb": "/External-link/img/bg/mc2-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc2-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-3",
     "category": "pets",
     "name": "萌宠 03",
-    "thumb": "https://picsum.photos/seed/mc3/400/225",
-    "value": "url(https://picsum.photos/seed/mc3/1920/1080)",
+    "thumb": "/External-link/img/bg/mc3-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc3-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-4",
     "category": "pets",
     "name": "萌宠 04",
-    "thumb": "https://picsum.photos/seed/mc4/400/225",
-    "value": "url(https://picsum.photos/seed/mc4/1920/1080)",
+    "thumb": "/External-link/img/bg/mc4-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc4-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-5",
     "category": "pets",
     "name": "萌宠 05",
-    "thumb": "https://picsum.photos/seed/mc5/400/225",
-    "value": "url(https://picsum.photos/seed/mc5/1920/1080)",
+    "thumb": "/External-link/img/bg/mc5-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc5-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-6",
     "category": "pets",
     "name": "萌宠 06",
-    "thumb": "https://picsum.photos/seed/mc6/400/225",
-    "value": "url(https://picsum.photos/seed/mc6/1920/1080)",
+    "thumb": "/External-link/img/bg/mc6-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc6-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-7",
     "category": "pets",
     "name": "萌宠 07",
-    "thumb": "https://picsum.photos/seed/mc7/400/225",
-    "value": "url(https://picsum.photos/seed/mc7/1920/1080)",
+    "thumb": "/External-link/img/bg/mc7-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc7-desktop.jpg)",
     "kind": "image"
   },
   {
     "id": "pets-8",
     "category": "pets",
     "name": "萌宠 08",
-    "thumb": "https://picsum.photos/seed/mc8/400/225",
-    "value": "url(https://picsum.photos/seed/mc8/1920/1080)",
+    "thumb": "/External-link/img/bg/mc8-thumb.jpg",
+    "value": "url(/External-link/img/bg/mc8-desktop.jpg)",
     "kind": "image"
   },
   {
@@ -304,64 +304,64 @@ var AP_BACKGROUND_CATALOG = [
     "id": "mobile-1",
     "category": "mobile",
     "name": "手机 01",
-    "thumb": "https://picsum.photos/seed/mb4/400/225",
-    "value": "url(https://picsum.photos/seed/mb4/1080/1920)",
+    "thumb": "/External-link/img/bg/mb4-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb4-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-2",
     "category": "mobile",
     "name": "手机 02",
-    "thumb": "https://picsum.photos/seed/mb5/400/225",
-    "value": "url(https://picsum.photos/seed/mb5/1080/1920)",
+    "thumb": "/External-link/img/bg/mb5-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb5-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-3",
     "category": "mobile",
     "name": "手机 03",
-    "thumb": "https://picsum.photos/seed/mb6/400/225",
-    "value": "url(https://picsum.photos/seed/mb6/1080/1920)",
+    "thumb": "/External-link/img/bg/mb6-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb6-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-4",
     "category": "mobile",
     "name": "手机 04",
-    "thumb": "https://picsum.photos/seed/mb7/400/225",
-    "value": "url(https://picsum.photos/seed/mb7/1080/1920)",
+    "thumb": "/External-link/img/bg/mb7-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb7-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-5",
     "category": "mobile",
     "name": "手机 05",
-    "thumb": "https://picsum.photos/seed/mb8/400/225",
-    "value": "url(https://picsum.photos/seed/mb8/1080/1920)",
+    "thumb": "/External-link/img/bg/mb8-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb8-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-6",
     "category": "mobile",
     "name": "手机 06",
-    "thumb": "https://picsum.photos/seed/mb9/400/225",
-    "value": "url(https://picsum.photos/seed/mb9/1080/1920)",
+    "thumb": "/External-link/img/bg/mb9-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb9-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-7",
     "category": "mobile",
     "name": "手机 07",
-    "thumb": "https://picsum.photos/seed/mb16/400/225",
-    "value": "url(https://picsum.photos/seed/mb16/1080/1920)",
+    "thumb": "/External-link/img/bg/mb16-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb16-mobile.jpg)",
     "kind": "image"
   },
   {
     "id": "mobile-8",
     "category": "mobile",
     "name": "手机 08",
-    "thumb": "https://picsum.photos/seed/mb19/400/225",
-    "value": "url(https://picsum.photos/seed/mb19/1080/1920)",
+    "thumb": "/External-link/img/bg/mb19-thumb.jpg",
+    "value": "url(/External-link/img/bg/mb19-mobile.jpg)",
     "kind": "image"
   }
 ];
@@ -414,12 +414,16 @@ function appearanceBackgroundParse(value) {
   var url = appearanceBackgroundSafeUrl(match ? match[2] : value, false);
   return url ? {kind:'image',css:'url("'+url+'")',url:url} : null;
 }
+// 站点默认背景直链（第三处副本：与 _config.fomalhaut.yml 的 #defineBg、settings.js 的 resetBg_() 同源，改地址要三处一起改）
+//   PC 日间    → picsum id/1015    PC 夜间    → picsum id/1044
+//   移动端日间  → picsum id/1018    移动端夜间  → picsum id/1039
+// 只在「默认背景」被选中时用，负责让面板里的预览图/名称跟随当前 设备宽度 + data-theme 变化
 function appearanceBackgroundDefaultUrl() {
   var root=document.documentElement;
   var dark=!!(root && root.getAttribute('data-theme') === 'dark');
   var width=typeof window !== 'undefined' ? window.innerWidth : (root && root.clientWidth);
   var mobile=typeof width === 'number' && width <= 768;
-  return mobile ? (dark ? 'https://picsum.photos/id/1039/1920/1080' : 'https://picsum.photos/id/1018/1920/1080') : (dark ? 'https://picsum.photos/id/1044/1920/1080' : 'https://picsum.photos/id/1015/1920/1080');
+  return mobile ? (dark ? '/External-link/img/bg/picsum-1039.jpg' : '/External-link/img/bg/picsum-1018.jpg') : (dark ? '/External-link/img/bg/picsum-1044.jpg' : '/External-link/img/bg/picsum-1015.jpg');
 }
 function appearanceBackgroundWatchEnvironment() {
   if(apBackgroundState.environmentListening) return;

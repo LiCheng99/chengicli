@@ -18,7 +18,7 @@
  *   #bgFilterParam、#defineBg、#menu_shadow、#nav-display、#aside-show、#aside-pos
  *   是「运行时空槽」：由右下角美化面板的 JS 在运行时写入内容，不能删、不能挪。
  *
- * 【本文件目录】共 17 块（后面的优先级更高）
+ * 【本文件目录】共 16 块（后面的优先级更高）
  *    1. scroll-gap-css     ← 原 _config.fomalhaut.yml:1209-1212
  *    2. annoV2             ← 原 _config.fomalhaut.yml:1216-1295
  *    3. pcLightTheme       ← 原 _config.fomalhaut.yml:1306-1344
@@ -30,7 +30,6 @@
  *    9. ft-hide-self       ← 原 _config.fomalhaut.yml:1522-1526
  *   10. aplayerVolumeFix   ← 原 _config.fomalhaut.yml:1538-1542
  *   11. readModeIconGuard  ← 2026-10-04 新增（阅读模式标题风车兜底）
- *   12. letterBoard        ← 2026-10-04 新增（留言板 / 信封页改版）
  *   13. cardAnimPerf       ← 2026-10-04 新增（首页卡片箭头 / 置顶角标流光改走 transform）
  *   14. loadingIdle        ← 2026-10-04 新增（加载动画在遮罩隐藏后停掉）
  *   15. cardGlassOff       ← 2026-10-04 新增（关闭卡片毛玻璃特效）
@@ -56,7 +55,7 @@ html { scroll-padding-top: 70px !important; }
  * 深色适配只覆盖变量，规则本体一套。
  */
 .card-announcement {
-  --anno-accent: var(--theme-color, #39c5bb);
+  --anno-accent: var(--theme-color, #FF1493);
 
   --anno-strong: #25706b;
   --anno-strong: color-mix(in srgb, var(--anno-accent) 62%, #000);
@@ -64,26 +63,26 @@ html { scroll-padding-top: 70px !important; }
   --anno-muted: rgba(60, 60, 67, .55);
   --anno-muted: color-mix(in srgb, var(--font-color, #1f2937) 55%, transparent);
 
-  --anno-chip-bg: rgba(57, 197, 187, .075);
+  --anno-chip-bg: rgba(255, 20, 147, .075);
   --anno-chip-bg: color-mix(in srgb, var(--anno-accent) 7.5%, transparent);
-  --anno-chip-bd: rgba(57, 197, 187, .22);
+  --anno-chip-bd: rgba(255, 20, 147, .22);
   --anno-chip-bd: color-mix(in srgb, var(--anno-accent) 22%, transparent);
 
-  --anno-soft-bg: rgba(57, 197, 187, .06);
+  --anno-soft-bg: rgba(255, 20, 147, .06);
   --anno-soft-bg: color-mix(in srgb, var(--anno-accent) 6%, transparent);
-  --anno-soft-bd: rgba(57, 197, 187, .16);
+  --anno-soft-bd: rgba(255, 20, 147, .16);
   --anno-soft-bd: color-mix(in srgb, var(--anno-accent) 16%, transparent);
 }
 [data-theme="dark"] .card-announcement {
   --anno-strong: #7fe3da;
   --anno-strong: color-mix(in srgb, var(--anno-accent) 78%, #fff);
-  --anno-chip-bg: rgba(57, 197, 187, .14);
+  --anno-chip-bg: rgba(255, 20, 147, .14);
   --anno-chip-bg: color-mix(in srgb, var(--anno-accent) 14%, transparent);
-  --anno-chip-bd: rgba(57, 197, 187, .32);
+  --anno-chip-bd: rgba(255, 20, 147, .32);
   --anno-chip-bd: color-mix(in srgb, var(--anno-accent) 32%, transparent);
-  --anno-soft-bg: rgba(57, 197, 187, .12);
+  --anno-soft-bg: rgba(255, 20, 147, .12);
   --anno-soft-bg: color-mix(in srgb, var(--anno-accent) 12%, transparent);
-  --anno-soft-bd: rgba(57, 197, 187, .26);
+  --anno-soft-bd: rgba(255, 20, 147, .26);
   --anno-soft-bd: color-mix(in srgb, var(--anno-accent) 26%, transparent);
 }
 .card-announcement .anno2 { font-size: 13.5px; line-height: 1.75; text-align: left; }
@@ -164,23 +163,18 @@ html { scroll-padding-top: 70px !important; }
 background: linear-gradient(135deg, var(--anno-accent), var(--anno-strong));
 background: linear-gradient(135deg, color-mix(in srgb, var(--anno-accent) 88%, var(--on-theme-away, #ffffff)), color-mix(in srgb, var(--anno-accent) 66%, var(--on-theme-away, #ffffff)));
   border-radius: 10px; padding: 8px 16px; line-height: 1.6; transition: .25s;
-  box-shadow: 0 3px 10px rgba(57, 197, 187, .35);
+  box-shadow: 0 3px 10px rgba(255, 20, 147, .35);
   box-shadow: 0 3px 10px color-mix(in srgb, var(--anno-accent) 35%, transparent); flex: 0 0 auto;}
 .card-announcement .a-btn:hover { color: var(--on-theme); filter: brightness(1.06); transform: translateY(-1px);
   box-shadow: 0 6px 16px color-mix(in srgb, var(--anno-accent) 45%, transparent); }
 .card-announcement .a-btn svg { width: 13px; height: 13px; fill: currentColor; }
-/* 欢迎信息块：改成左对齐的「小标签 + 正文」，并让 fomal.js 写死的内联蓝色跟随主题色 */
-.card-widget.card-announcement #welcome-info { background: var(--anno-soft-bg); border: 1px solid var(--anno-soft-bd);
-  border-radius: 14px; padding: 10px 13px; margin-top: 0; text-align: left; font-weight: 500; line-height: 1.9; font-size: 13.5px; }
-.card-widget.card-announcement #welcome-info b { font-weight: 500; }
-.card-widget.card-announcement #welcome-info center { text-align: left; margin: 0 0 2px; font-size: 12px;
-  letter-spacing: .5px; color: var(--anno-muted); font-weight: 700; }
-.card-widget.card-announcement #welcome-info span { color: var(--anno-strong) !important; font-weight: 800; }
+/* 原「欢迎信息」块的配色（#welcome-info）已于 2026-10-28 随卡片一起删除，
+   卡片位置换成了「每日一言」+ 悬停音乐播放器，样式单独放在 source/css/daily-say.css。 */
 
 /* ── 3/12  #pcLightTheme  ← 原 _config.fomalhaut.yml:1306-1344 ── */
 /* 版权卡片 · 白天配色（2026-10-05）：原文那套粉-青-米渐变是主题作者写死的固定值，跟主题色无关； */
 /* 更要紧的是两处彩色小字白天几乎看不见：文章链接 #99a9bf 只有 1.89:1、值行用主题色原色只有 1.71:1 */
-/* （实测自用户截图，WCAG AA 小字要 4.5:1）。注意 #39c5bb 放在纯白上也只有 2.13:1 —— 所以光换底色没用， */
+/* （实测自用户截图，WCAG AA 小字要 4.5:1）。注意 #FF1493 放在纯白上也只有 2.13:1 —— 所以光换底色没用， */
 /* 必须把文字按同色系压深一档，才有现在这套： */
 /*   值行/许可协议  color-mix(主题色 50%, #0d1f22) → 5.1~5.5:1（13 种主题色全验过，最差的黄色 4.69:1） */
 /*   文章链接        保留它那支灰蓝压深 → ≈6:1 */
@@ -192,11 +186,11 @@ background: linear-gradient(135deg, color-mix(in srgb, var(--anno-accent) 88%, v
 html[data-theme="light"] #post .post-copyright {
   background: linear-gradient(45deg, #e3f7f5, #f9fdfd, #d1eeef) !important;
   background: linear-gradient(45deg,
-      color-mix(in srgb, var(--theme-color, #39c5bb) 14%, #fff),
-      color-mix(in srgb, var(--theme-color, #39c5bb) 3%, #fff),
-      color-mix(in srgb, var(--theme-color, #39c5bb) 18%, #f2f7fa)) !important;
+      color-mix(in srgb, var(--theme-color, #FF1493) 14%, #fff),
+      color-mix(in srgb, var(--theme-color, #FF1493) 3%, #fff),
+      color-mix(in srgb, var(--theme-color, #FF1493) 18%, #f2f7fa)) !important;
   border-color: #c9e7e8 !important;
-  border-color: color-mix(in srgb, var(--theme-color, #39c5bb) 18%, #e9eef2) !important;
+  border-color: color-mix(in srgb, var(--theme-color, #FF1493) 18%, #e9eef2) !important;
   /* 原 box-shadow 是 currentColor（深灰实心偏移影），浅底上会显得脏，压到 10% 黑 */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, .1) !important;
 }
@@ -204,7 +198,7 @@ html[data-theme="light"] #post .post-copyright {
 html[data-theme="light"] #post .post-copyright .post-copyright-cc-info,
 html[data-theme="light"] #post .post-copyright .post-copyright-cc-info a {
   color: #23726f !important;
-  color: color-mix(in srgb, var(--theme-color, #39c5bb) 50%, #0d1f22) !important;
+  color: color-mix(in srgb, var(--theme-color, #FF1493) 50%, #0d1f22) !important;
 }
 /* 文章链接：保留它自己那支灰蓝，只压深（1.89:1 → ≈6:1） */
 html[data-theme="light"] #post .post-copyright__type .post-copyright-info a {
@@ -215,14 +209,14 @@ html[data-theme="light"] #post .post-copyright__type .post-copyright-info a {
 html[data-theme="light"] #post .post-copyright-info a:hover,
 html[data-theme="light"] #post .post-copyright-cc-info a:hover {
   color: #23726f !important;
-  color: color-mix(in srgb, var(--theme-color, #39c5bb) 50%, #0d1f22) !important;
+  color: color-mix(in srgb, var(--theme-color, #FF1493) 50%, #0d1f22) !important;
   text-decoration: underline !important;
   text-underline-offset: 3px;
 }
 /* 右下角那枚 CC 水印：由原来的灰改成跟着主题色染一点（仍由 opacity 保持很淡） */
 html[data-theme="light"] #post .post-copyright:before {
   color: #61a0a4;
-  color: color-mix(in srgb, var(--theme-color, #39c5bb) 40%, #7b8794);
+  color: color-mix(in srgb, var(--theme-color, #FF1493) 40%, #7b8794);
 }
 
 /* ── 4/12  #asideWider  ← 原 _config.fomalhaut.yml:1364-1379 ── */
@@ -338,7 +332,7 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
 /* 根因：APlayer 渲染出的 .aplayer-volume 自带内联 style="background:<data-theme 的颜色>"， */
 /*   内联样式优先级高于样式表，于是 themes/fomalhaut/source/css/_custom/custom.css:1492 那句 */
 /*   不带 !important 的 background: var(--theme-color) 从来没生效过——填充色一直是 */
-/*   source/life/music/index.md 里 data-theme="#e3f2f5" 的浅灰蓝； */
+/*   source/music/index.md 里 data-theme="#e3f2f5" 的浅灰蓝； */
 /*   而槽色（custom.css:1488）是 color-mix(--theme-color 18%, #fff)，也是接近白的浅色， */
 /*   两段肉眼几乎同色 → 拖动/点击音量条、点喇叭静音时只有声音变，看不出任何变化。 */
 /* 修法照主题对 .aplayer-played / .aplayer-thumb 的既有做法（custom.css 里那两句都带 !important）， */
@@ -369,153 +363,6 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
   .read-mode #content-inner.layout #article-container h4 { padding-left: 1.3rem; }
   .read-mode #content-inner.layout #article-container h5,
   .read-mode #content-inner.layout #article-container h6 { padding-left: 1.15rem; }
-}
-
-/* ── 12/12  #letterBoard  ← 2026-10-04 新增（留言板 / 信封页改版） ── */
-/* /comments/ 页面由 hexo-butterfly-envelope 插件生成，主题源码 themes/ 不动，样式按站点约定放这里。
- * 为什么不能只靠配置：插件把信封构图写死在 node_modules/hexo-butterfly-envelope/lib/html.pug 的内联
- *   <style> 里（#form-wrap 447px 裁剪、hover 才展开、#beforeimg/#afterimg 绝对定位），配置项只能换图片与文案。
- * 做法：
- *   ① 解除 447px 裁剪与 hover 联动 → 4 条留言提示默认可见（原来要悬停才露出来）；
- *   ② 给插件内容套一层主题色「信笺台」#maincontent（点阵 + 顶部主题色渐变）；
- *   ③ 信封正面口袋 after.png 从绝对定位改回正常流元素 + 负 margin，让信纸底边稳定插进袋口；
- *      #beforeimg（信封背页）隐藏，避免它的白/蓝底与信纸的白底在袋口透明区打架；
- *   ④ 重排标题 / 提示面板 / 签名，并把评论区上方分隔线、评论图标改成主题色。
- * 作用域 #page:has(#maincontent)：只有这个插件页生效；:has() 不支持时整块失效，页面回落到插件原样。
- * 回滚：删掉本块即可（纯样式，不涉及 JS / 模板 / 主题源码）。 */
-#page:has(#maincontent) {
-  --lt-accent: var(--theme-color, #39c5bb);
-  --lt-soft: rgba(57, 197, 187, .07);
-  --lt-soft: color-mix(in srgb, var(--lt-accent) 7%, transparent);
-  --lt-soft2: rgba(57, 197, 187, .15);
-  --lt-soft2: color-mix(in srgb, var(--lt-accent) 15%, transparent);
-  --lt-line: rgba(57, 197, 187, .22);
-  --lt-line: color-mix(in srgb, var(--lt-accent) 22%, transparent);
-  --lt-ink: #1f6b67;
-  --lt-ink: color-mix(in srgb, var(--lt-accent) 52%, #10201f);
-  --lt-muted: rgba(60, 60, 67, .55);
-  --lt-muted: color-mix(in srgb, var(--font-color, #1f2937) 55%, transparent);
-  --lt-pocket: 680px;
-}
-[data-theme="dark"] #page:has(#maincontent) {
-  --lt-soft: rgba(57, 197, 187, .12);
-  --lt-soft: color-mix(in srgb, var(--lt-accent) 12%, transparent);
-  --lt-soft2: rgba(57, 197, 187, .22);
-  --lt-soft2: color-mix(in srgb, var(--lt-accent) 22%, transparent);
-  --lt-line: rgba(57, 197, 187, .32);
-  --lt-line: color-mix(in srgb, var(--lt-accent) 32%, transparent);
-  --lt-ink: #7fe3da;
-  --lt-ink: color-mix(in srgb, var(--lt-accent) 78%, #fff);
-  --lt-muted: color-mix(in srgb, var(--font-color, #e6e6e6) 62%, transparent);
-}
-/* ① 解除插件折叠 */
-#page:has(#maincontent) #form-wrap,
-#page:has(#maincontent) #form-wrap:hover {
-  height: auto !important; top: 0 !important;
-  overflow: visible !important; transition: none !important;
-}
-/* ② 信笺台 */
-#page:has(#maincontent) #maincontent {
-  width: 100%; max-width: 100%; box-sizing: border-box;
-  margin: 0 auto; padding: 27px 22px 0;
-  position: relative; border-radius: 20px;
-  border: 1px solid var(--lt-line);
-  background-image:
-    radial-gradient(rgba(57, 197, 187, .26) 1px, transparent 1px),
-    radial-gradient(120% 70% at 50% -8%, rgba(57, 197, 187, .15), transparent 62%),
-    linear-gradient(180deg, rgba(57, 197, 187, .07), transparent 58%);
-  background-image:
-    radial-gradient(color-mix(in srgb, var(--lt-accent) 34%, transparent) 1px, transparent 1px),
-    radial-gradient(120% 70% at 50% -8%, var(--lt-soft2), transparent 62%),
-    linear-gradient(180deg, var(--lt-soft), transparent 58%);
-  background-size: 16px 16px, auto, auto;
-  animation: lt-board-in .55s ease-out both;
-}
-@keyframes lt-board-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  #page:has(#maincontent) #maincontent { animation: none; }
-}
-/* ③ 信纸 */
-#page:has(#maincontent) #beforeimg { display: none !important; }
-#page:has(#maincontent) #envelope { width: 600px; max-width: 100%; padding-top: 4px; position: relative; z-index: 2; }
-#page:has(#maincontent) .formmain {
-  background: var(--card-bg, #fff); width: 100% !important; max-width: none !important;
-  border: 1px solid var(--lt-line) !important; border-radius: 14px !important;
-  box-shadow: 0 22px 46px -26px rgba(0, 0, 0, .5) !important;
-  overflow: hidden !important;
-}
-#page:has(#maincontent) img.headerimg {
-  display: block; width: 100% !important; height: 214px; margin: 0 !important;
-  object-fit: cover; object-position: center 16%;
-  -webkit-mask-image: linear-gradient(180deg, #000 74%, transparent);
-  mask-image: linear-gradient(180deg, #000 74%, transparent);
-}
-#page:has(#maincontent) #maincontent .comments-main { padding: 8px 30px 28px; }
-#page:has(#maincontent) #maincontent h3.title3 {
-  margin: 0 0 15px !important; padding: 0 0 12px !important; position: relative;
-  font-size: 19px !important; font-weight: 700; letter-spacing: 1px;
-  color: var(--lt-ink) !important; text-align: center !important;
-}
-#page:has(#maincontent) #maincontent h3.title3::after {
-  content: ""; position: absolute; left: 50%; bottom: 0; width: 46px; height: 3px;
-  border-radius: 3px; transform: translateX(-50%);
-  background: linear-gradient(90deg, var(--lt-accent), color-mix(in srgb, var(--lt-accent) 28%, transparent));
-}
-#page:has(#maincontent) #maincontent .comments {
-  margin: 15px 0 0 !important; padding: 14px 22px !important;
-  background: var(--lt-soft) !important; border: 1px solid var(--lt-line) !important;
-  border-radius: 14px !important; text-align: left !important;
-}
-#page:has(#maincontent) #maincontent .comments > div {
-  display: flex; gap: 10px; align-items: baseline;
-  font-size: 14.5px; line-height: 2; color: var(--font-color, #1f2937);
-}
-#page:has(#maincontent) #maincontent .comments > div::before {
-  content: "✦"; flex: 0 0 auto; font-size: 11px; color: var(--lt-accent); opacity: .9;
-}
-#page:has(#maincontent) #maincontent .comments > div + div { border-top: 1px dashed var(--lt-line); }
-#page:has(#maincontent) #maincontent .bottomcontent { margin-top: 20px !important; }
-#page:has(#maincontent) #maincontent .bottomcontent img.bottomimg {
-  display: block; width: auto !important; max-width: 100%; height: auto; max-height: 54px;
-  margin: 0 auto !important; opacity: .85;
-}
-#page:has(#maincontent) #maincontent p.bottomhr {
-  margin: 2px 6px 0 0 !important; text-align: right !important;
-  font-size: 12.5px !important; font-style: italic; letter-spacing: .5px;
-  color: var(--lt-muted) !important;
-}
-#page:has(#maincontent) #maincontent p.bottomhr::before { content: "—— "; }
-/* ④ 信封口袋 after.png：脱离绝对定位，用负 margin 咬住信纸底边 */
-#page:has(#maincontent) #afterimg {
-  position: relative !important; left: auto !important; right: auto !important;
-  top: auto !important; bottom: auto !important;
-  display: block !important; z-index: 3 !important;
-  width: var(--lt-pocket) !important; max-width: 100%; height: auto !important;
-  margin: -38px auto 0 !important; pointer-events: none;
-  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, .16));
-  /* after.png 的左上 / 右上被硬切成平口（原设计靠 #beforeimg 背页压住，本块把背页隐藏了），
-   * 顶部 20px 渐隐后平口没入信笺台点阵，不再出现两条横向断线。 */
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 20px);
-  mask-image: linear-gradient(180deg, transparent 0, #000 20px);
-}
-/* ⑤ 评论区 */
-#page:has(#maincontent) #article-container + hr {
-  border: 0 !important; height: 1px !important; max-width: 460px; margin: 30px auto !important;
-  background: linear-gradient(90deg, transparent, var(--lt-line), transparent) !important;
-}
-#page:has(#maincontent) #post-comment .comment-headline { letter-spacing: 1px; }
-#page:has(#maincontent) #post-comment .comment-headline i { color: var(--lt-accent); }
-@media screen and (max-width: 768px) {
-  #page:has(#maincontent) #maincontent { padding: 16px 10px 20px; border-radius: 16px; }
-  #page:has(#maincontent) #envelope { width: 100%; padding-top: 0; }
-  #page:has(#maincontent) img.headerimg { height: 148px; }
-  #page:has(#maincontent) #maincontent .comments-main { padding: 6px 16px 20px; }
-  #page:has(#maincontent) #maincontent .comments { padding: 12px 15px !important; }
-  #page:has(#maincontent) #maincontent .comments > div { font-size: 13.5px; }
-  #page:has(#maincontent) #afterimg { display: none !important; }
 }
 
 /* ── 13/13  cardAnimPerf  ← 2026-10-04 新增（首页卡片动画改走合成层）────────────
@@ -627,6 +474,49 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
 .settings .bf-panel input:disabled,.settings .bf-panel button:disabled { opacity:.4; cursor:not-allowed; }
 @media(max-width:480px) { .settings .bf-panel { margin:16px 0; padding:14px 12px; } }
 
+/* ── 左下角胶囊组共用配色（#ds-mini + #fps，2026-10-28 两版）────────────────────
+   左下角是**两个**控件竖着叠成一组：上面 #ds-mini（daily-say.css，172 高）、
+   下面 #fps（本文件，52 高）。既然是同一组，底色/描边/文字必须是同一套值，
+   所以配色抽到这里，daily-say.css 的 #ds-mini 直接引用（本文件先于它加载）。
+
+   ⚠⚠ 第一版（掺主题色）已被作者否掉：粉主题下整块变成「红红的」玻璃，压在有纹理的
+   壁纸上又糊成一团。作者给的参照是**侧栏卡片**（日历 / 倒计时 / 公告栏），
+   所以现在不再自己调色，直接抄卡片那三件套（themes/fomalhaut/source/css/_custom/custom.css:446-465）：
+     background: var(--trans-light) / var(--trans-dark)   ← 和卡片同一个变量、同一个滑条
+     border:     var(--border-style)                      ← 1px 实线，深色主题也不另调
+     box-shadow: 卡片那道投影的缩小版
+   而且卡片**没有 backdrop-filter** —— 这一条很关键：胶囊原来写了 blur(18px)，
+   压在照片上就是「糊的一块」；去掉之后才和卡片一样是「透下去的干净一层」。
+   颜色只留在两个地方：图标 / 播放键实底（--glass-accent = 主题色）、帧率数值的状态色。
+   这也是卡片自己的做法（公告栏的胶囊、日历里那个粉色 28 号），比整块染色干净得多。
+
+   透明度仍然只有一个来源：--trans-*（美化面板的「卡片不透明度」）。
+   ⚠ 不要再往 --glass-bg 里掺主题色，也不要给胶囊加 backdrop-filter —— 那正是被否掉的第一版。 */
+html {
+  --glass-base: var(--trans-light, rgba(250, 250, 250, .97));
+  --glass-bg: var(--glass-base);                    /* 与卡片完全同款，不掺色 */
+  --glass-bd: var(--border-style, 1px solid rgba(169, 169, 169, .7));
+  --glass-chip: rgba(0, 0, 0, .08);
+  --glass-chip: color-mix(in srgb, var(--theme-color, #FF1493) 12%, transparent);
+
+  --glass-accent: var(--theme-color, #FF1493);      /* 实底（播放键）、图标：主题色原色 */
+  --glass-ink: var(--font-color, #1f2937);          /* 正文：直接跟主题正文色，别自己压色相 */
+  --glass-dim: color-mix(in srgb, var(--glass-ink) 62%, transparent);
+  /* 中性薄片：小块「面」的底色（首页分类磁贴用）。掺 ink 不掺主题色，
+     10% 压在不透明的卡上约等于 #e4e4e4，和原来写死的 #e9e9e9 视觉一致；
+     卡片一透明它就跟着透 —— 这是「跟不跟滑块」的关键，不能写死颜色。 */
+  --glass-veil: color-mix(in srgb, var(--glass-ink) 10%, transparent);
+
+  --glass-shadow: 0 2px 10px rgba(7, 17, 27, .07);  /* 卡片 --card-box-shadow 的缩小版 */
+}
+html[data-theme="dark"] {
+  --glass-base: var(--trans-dark, rgba(28, 28, 28, .97));
+  --glass-bg: var(--glass-base);
+  --glass-chip: rgba(255, 255, 255, .1);
+  --glass-chip: color-mix(in srgb, var(--theme-color, #FF1493) 20%, transparent);
+  --glass-shadow: 0 2px 12px rgba(0, 0, 0, .4);
+}
+
 /* FPS 轻量状态条：不阻挡点击，不加模糊或动画；预留数值与状态宽度，避免刷新抖动。
    配色按观感优先（2026-10-15 作者确认）：小字对比度有意不按 4.5:1 收紧，
    浅底压在深色壁纸上约 3.2–4.3:1；曾按对比度压深过一版，观感变闷、状态色也难区分，
@@ -636,21 +526,52 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
    色相只差 48°，12px 下很难一眼分开 —— 现在把 amber 推向金黄、red 推向纯红，
    Lab ΔE 从 43 提到 64（深色 44 → 60）。*/
 html #fps, html[data-theme] #fps {
-  --fps-bg:rgba(232,242,246,.88); --fps-fg:#283c45; --fps-muted:#65757b;
-  --fps-border:rgba(61,91,104,.18); --fps-good:#267d72; --fps-warn:#a0740d; --fps-low:#df2039;
-  box-sizing:border-box; position:fixed; left:12px; bottom:12px;
-  left:calc(12px + env(safe-area-inset-left,0px)); bottom:calc(12px + env(safe-area-inset-bottom,0px));
-  z-index:1000; width:max-content; height:30px; padding:0 9px;
-  border:1px solid var(--fps-border); border-radius:9px; background:var(--fps-bg); color:var(--fps-fg);
-  font-size:13px; line-height:28px; font-weight:500; white-space:nowrap;
-  box-shadow:0 2px 8px rgba(15,35,45,.06); pointer-events:none; user-select:none;
+  /* 配色全部接到上面的 --glass-*：和上面的 #ds-mini 是同一块玻璃，同色同透明度。
+     good（正常）跟着主题色的 ink 走，warn/low 保留琥珀/红 —— 那是语义色，
+     换成主题色就分不出「顺畅还是卡顿」了，只按深浅主题调亮度。 */
+  --fps-bg: var(--glass-bg);
+  --fps-fg: var(--glass-ink);
+  --fps-muted: var(--glass-dim);
+  --fps-border: var(--glass-bd);        /* 现在是一整条 border 简写（= 卡片那条 --border-style） */
+  /* good（正常）用主题色压深/提亮到能读；warn 琥珀 / low 红保留 —— 那是语义色，
+     换成主题色就分不出「顺畅还是卡顿」了，只按深浅主题调亮度。 */
+  --fps-good: #267d72;
+  --fps-good: color-mix(in srgb, var(--theme-color, #FF1493) 72%, #101820);
+  --fps-warn: #a0740d;
+  --fps-low: #df2039;
+  /* 定位：左下角竖向胶囊组的**下半格**（10-28 起改成 52×52 小胶囊，贴底 12）。
+     上方是 #ds-mini（bottom 72、宽 52），两者同宽、同圆角、同玻璃底，竖着叠成一组。
+     52 是卡出来的安全宽度：10 + 52 = 62，贴着正文左边界（约 60–160，随窗口宽度变化）
+     也只擦到卡片内边距，不会压住字。
+     竖排两行：上行是数值（状态色），下行是 FPS 小字 —— 横排那个「· 流畅 / 轻微掉帧」
+     在 52px 里放不下，改成用数值颜色表达状态（:has(data-state) 见下）。
+     注意这里**不能用 flex**：settings.js / beauty-boot.js 会用 inline style 把 #fps 写成
+     display:block / none（帧率开关），inline 优先级高于任何选择器，flex 会被打回 block。
+     所以改成两个 block 的 span 自己堆叠，靠 padding 让内容垂直居中。 */
+  box-sizing:border-box; position:fixed; left:10px; bottom:12px;
+  left:calc(10px + env(safe-area-inset-left,0px)); bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  z-index:1000; width:52px; height:52px; padding:0; text-align:center;
+  border:var(--fps-border); border-radius:999px; background:var(--fps-bg); color:var(--fps-fg);
+  font-size:13px; line-height:1; font-weight:500; white-space:nowrap;
+  box-shadow:var(--glass-shadow); pointer-events:none; user-select:none;
 }
+/* 竖排重排：数值在上做主角、FPS 做副标题、状态文字整个藏掉（信息量转给数值颜色）。
+   内容总高 16 + 2 + 8.5 = 26.5，胶囊内高 50，所以 padding-top 取 12 让它视觉居中。 */
+html #fps .fps-value { display:block; width:auto; margin:0; padding-top:12px; font-size:16px; line-height:1; text-align:center; }
+html #fps .fps-label { display:block; margin-top:2px; font-size:8.5px; line-height:1; letter-spacing:1px; text-align:center; }
+html #fps .fps-state { display:none; }
+/* 数值跟着 data-state 变色；保留 .fps-state 节点是因为 cursor.js 在监听它的属性变化 */
+html #fps:has(.fps-state[data-state="good"]) .fps-value { color:var(--fps-good); }
+html #fps:has(.fps-state[data-state="warn"]) .fps-value { color:var(--fps-warn); }
+html #fps:has(.fps-state[data-state="low"])  .fps-value { color:var(--fps-low); }
+/* 深色只翻三个「语义色」和 good 的提亮方向；底色/描边/文字已经在 --glass-* 里跟主题走过了，
+   这里再写一遍会盖掉共享 token（以前就是在这里写死 rgba(18,29,35,.88) 的）。 */
 html[data-theme="dark"] #fps {
-  --fps-bg:rgba(18,29,35,.88); --fps-fg:#dce9ef; --fps-muted:#9aacb6;
-  --fps-border:rgba(192,219,232,.16); --fps-good:#75d2c5; --fps-warn:#f0cb68; --fps-low:#ff8a95;
+  --fps-good: color-mix(in srgb, var(--theme-color, #FF1493) 58%, #eef4f7);
+  --fps-warn:#f0cb68; --fps-low:#ff8a95;
 }
 #fps:empty { visibility:hidden; }
-#fps > span { display:inline-block; vertical-align:middle; line-height:18px; }
+#fps > span { display:inline-block; vertical-align:middle; line-height:18px; flex:0 0 auto; }
 #fps .fps-label { font-size:10px; letter-spacing:.6px; color:var(--fps-muted); }
 #fps .fps-value { width:3ch; margin:0 6px; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-variant-numeric:tabular-nums; font-weight:600; text-align:right; }
 #fps .fps-state { min-width:3.5em; font-size:12px; }
@@ -658,8 +579,11 @@ html[data-theme="dark"] #fps {
 #fps .fps-state[data-state="good"] { color:var(--fps-good); }
 #fps .fps-state[data-state="warn"] { color:var(--fps-warn); }
 #fps .fps-state[data-state="low"] { color:var(--fps-low); }
+}
 @media(max-width:600px) {
-  html #fps, html[data-theme] #fps { height:28px; line-height:26px; padding:0 8px; border-radius:8px; }
+  /* 手机：48×48，组间距 12 + 48 + 6 = 66（#ds-mini 的 bottom 同步在 daily-say.css 里改） */
+  html #fps, html[data-theme] #fps { width:48px; height:48px; }
+  html #fps .fps-value { padding-top:10px; font-size:15px; }
 }
 
 /* 互动挂件与功能分区：沿用 bf-panel 的边框、留白与圆角，不改主题源码。 */
@@ -682,13 +606,13 @@ html[data-theme="dark"] #fps {
    颜色全部从 --theme-color 派生，换主题色或自定义取色时自动跟随。 */
 .ripple-layer { position:fixed; left:0; top:0; width:0; height:0; pointer-events:none; z-index:9998; }
 .ripple-burst { position:absolute; left:0; top:0; width:0; height:0; }
-.ripple-ring { box-sizing:border-box; position:absolute; left:0; top:0; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:50%; border:1.5px solid color-mix(in srgb, var(--theme-color, #39c5bb) 55%, transparent); opacity:0; animation:ripple-out .52s cubic-bezier(.22,.61,.36,1) forwards; }
+.ripple-ring { box-sizing:border-box; position:absolute; left:0; top:0; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:50%; border:1.5px solid color-mix(in srgb, var(--theme-color, #FF1493) 55%, transparent); opacity:0; animation:ripple-out .52s cubic-bezier(.22,.61,.36,1) forwards; }
 /* 第二环错开 60ms、更细更淡：两圈同心速度略不同，一眼是水波不是单圈涟漪。 */
-.ripple-ring.is-late { border-width:1px; border-color:color-mix(in srgb, var(--theme-color, #39c5bb) 30%, transparent); animation-delay:.06s; animation-duration:.56s; }
+.ripple-ring.is-late { border-width:1px; border-color:color-mix(in srgb, var(--theme-color, #FF1493) 30%, transparent); animation-delay:.06s; animation-duration:.56s; }
 @keyframes ripple-out { from { transform:scale(.16); opacity:.9; } to { transform:scale(2.6); opacity:0; } }
 
 /* 十色预设色板：站点注入覆盖主题变量，不改主题源码。
-   青绿、珊瑚红、紫罗兰、樱花粉保持原色；与 boot/cursor 的 RGB 完全对应。 */
+   深粉红色、珊瑚红、紫罗兰、樱花粉保持原色；与 boot/cursor 的 RGB 完全对应。 */
 :root {
   --color-orange: rgb(215, 146, 77); /* 暖杏橙 #D7924D */
   --color-yellow: rgb(196, 166, 74); /* 蜂蜜金 #C4A64A */
@@ -701,7 +625,7 @@ html[data-theme="dark"] #fps {
 
 /* 主题色「实底上的前景色」--on-theme（2026-10-14 新增）
    由来：主题的按钮/标签/分页/右栏图标/气泡/选中底色全是白字压在 --theme-color 上，
-   而 10 个预设里只有紫罗兰的白字过 WCAG AA（默认青绿只有 2.13:1，蜂蜜金 2.36:1）。
+   而 10 个预设里只有紫罗兰的白字过 WCAG AA（默认深粉红色只有 2.13:1，蜂蜜金 2.36:1）。
    前景色由站点脚本按主题色亮度算：
      · source/js/inject/beauty-boot.js —— 首帧前写（浅色预设不会先闪一下白字）
      · source/js/modules/settings.js 的 setColor() —— 换色时写
@@ -712,7 +636,7 @@ html[data-theme="dark"] #fps {
 /* ── 实底图标块：右侧工具条那排 38×38（2026-10-15 第三版）────────────────────────
    这三轮试下来的结论：颜色越压深越"稳"，但越没活泼感；站点主人要的是亮。
    所以最终取「主题色原色 + 白图标 + 一层极轻的暗投影」：
-     · 填充回到主题色原色（青绿 rgb(57,197,187)），不再压深 —— 这是最亮、最接近原设计的状态；
+     · 填充回到主题色原色（深粉红色 rgb(57,197,187)），不再压深 —— 这是最亮、最接近原设计的状态；
      · 白图标在原色底上名义对比只有 2.13:1（WCAG 不把投影算进对比度），
        但 0 1px 1px 的深色投影把字形边缘压出来，实际观感不糊（和改之前的样子基本一致，只是更清晰）。
    如果要回到"压深一档"的版本（白图标 3.45:1 但偏暗）：把下面两行的 background-color 换成
@@ -737,13 +661,57 @@ html[data-theme="dark"] #fps {
 /* 主题 CSS 里写死 white、但底色就是主题色/渐变主题色的几处（custom.css:1473 作者卡按钮、
    3812 设置面板保存按钮、3813 切换背景按钮、4013 恢复默认按钮）：统一接到 --on-theme。
    标签外挂按钮（_tags/button.styl:11 的 $btn-color=#fff）hover 时底色换成 --btn-hover-color，也要跟着走。 */
-#aside-content > .card-widget.card-info > #card-info-btn { color: var(--on-theme) !important; }
+/* ⚠ 作者卡「微信 - Wechat」按钮**不在**上面那类里 —— 它的常态底色是白/半透明白
+   （custom.css:3806 `rgba(255,255,255,.82)`），不是主题色。原来这里错写成
+   `color: var(--on-theme)`，而 --on-theme 是「压在主题色实底上的字色」：
+   主题色选黑 / 深蓝 / 深绿时它算出 #fff，于是白字压白底 → 整行字消失（作者 10-28 报的 bug）。
+   常态文字只能跟正文色（--glass-ink）走，只有 hover 之后底色才是主题色、才轮到 --on-theme。 */
+#aside-content > .card-widget.card-info > #card-info-btn {
+  /* 底色 = 卡片同一块玻璃（--glass-bg 就是 --trans-light / --trans-dark），**不掺主题色**。
+     踩过一次坑：这里曾用 --glass-chip（= 主题色 12% / 深色 20% 薄片），
+     于是主题色选粉就是一片粉底、选黑就是一片灰底（黑 12% 压白卡 = 灰），
+     作者 10-28 直接否掉。主题色只留给 hover 的实底，常态必须是中性玻璃。
+     描边用 --glass-bd（= 卡片那条 --border-style），文字用 --glass-ink（= --font-color）。 */
+  background-color: var(--glass-bg) !important;
+  color: var(--glass-ink) !important;
+  border: var(--glass-bd);
+  box-shadow: var(--glass-shadow);
+}
+/* 深色必须单写一条：custom.css:3872 的 `[data-theme="dark"] …　#card-info-btn` 特异性是 (2,3,0)，
+   比上面那条 (2,2,0) 高，不写就会被它的 #eaf7f7 / rgba(255,255,255,.14) 盖回去。 */
+[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn {
+  background-color: var(--glass-bg) !important;
+  color: var(--glass-ink) !important;
+  border: var(--glass-bd);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ── 首页分类磁贴（#catalog_magnet，由 hexo-magnet-fomal 注入）──────────────────
+   插件把配色**写死**在它自己注入的 <style> 里，值取自 _config.yml 的
+   magnet.color_setting：`.magnet_item{background:#e9e9e9}`、`.magnet_link{color:black}`。
+   后果就是作者 10-28 报的「调整透明度的时候这个标签没反应」：
+   外面那张卡片跟着 --trans-light 变透明了，里面这块磁贴永远是一坨实心灰（rgb(233,233,233)，
+   实测滑块从 97% 拉到 28% 它一个字节都不变）；顺带 `.magnet_link` 的黑色字在深色主题下直接看不见。
+   修法：改用中性薄片 --glass-veil（ink 10% 透明）—— 卡片不透明时≈#e4e4e4，和原来观感一致，
+   卡片一透明它就跟着透；文字接 --glass-ink / --glass-dim。
+   这里靠 **id + class (1,1,0)** 压过插件注入的 class 选择器 (0,1,0)，
+   既不用 !important，也不用去改插件和 _config.yml 里那串写死的颜色。 */
+#catalog_magnet .magnet_item { background: var(--glass-veil); }
+/* hover 必须自己再写一条：上面那条是 (1,1,0)，插件给的 `.magnet_item:hover` 只有 (0,2,0)，
+   id 压过 class + 伪类，不写的话 hover 反而被常态底盖掉、整块失去反馈。
+   底色用**实底** --theme-color 而不是插件原来的 --text-bg-hover（= 主题色 70%）：
+   70% 的黑压在半透明白卡上合成出来是**深灰**，看着像没生效；实底才和作者卡按钮的 hover 一致。 */
+#catalog_magnet .magnet_item:hover { background: var(--theme-color, #FF1493); }
+#catalog_magnet .magnet_link { color: var(--glass-ink); }
+/* hover 底色是主题色实底 → 字必须用 --on-theme（黑/白按亮度自动算）。
+   插件原来写死 white，浅色主题色（白/黄）下就是白压白。 */
+#catalog_magnet .magnet_link:hover { color: var(--on-theme); }
+#catalog_magnet .magnet_link_more { color: var(--glass-dim); }
 .settings .bgp-save, .settings .picbtn, #reset_btn { color: var(--on-theme); }
 #article-container .btn-beautify:hover { color: var(--on-theme); }
 /* tag-hide 的折叠按钮：底色是 $tag-hide-bg、字是 var(--white)，hover 换成 --btn-hover-color */
 #article-container .hide-button:hover { color: var(--on-theme); }
 /* 音乐卡标签 + 作者卡按钮 hover（custom.css:1705 / 3889 / 3950，主题里带 !important） */
-#article-container .music-note-id { color: var(--on-theme); }
 #aside-content > .card-widget.card-info > #card-info-btn:hover,
 [data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn:hover { color: var(--on-theme) !important; }
 /* 新增档位的圆点样式：主题 CSS 里没有 #matcha 这条规则（它是站点新增的档位），
@@ -1017,3 +985,340 @@ html[data-theme="dark"] #fps {
   .dm-stage .dm-glow { height: 22%; }
 }
 @media (prefers-reduced-motion: reduce) { .dm-stage { display: none !important; } }
+
+/* ---------- 美化设置面板：标题栏三个按钮跟随自定义鼠标 ----------
+ * WinBox 自带样式里写了 `.wb-control * {cursor:pointer}`，还有 `.wb-drag{cursor:move}`，
+ * 优先级 (0,1,0) 比 cursor.js 注入的 `*{cursor:url(圆点)}` 高，所以面板右上角
+ * 最小化/最大化/关闭会露出系统手型。这里用 (0,3,0) + !important 把标题栏和面板内容
+ * 整块交还给圆点；四周的缩放边缘(.wb-n/.wb-e/…)故意不动，保留 resize 提示。
+ * 鼠标特效关掉（html 上没有 beauty-cursor-on）时本段不生效。 */
+html.beauty-cursor-on .winbox .wb-header,
+html.beauty-cursor-on .winbox .wb-header *,
+html.beauty-cursor-on .winbox .wb-body,
+html.beauty-cursor-on .winbox .wb-body * { cursor: inherit !important; }
+
+/* ---------- 去掉加密文章的「Encrypt again」按钮 ----------
+ * 文章 front-matter 里有 password 时，hexo-blog-encrypt 的 /lib/hbe.js 会在解锁成功后
+ * 往 #hexo-blog-encrypt 里追加一个 <button class="hbe-button">Encrypt again</button>
+ * （点它会把密码从 localStorage 删掉再刷新，重新上锁）。站点不需要这个入口，直接隐藏。
+ * 注意：改的是 node_modules 里插件生成的脚本，所以只能从样式层隐藏；
+ * 升级插件、hexo clean 之后这条依然生效（它挂在站点样式表里，不依赖插件版本）。 */
+.hbe-button { display: none !important; }
+
+/* ---------- 表格容器别永远画滚动条 ----------
+ * 主题 `_global/index.styl` 里写的是 `.table-wrap { overflow-x: scroll }`，
+ * `scroll` 是「不管溢不溢出都留出滚动条」：Windows 上的 Chromium 会把 thumb 填满整条轨道，
+ * 在文章正文里表现成表格底部多出一条 8px 的浅灰横线（加密文章解密后主题重复包了一层的话
+ * 就是两条）。这里改成 auto —— 内容真超出宽度时照样能横向滚动，不超出就干干净净。
+ * 特异性 (1,1,0) 高于主题的 (0,1,0)，且本文件在主题样式之后加载。 */
+#article-container .table-wrap { overflow-x: auto; }
+
+/* ==========================================================================
+   代码块字体：把面板那 4 个选项接到本机字体上（2026-10-29 加）
+   --------------------------------------------------------------------------
+   现象：美化面板「代码字体」四个按钮（Monaco / Consolas / Maple Mono / Hack）点了没反应，
+   代码块反而变成正文字体。原因不是按钮坏了，是这 4 个 family 名（Monaco_1 / Consolas_1 /
+   MapleMono_1 / Hack_1）**全站没有任何 @font-face** —— 名字带 _1 后缀是为了和系统族名区分，
+   但没有本地 face 就等于「指向一个不存在的字体」，浏览器顺着栈往后找，直接掉到 var(--global-font)。
+   做法：用 local() 指到本机同名系统字体。装了就用，没装这一条自动跳过（表现与改动前一致，不会更差）。
+   这些是系统字体，不占流量，所以不需要 unicode-range 分片。
+   ========================================================================== */
+@font-face { font-family: Monaco_1;     src: local("Monaco"), local("Menlo"); font-display: swap; }
+@font-face { font-family: Consolas_1;   src: local("Consolas"); font-display: swap; }
+@font-face { font-family: MapleMono_1;  src: local("Maple Mono"), local("Maple Mono NF"), local("MapleMono"); font-display: swap; }
+@font-face { font-family: Hack_1;       src: local("Hack"), local("Hack Nerd Font"); font-display: swap; }
+
+/* ==========================================================================
+   美化设置面板：从右上角齿轮「弹出来 / 弹回去」（2026-10-29 加）
+   --------------------------------------------------------------------------
+   需求：面板原来是一帧硬切出来的（display:none → block），打开/关闭都没过程，很突兀。
+   做法：整块窗口只做 transform / opacity / filter 三段过渡，起点是**齿轮按钮的中心**。
+         transform-origin 由 settings.js 的 winboxSetTransformOrigin() 按「齿轮中心相对面板左上角」
+         算成一对像素值写进 style（齿轮在面板右上方时值是负的，属正常），
+         这样 scale(.14) 时窗口正好缩在齿轮上，看起来就是从按钮里长出来。
+   类名约定（与 settings.js 一一对应，改名字两边都要改）：
+     .wb-pop      刚打开时的「收起态」，transition:none，让初始状态一帧到位；
+     .wb-pop-out  收起动画态，过渡更短更干脆；
+     两个都不在 = 正常显示态。
+   注意：Winbox 自身只用 left/top 定位，不写 transform，所以这里动 transform 不冲突。
+   ========================================================================== */
+#meihuaBox {
+  transform-origin: 100% 0; /* JS 算不出齿轮位置时的兜底：右上角 */
+  /* 起手别太快：曲线前段压平一点，前 100ms 还看得出「从齿轮里往外长」，
+     末尾 y2=1.03 留一点点过冲，就是「弹」的那一下 */
+  transition: transform 0.5s cubic-bezier(0.34, 0.06, 0.22, 1.03),
+    opacity 0.3s ease-out, filter 0.3s ease-out;
+}
+#meihuaBox.wb-pop {
+  transform: scale(0.14);
+  opacity: 0;
+  filter: blur(7px);
+  transition: none !important;
+}
+#meihuaBox.wb-pop-out {
+  transform: scale(0.1);
+  opacity: 0;
+  filter: blur(7px);
+  transition: transform 0.3s cubic-bezier(0.4, 0.05, 0.6, 0.5), opacity 0.24s ease-in,
+    filter 0.24s ease-in;
+}
+/* will-change 只在这两帧期间挂：常驻会让整块面板常驻合成层，正文容易失去次像素抗锯齿、发虚 */
+#meihuaBox.wb-pop,
+#meihuaBox.wb-pop-out {
+  will-change: transform, opacity;
+}
+/* --------------------------------------------------------------------------
+   最小化标题条（.winbox.min，2026-10-29）
+   需求：点「—」不要把面板扔到左下角，要收到右上角齿轮按钮的正下方。
+   位置（left/top/width/height）由 settings.js 的 dockWinboxMin() 按齿轮实测矩形写内联，
+   这里只管观感和过渡：
+     · 过渡写在这条 .min 规则上 —— Winbox 内部是先改尺寸再 addClass("min")，同一帧内完成，
+       但过渡归属看「变更后的样式」，所以依旧会从面板原位置滑到齿轮下方；
+     · 标题条里只留标题文字，✕ / 最大化键藏掉（点标题条本体就是还原，别再给两个会打架的按钮）；
+     · 手型光标 + 顶部圆角，看着像一张「收起来的卡片」。
+   -------------------------------------------------------------------------- */
+#meihuaBox.min {
+  transition: left 0.36s cubic-bezier(0.3, 1, 0.28, 1), top 0.36s cubic-bezier(0.3, 1, 0.28, 1),
+    width 0.36s cubic-bezier(0.3, 1, 0.28, 1), height 0.36s cubic-bezier(0.3, 1, 0.28, 1);
+  opacity: 1;
+  filter: none;
+  transform: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+#meihuaBox.min .wb-close,
+#meihuaBox.min .wb-max,
+#meihuaBox.min .wb-full {
+  display: none !important;
+}
+/* 缩成标题条的过程中把面板内容藏掉。
+   这里不能用 display:none：设置页根节点带内联 display:block，Winbox 自带的
+   .winbox.min .wb-body>*{display:none} 根本盖不住它；而且 display:none 会让 .wb-body
+   的 scrollHeight 归零、滚动位置被夹到 0，还原后又会跳回顶部。
+   用 visibility:hidden 恰好：不画内容、布局还在、滚动位置原样保留。 */
+#meihuaBox.min .wb-body > * {
+  visibility: hidden !important;
+}
+/* 缩的过程中别露出那块灰白底板，只留一条和标题栏同色的条在飞，视觉上更像「收起来了」 */
+#meihuaBox.min .wb-body {
+  background: transparent !important;
+}
+#meihuaBox.min .wb-header,
+#meihuaBox.min .wb-drag {
+  cursor: pointer;
+}
+#meihuaBox.min .wb-drag {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+#meihuaBox.min .wb-header .wb-title {
+  font-size: 13.5px;
+  letter-spacing: 0.5px;
+}
+/* 尊重系统「减少动态效果」：只留一个淡入淡出 */
+@media (prefers-reduced-motion: reduce) {
+  #meihuaBox,
+  #meihuaBox.wb-pop,
+  #meihuaBox.wb-pop-out {
+    transition: opacity 0.2s ease !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* 音乐馆页头站名的静态辉光（10-30，纯装饰，不依赖音频数据） */
+#page-site-info #site-title {
+  text-shadow: 0 2px 20px color-mix(in srgb, var(--theme-color, #ff1493) 45%, transparent);
+}
+
+/* ============================================================================
+   全站宽度改造（10-30，第十九版）
+   作者要求：
+     ①「把全站的页面都改的像这么大（音乐馆这么宽）」
+     ②「左边可以以文章的最左边来确定距离，但是右边不可以以文章页面定距离了，
+        要以目录的最右边来定距离」—— 两条红线间距 20px，目录尺寸不动
+     ③ 音乐馆页：左右留白相等（右边到菜单按钮的距离保持，左边改成一样），整体改小一点
+
+   已知上游事实（量过，别猜）：
+     · 主题 `.layout`（_page/common.styl）：display:flex; max-width:1200px; padding:40px 15px
+       → 站点自定义 CSS 又把它改成 max-width:1400px（_custom/custom.css:1033）
+     · 主题 `.layout > div:first-child`（文章列）：width:74%
+       → 站点 ≥1200px 时改成 flex:1 1 auto; width:auto（site-inject 第 4/12 块）
+     · `#aside-content`（右侧目录）：width:26%，站点 ≥1200px 时固定 340px
+     · 右侧悬浮工具条 #rightside：position:fixed，按钮 38px，右边缘 ≈ 窗口右 −48px
+       → 内容必须在它左边收住（site-inject 第 4/12 块已经把 .layout 右内边距加大到 78px）
+     · 音乐馆页（.mp-page）此前是 body:has() 单独把 .layout 撑到 max-width:none，
+       左右内边距 124px / 96px —— 这一版按作者要求改成两边相等并整体收窄。
+
+   这里的做法：
+     · 全站 .layout 上限 1400 → 1560px（窗口不够宽时自然回落到 100%）
+     · 文章页：文章列吃掉剩余空间，右边缘 = 目录左边缘；
+       目录右边缘到窗口右边留 20px（作者的两条红线间距）
+     · 音乐馆页：左右内边距统一 96px，并给一个比全站略小的上限（作者说"改小一点"）
+   ========================================================================== */
+
+/* ── 全站统一（10-30 第二十一版，取代第十九版的固定 20/68 方案）────────────
+   作者原话：「现在把全站的全部页面都按照这个距离来修改 主页给我恢复以前的样子
+             其他全站的页面全部照这个音乐馆的页面修改
+             现在的窗口比如说是1600 那么两边都是165
+             其他的页面全部按照这个百分比来定」
+   即：除首页外，所有页面的左右留白都用音乐馆那套比例公式：
+       padding-left  = calc(10.3125vw + 21px)
+       padding-right = calc(10.3125vw + 7px)
+   （10.3125vw = 165px / 1600 视口；两个固定补偿来自胶囊 left:10/宽52 与
+     工具条 right:48，推导见下方音乐馆块。）
+   首页 #body-wrap.home 单独恢复成老样子（见再下面一块）。 */
+@media screen and (min-width: 861px) {
+  #body-wrap:not(.home) .layout {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: calc(10.3125vw + 21px);
+    padding-right: calc(10.3125vw + 7px);
+  }
+}
+
+/* ── 首页恢复以前的样子（10-30 第二十一版）────────────────────────────
+   「以前」= 站点自定义 CSS 的设定：.layout 上限 1400px 居中（custom.css:1033），
+   内边距按主题默认 40px 15px，右侧再按第 4/12 块的侧栏规则给悬浮工具条留位：
+     901~1400px 视口 → padding-right 78px
+     1401px 以上     → padding-right 随居中余量动态回收（最少 15px）
+   首页布局是 recent-posts 卡片流，跟内容页（文章/归档/音乐馆）不是一套排版，
+   所以单独恢复，不跟全站统一。 */
+@media screen and (min-width: 861px) {
+  #body-wrap.home .layout {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+  }
+}
+@media screen and (min-width: 901px) and (max-width: 1400px) {
+  #body-wrap.home .layout { padding-right: 78px; }
+}
+@media screen and (min-width: 1401px) {
+  #body-wrap.home .layout { padding-right: max(15px, calc(78px - (100vw - 1400px) / 2)); }
+}
+
+/* --- 音乐馆页：左右留白相等，整体比全站略窄 ---
+   作者原话：「右边的距离菜单按钮距离就刚刚好 我告诉你该到多大…
+   比如说右边的距离菜单按钮距离是10px 那么现在就改为20px
+   左边距离音乐胶囊也改为20px 两边相等 20px 我只是举例子
+   实际是多少还要看你当时给我改的是多少」
+
+   实测依据（1600 视口，tools/mpwidth.mjs 量出来的）：
+     · 左：音乐胶囊 #ds-mini 固定在 left:10px、宽 52px → 右边缘 62px
+       （#fps 帧率徽章也在左边，见 daily-say.css:393-396）
+     · 右：悬浮工具条 #rightside 固定在 窗口右 −48px → 左边缘 1544
+   「右边刚刚好」= 卡片右边缘到工具条左边缘 = 165px（改之前的实测值）。
+   左边要做到一样 → 卡片左边缘 = 62（胶囊右边缘）+ 165 = 227px。
+
+   但 .layout 是居中的（margin:0 auto），左右内边距一改，两侧留白会跟着变，
+   而且「卡片左边缘到胶囊」还隔着 .layout 自身的居中余量 —— 直接写死像素会在
+   窗口变宽时错位。所以这里改用「左右内边距相等 + 限制布局宽度」的做法：
+   胶囊占位 62px + 工具条占位 48px = 110px 的固定悬浮物，
+   两侧各留 96px 内容留白（左右完全相等），布局整体不铺满（max-width 1440px，
+   比全站的 1620px 窄 —— 这就是作者说的「有点太大了，再改小一点」）。 */
+@media screen and (min-width: 861px) {
+  body:has(#article-container .mp-page) .layout {
+    /* 改成按视口比例换算（作者 10-30 第二十版）：
+       「按照现在的窗口大小和整体的页面尺寸换算成百分比来控制，
+         不管窗口多大，布局的整体比例是不会变的」
+       基准：1600 视口时「卡片右 → 工具条左」= 165px → 165/1600 = 10.3125vw。
+       两段固定补偿来自两个**不随窗口缩放**的固定定位元素：
+         左：胶囊 #ds-mini 固定 left:10px、宽 52px → 右边缘恒为 62px
+         右：工具条 #rightside 固定 right:48px → 左边缘 = 视口宽 − 56px
+       于是：
+         距离左 = (PL + 41) − 62 = PL − 21
+         距离右 = (V−56) − (V−8−PR−41) = PR − 7
+       要两边相等且都 = 10.3125vw：
+         PL = 10.3125vw + 21px
+         PR = 10.3125vw + 7px
+       实测：1000/1200/1280/1440/1600/1920 六档视口，两侧距离逐档相等。 */
+    /* 音乐馆页左右留白相等，且距离不随窗口宽度漂移：
+       做法是**布局铺满（不居中）** + 左右内边距直接给两个固定悬浮物的位置：
+         左：胶囊 #ds-mini 固定 left:10px、宽 52px → 右边缘 62px
+         右：工具条 #rightside 固定在 窗口右 −48px → 左边缘 = 100vw − 56px
+       padding-left = 62 + 165 = 227px（165 = 卡片到悬浮物的距离，两边一样）
+       padding-right = 56 + 165 = 221px
+       「有点太大了，再改小一点」→ 加 max-width:1360px，让内容区不至于铺得太开。 */
+    /* 关键：布局必须**不居中**（margin:0），否则内边距会被居中余量抵消，
+       左右距离就不等于「到悬浮物的距离」了。 */
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    /* 实测校准（1600 视口）：
+       卡片左边缘 = padding-left + 41（#article-container 到 .mp-deck-card 卡片边还有 41px）
+       卡片右边缘 = 视口宽 − padding-right − 41
+       要「卡片到胶囊(右边缘 62)」= 165 → 卡片左 227 → padding-left = 227−41 = 186
+       要「卡片到工具条(左边缘 1544)」= 165 → 卡片右 1379 → padding-right = 1592−41−1379 = 172 */
+    padding-left: calc(10.3125vw + 21px);
+    padding-right: calc(10.3125vw + 7px);
+  }
+}
+
+/* ── 备选方案 B：距离绝对恒定 165px（不随窗口缩放）─────────────────────
+   如果作者要的是「不管窗口多大，卡片到工具条始终差 165px」，
+   把下面这段的注释去掉、同时把上面那条 padding 注释掉即可。
+   公式（胶囊右恒 62、工具条左 = V−56）：
+     距离左 = PL − 21 = 165  → PL = 186px
+     距离右 = PR − 7  = 165  → PR = 172px
+   注意：这样卡片宽度会随窗口线性变化（1000 屏 676px、1920 屏 1406px）。 */
+/*
+body:has(#article-container .mp-page) .layout {
+  padding-left: 186px;
+  padding-right: 172px;
+}
+*/
+
+/* ── 天文馆页（box/astronomy）──────────────────────────────────────────
+   作者 10-31 明确要求：不要动整页布局尺寸（.layout 留白/侧栏保持全站默认），
+   只放大「红框那张深色卡片」本身（voyager.html 的 .wrap / iframe 画布）。
+   因此这里不再 override .layout，留白/侧栏交给全站规则。
+   卡片尺寸的调整写在 index.md 的 iframe 与 voyager.html 的 .wrap 上。 */
+
+/* ── 页脚「站点运行 X 年 Y 天」（2026-10-31 新增）────────────────────────
+   位置：themes/fomalhaut/layout/includes/footer.pug 的 .copyright 里，
+        紧跟「©2023-2026 By chengicli」之后的 #ftRun。
+   文字由 source/js/modules/footer-time.js 每秒写入（值没变就不写 DOM），规则与
+   「已经和女朋友 X 天啦💞」一致：
+     · 不满 1 年只显示天数：50 天 → 「50 天」，不出现「0 年」
+     · 满整年省略「0 天」：正好 365 天 → 「1 年」，不是「1 年 0 天」
+   数字加粗 + 主题色，和 #ftLove 的视觉语言保持一致。 */
+#footer-wrap .copyright #ftRun {
+  margin-left: 10px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+#footer-wrap .copyright #ftRun b {
+  margin: 0 2px;
+  color: var(--theme-color);
+  font-weight: 700;
+}
+@media screen and (max-width: 768px) {
+  #footer-wrap .copyright #ftRun {
+    display: block;
+    margin: 4px 0 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * 全站禁止选中文字（避免拖拽/双击误选）。只放开：文章详情页正文、代码框、输入框、每日一言句子。
+ * 判定依据：文章页有 #post，Page 类型页面（螺纹速查 / 留言板 / 友链等）是 #page，两者互斥。
+ * 每日一言标题「每日一言·······悬停音乐」保持禁选，只放开 .ds-quote / .ds-from。
+ * ------------------------------------------------------------------------- */
+body { -webkit-user-select: none; user-select: none; }
+#post #article-container,
+pre,
+code,
+figure.highlight,
+input,
+textarea,
+[contenteditable="true"] { -webkit-user-select: text; user-select: text; }
+#daily-say .ds-quote,
+#daily-say .ds-from { -webkit-user-select: text; user-select: text; }
+
+/* Page 页面默认禁选；front-matter 写 selectable: true 时整页放开（模板 page.pug 会加 .is-selectable） */
+#page.is-selectable,
+#page.is-selectable * { -webkit-user-select: text; user-select: text; }

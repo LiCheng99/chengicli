@@ -10,23 +10,23 @@
 
 /* ---------------------------------------------------------------- 变量 */
 .twikoo {
-  --tk-accent: var(--theme-color, #39c5bb);
+  --tk-accent: var(--theme-color, #FF1493);
 
   --tk-accent-strong: #23766f;
   --tk-accent-strong: color-mix(in srgb, var(--tk-accent) 62%, #000);
   /* 主操作按钮的深色档 + 极浅档：满饱和 --tk-accent 在浅底上对比度只有 2.1，按钮文字看不清 */
   --tk-accent-deep: #23766f;
   --tk-accent-deep: hsl(from var(--tk-accent) h s 30%);
-  --tk-accent-faint: rgba(57, 197, 187, 0.14);
+  --tk-accent-faint: rgba(255, 20, 147, 0.14);
   --tk-accent-faint: color-mix(in srgb, var(--tk-accent) 14%, transparent);
   --tk-on-deep: #fff;
   --tk-disabled-bg: #eceff1;
   --tk-disabled-text: #5c686e;
-  --tk-accent-soft: rgba(57, 197, 187, 0.1);
+  --tk-accent-soft: rgba(255, 20, 147, 0.1);
   --tk-accent-soft: color-mix(in srgb, var(--tk-accent) 10%, transparent);
-  --tk-accent-line: rgba(57, 197, 187, 0.3);
+  --tk-accent-line: rgba(255, 20, 147, 0.3);
   --tk-accent-line: color-mix(in srgb, var(--tk-accent) 30%, transparent);
-  --tk-accent-wash: rgba(57, 197, 187, 0.06);
+  --tk-accent-wash: rgba(255, 20, 147, 0.06);
   --tk-accent-wash: color-mix(in srgb, var(--tk-accent) 6%, transparent);
 
   --tk-line-soft: rgba(128, 128, 128, 0.16);
@@ -50,9 +50,14 @@
 }
 
 /* ---------------------------------------------------------- 评论总数标题 */
+/* 「N 条评论 + 排序/搜索/设置」这一排。
+   组件内置只有 margin-bottom:16px、没有上边距，所以它紧贴在编辑器卡片下沿，
+   跟上面那块输入框糊成一片、看不出这是一段新内容的开头。这里补一段上边距，
+   让它明确充当「列表标题」。 */
 .twikoo .tk-comments-title {
   font-size: 1.15rem;
   letter-spacing: 0.01em;
+  margin-top: 28px;
 }
 .twikoo .tk-comments-count {
   /* 不再用满饱和主题色：白底上 2.1:1，又亮又糊。改用主题色的深档（5.1:1） */
@@ -390,7 +395,7 @@
 }
 .twikoo .tk-avatar {
   transition: box-shadow 0.25s ease;
-  /* 降一档饱和度：满饱和青绿描边跟用户头像、气泡、页面底图都容易打架 */
+  /* 降一档饱和度：满饱和深粉红色描边跟用户头像、气泡、页面底图都容易打架 */
   filter: saturate(0.55);
 }
 .twikoo .tk-comment:hover > .tk-avatar {
@@ -432,18 +437,8 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* 主楼气泡：主题色实心；访客气泡：柔和浅底（保留主题既有的「楼中楼」观感） */
-.twikoo .tk-content {
-  border-radius: 4px 14px 14px 14px;
-  box-shadow: var(--tk-shadow-soft);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
-}
-.twikoo .tk-comment:hover .tk-content {
-  box-shadow: var(--tk-shadow-hover);
-}
-.twikoo .tk-replies .tk-content {
-  box-shadow: none;
-}
+/* 气泡的圆角 / 描边 / 底色全部由文件末尾「气泡」一段接管（那里写在后面、优先级更高），
+   这里只留图片圆角，避免同一个属性两处各写一半、改一边忘一边。 */
 .twikoo .tk-content img {
   border-radius: 8px;
 }
@@ -517,16 +512,8 @@
   box-shadow: var(--tk-shadow-accent);
 }
 
-/* 底部 Twikoo 版权小字：弱化，不抢视线 */
-.twikoo .tk-footer {
-  color: inherit;
-  opacity: 0.3;
-  font-size: 0.72em;
-  transition: opacity 0.2s ease;
-}
-.twikoo .tk-footer:hover {
-  opacity: 0.55;
-}
+/* 底部 Twikoo 版权小字：原先这里只是「弱化」（opacity .3 + hover .55），
+   现在整行不显示，规则统一收在文件末尾「页脚署名」一段，这里不再重复定义同一属性。 */
 
 /* 表情面板：与输入框同一套圆角 / 描边语言 */
 .twikoo .OwO .OwO-body {
@@ -635,48 +622,69 @@
 }
 
 /* ------------------------------------------------------------------ 气泡
-   主题自带的 .tk-content 是 Twikoo 1.x 时代写死的两套色：
-   白天 #8d6ca3（紫）+ 白字 4.37:1，博主 #29b19e（青绿）+ 白字只有 2.67:1；
-   夜间 #3a2c44 / #26453a。它们和页面主题色（--theme-color，用户可换）对不上，
-   也和评论区的其余部分不像一套东西。这里改成「同一 hue 的深/浅两档」：
-   白天浅色气泡配深色字，夜间深色气泡配浅色字，对比度全部 ≥ 5:1。
-   主题里 .tk-content 的 font-size/width/overflow: visible 等仍然保留，不动。 */
+   历史：主题自带的 .tk-content 是 Twikoo 1.x 写死的两套色（白天 #8d6ca3 紫、博主 #29b19e，
+   夜间 #3a2c44 / #26453a），跟 --theme-color 对不上；后来改成「同一 hue 的深/浅两档实心块」
+   （亮色 hsl 88% 浅粉、博主 72%；夜间 26% / 28% 深紫红）。
+   问题（2026-11-01 作者贴图：「这个评论的背景好丑」）：满宽实色块压在白卡上，
+   跟旁边的输入框、小字、整站的玻璃卡片完全不是一套语言，博主那条 28% 的深品红尤其闷。
+
+   现在：与留言板导语卡 .msg-lead 同一套 —— 中性玻璃底 + 左侧一根主题色竖条，正文用继承色。
+   博主的差别只留在竖线（30% → 满色）与描边一档，不再整块上色：
+   整块染主题色会让人一眼只看见颜色、看不见字，「博主」本来就有绿标签在昵称后面。 */
 .twikoo .tk-content {
-  background: #c9eeea;
-  background: hsl(from var(--tk-accent) h s 88%);
-  color: #123a42;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
-  transition: box-shadow 0.25s ease;
+  background: rgba(128, 128, 128, 0.045);
+  color: inherit;
+  border: 1px solid var(--tk-line-soft);
+  border-left: 3px solid var(--tk-accent-line);
+  border-radius: 4px 14px 14px 4px;
+  box-shadow: none;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 .twikoo .tk-content a {
-  color: #1c6c62;
-  color: hsl(from var(--tk-accent) h 62% 26%);
+  color: var(--tk-accent-deep);
+  border-bottom: 1px solid var(--tk-accent-faint);
+}
+.twikoo .tk-content a:hover {
+  border-bottom-color: var(--tk-accent);
 }
 .twikoo .tk-master .tk-content {
-  background: #7fd0c7;
-  background: hsl(from var(--tk-accent) h s 72%);
-  color: #0c272e;
+  border-color: var(--tk-accent-faint);
+  border-left-color: var(--tk-accent);
 }
 .twikoo .tk-master .tk-content a {
-  color: #14645c;
-  color: hsl(from var(--tk-accent) h 65% 20%);
+  color: var(--tk-accent-strong);
 }
+
+/* 深色：底改成一层极淡的白（玻璃感），竖线要提亮，30% 主题色在深底上几乎看不见 */
 [data-theme="dark"] .twikoo .tk-content {
-  background: #1c5f5a;
-  background: hsl(from var(--tk-accent) h s 26%);
-  color: #eafbf8;
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+  border-left-color: rgba(255, 20, 147, 0.55);
+  border-left-color: color-mix(in srgb, var(--tk-accent) 55%, transparent);
+  color: inherit;
 }
 [data-theme="dark"] .twikoo .tk-content a {
-  color: #c7ece7;
-  color: hsl(from var(--tk-accent) h s 85%);
+  color: #f0a8cf;
+  color: hsl(from var(--tk-accent) h 82% 76%);
 }
 [data-theme="dark"] .twikoo .tk-master .tk-content {
-  background: #1f6a64;
-  background: hsl(from var(--tk-accent) h s 28%);
-  color: #f0fdfa;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-left-color: var(--tk-accent);
 }
 [data-theme="dark"] .twikoo .tk-master .tk-content a {
-  color: #cff3ee;
-  color: hsl(from var(--tk-accent) h s 86%);
+  color: #f7c4dd;
+  color: hsl(from var(--tk-accent) h 88% 82%);
+}
+
+/* ------------------------------------------------------------------ 页脚署名
+   Twikoo 会在评论区右下角渲染一行「Powered by Twikoo vX.Y.Z」：
+     <div class="tk-footer"> Powered by <a href="https://twikoo.js.org">Twikoo v2.0.12</a></div>
+   组件自带样式是 .tk-footer{text-align:end;color:#999;margin-top:1em;font-size:.75em}。
+   这一行不属于内容，且会让卡片右下角多出一条灰尾巴；这里直接不显示。
+
+   用 display:none 而不是去改三方 JS 或删 DOM ——
+   升级 Twikoo 后若类名变了，最坏情况只是这行又冒出来（看见再补一条选择器即可），
+   不会因为动了压缩过的 twikoo.all.min.js 而连带弄坏评论逻辑。 */
+.twikoo .tk-footer {
+  display: none !important;
 }

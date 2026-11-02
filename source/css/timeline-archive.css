@@ -38,7 +38,7 @@
   --tl-rail: 62px;
   --tl-gap: 18px;
 
-  --tl-c: var(--theme-color, #39c5bb);
+  --tl-c: var(--theme-color, #FF1493);
   --tl-ink: var(--font-color, #4c4948);
   --tl-card: var(--card-bg, #fff);
 
@@ -47,7 +47,7 @@
   --tl-hair: color-mix(in srgb, var(--font-color, #4c4948) 13%, transparent);
   --tl-mute: rgba(76, 73, 72, .52);
   --tl-mute: color-mix(in srgb, var(--font-color, #4c4948) 52%, transparent);
-  --tl-soft: rgba(57, 197, 187, .1);
+  --tl-soft: rgba(255, 20, 147, .1);
   --tl-soft: color-mix(in srgb, var(--tl-c) 10%, transparent);
   --tl-tint: #f7fbfb;
   --tl-tint: color-mix(in srgb, var(--tl-c) 4%, var(--card-bg, #fff));
@@ -81,7 +81,7 @@
   width: 2px;
   border-radius: 2px;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(57, 197, 187, .5), rgba(57, 197, 187, .18) 10%, rgba(57, 197, 187, .18) 90%, transparent);
+  background: linear-gradient(180deg, rgba(255, 20, 147, .5), rgba(255, 20, 147, .18) 10%, rgba(255, 20, 147, .18) 90%, transparent);
   background: linear-gradient(180deg,
     color-mix(in srgb, var(--tl-c) 50%, transparent) 0%,
     color-mix(in srgb, var(--tl-c) 20%, transparent) 9%,
@@ -179,11 +179,11 @@
 
 #article-container .timeline.tl-ready a.tl-chip:hover {
   color: var(--tl-c);
-  border-color: rgba(57, 197, 187, .45);
+  border-color: rgba(255, 20, 147, .45);
   border-color: color-mix(in srgb, var(--tl-c) 45%, transparent);
   text-decoration: none;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px -8px rgba(57, 197, 187, .7);
+  box-shadow: 0 6px 16px -8px rgba(255, 20, 147, .7);
   box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--tl-c) 70%, transparent);
 }
 
@@ -211,7 +211,7 @@
   right: 0;
   bottom: 0;
   height: 4px;
-  background: rgba(57, 197, 187, .15);
+  background: rgba(255, 20, 147, .15);
   background: color-mix(in srgb, var(--tl-c) 15%, transparent);
 }
 
@@ -219,7 +219,7 @@
   display: block;
   height: 100%;
   border-radius: 0 2px 2px 0;
-  background: rgba(57, 197, 187, .6);
+  background: rgba(255, 20, 147, .6);
   background: color-mix(in srgb, var(--tl-c) 58%, transparent);
   transition: background .2s;
 }
@@ -279,7 +279,7 @@
 #article-container .timeline.tl-ready .tl-year-line i {
   flex: 1 1 auto;
   height: 1px;
-  background: linear-gradient(90deg, rgba(57, 197, 187, .45), transparent 88%);
+  background: linear-gradient(90deg, rgba(255, 20, 147, .45), transparent 88%);
   background: linear-gradient(90deg, color-mix(in srgb, var(--tl-c) 42%, transparent), transparent 88%);
 }
 
@@ -386,10 +386,10 @@
 }
 
 #article-container .timeline.tl-ready .timeline-item:hover > .timeline-item-content {
-  border-color: rgba(57, 197, 187, .32);
+  border-color: rgba(255, 20, 147, .32);
   border-color: color-mix(in srgb, var(--tl-c) 32%, transparent);
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px -14px rgba(57, 197, 187, .8), 0 1px 2px rgba(7, 17, 27, .03);
+  box-shadow: 0 8px 22px -14px rgba(255, 20, 147, .8), 0 1px 2px rgba(7, 17, 27, .03);
   box-shadow: 0 8px 22px -14px color-mix(in srgb, var(--tl-c) 80%, transparent), 0 1px 2px rgba(7, 17, 27, .03);
 }
 
@@ -413,7 +413,7 @@
   line-height: 1.7;
   color: #fff;
   background: var(--tl-c);
-  box-shadow: 0 4px 12px -6px rgba(57, 197, 187, .9);
+  box-shadow: 0 4px 12px -6px rgba(255, 20, 147, .9);
   box-shadow: 0 4px 12px -6px color-mix(in srgb, var(--tl-c) 90%, transparent);
 }
 

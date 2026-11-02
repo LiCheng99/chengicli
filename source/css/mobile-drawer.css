@@ -11,7 +11,7 @@
  *   主题只给了抽屉最朴素的默认样式（themes/fomalhaut/source/css/_layout/sidebar.styl：
  *   一行一个文字链接 + 一条 2px 虚线 hr；配色在 themes/fomalhaut/source/css/_custom/custom.css:2303-2312）。
  *   主题没有任何开关能调出「层级 / 卡片 / 图标底衬 / 动效」这些设计感，配置项做不到，
- *   所以按站点既有约定（source/css/stats.css、source/css/twikoo.css 同样做法）新增独立样式表，
+ *   所以按站点既有约定（source/css/stats.css 同样做法）新增独立样式表，
  *   themes/ 下一行源码都不动。
  *
  * 引入
@@ -43,27 +43,27 @@
   --md-base: #f7fbfd;                                              /* 面板兜底底色 */
   --md-aurora-rose: #ffd7e4;                                       /* 左上：晨曦粉（沿用原抽屉的粉蓝基因） */
   --md-aurora-sky: #c8f1ff;                                        /* 右上：天光蓝 */
-  --md-aurora-mint: rgba(57, 197, 187, 0.16);                      /* 底部：主题色薄雾 */
+  --md-aurora-mint: rgba(255, 20, 147, 0.16);                      /* 底部：主题色薄雾 */
   --md-aurora-mint: color-mix(in srgb, var(--theme-color) 16%, transparent);
   --md-star: rgba(255, 255, 255, 0);                               /* 浅色模式不撒星星 */
 
   --md-ink: #2b3a3f;                                               /* 主文字 */
   --md-ink-soft: #4a5e64;                                          /* 次级文字 */
   --md-ink-mute: #7e9096;                                          /* 弱化文字（标签、页脚签名） */
-  --md-accent: #39c5bb;                                            /* 主题色本体：只做装饰（光晕、描边） */
-  --md-accent: var(--theme-color, #39c5bb);
+  --md-accent: #FF1493;                                            /* 主题色本体：只做装饰（光晕、描边） */
+  --md-accent: var(--theme-color, #FF1493);
   --md-accent-ink: #1d6b64;                                        /* 主题色压深：做文字用，保证对比度 */
-  --md-accent-ink: color-mix(in srgb, var(--theme-color, #39c5bb) 60%, #062b28);
+  --md-accent-ink: color-mix(in srgb, var(--theme-color, #FF1493) 60%, #062b28);
 
   --md-line: rgba(12, 60, 70, 0.09);                               /* 发丝线 */
   --md-line-strong: rgba(12, 60, 70, 0.17);
   --md-card: rgba(255, 255, 255, 0.62);                            /* 统计胶囊底 */
-  --md-wash: rgba(57, 197, 187, 0.1);                              /* hover 洗色 */
+  --md-wash: rgba(255, 20, 147, 0.1);                              /* hover 洗色 */
   --md-wash: color-mix(in srgb, var(--theme-color) 10%, transparent);
   --md-tile: rgba(255, 255, 255, 0.92);                            /* 图标方块底 */
-  --md-tile-on: rgba(57, 197, 187, 0.18);
+  --md-tile-on: rgba(255, 20, 147, 0.18);
   --md-tile-on: color-mix(in srgb, var(--theme-color) 18%, transparent);
-  --md-halo: rgba(57, 197, 187, 0.34);                             /* 头像呼吸光晕 */
+  --md-halo: rgba(255, 20, 147, 0.34);                             /* 头像呼吸光晕 */
   --md-halo: color-mix(in srgb, var(--theme-color) 34%, transparent);
   --md-shadow: rgba(8, 42, 52, 0.55);                              /* 投影基色 */
   --md-edge: rgba(255, 255, 255, 0.75);                            /* 左缘高光 */
@@ -114,7 +114,7 @@
 /* ---------------------------------------------------------------- 顶部字标 */
 /* 主题没有「站点名」这个节点，用伪元素补一行 masthead；★ 改站名记得改这里 */
 #sidebar #sidebar-menus::before {
-  content: "Demo";
+  content: "chengicli";
   display: block;
   padding: 20px 24px 0;
   text-align: center;
@@ -145,7 +145,7 @@
   height: 96px;
   margin: 24px auto 20px;
   /* 呼吸灯不在这里写：主题的 huxi_light / huxi_dark 已由 /css/avatar-glow.css 改成
-     主题色派生（原来写死 #9ff2d2 / #39c5bb），抽屉头像直接复用同一套动画，
+     主题色派生（原来写死 #9ff2d2 / #FF1493），抽屉头像直接复用同一套动画，
      和电脑端作者卡保持一致；尺寸/圆角/白边仍归本文件管 */
 }
 
@@ -409,8 +409,8 @@
 [data-theme="dark"] #sidebar #sidebar-menus {
   --md-base: #101b20;
   --md-aurora-rose: rgba(96, 124, 214, 0.32);                       /* 左上：夜蓝 */
-  --md-aurora-sky: rgba(57, 197, 187, 0.3);                       /* 右上：极光青 */
-  --md-aurora-mint: rgba(57, 197, 187, 0.1);
+  --md-aurora-sky: rgba(255, 20, 147, 0.3);                       /* 右上：极光青 */
+  --md-aurora-mint: rgba(255, 20, 147, 0.1);
   --md-aurora-mint: color-mix(in srgb, var(--theme-color) 10%, transparent);
   --md-star: rgba(255, 255, 255, 0.75);                            /* 深色下撒一层星星 */
 
@@ -418,17 +418,17 @@
   --md-ink-soft: rgba(234, 243, 244, 0.72);
   --md-ink-mute: rgba(234, 243, 244, 0.46);
   --md-accent-ink: #7fe3da;
-  --md-accent-ink: color-mix(in srgb, var(--theme-color, #39c5bb) 74%, #ffffff);
+  --md-accent-ink: color-mix(in srgb, var(--theme-color, #FF1493) 74%, #ffffff);
 
   --md-line: rgba(255, 255, 255, 0.08);
   --md-line-strong: rgba(255, 255, 255, 0.18);
   --md-card: rgba(255, 255, 255, 0.055);
-  --md-wash: rgba(57, 197, 187, 0.13);
+  --md-wash: rgba(255, 20, 147, 0.13);
   --md-wash: color-mix(in srgb, var(--theme-color) 13%, transparent);
   --md-tile: rgba(255, 255, 255, 0.07);
-  --md-tile-on: rgba(57, 197, 187, 0.22);
+  --md-tile-on: rgba(255, 20, 147, 0.22);
   --md-tile-on: color-mix(in srgb, var(--theme-color) 22%, transparent);
-  --md-halo: rgba(57, 197, 187, 0.4);
+  --md-halo: rgba(255, 20, 147, 0.4);
   --md-halo: color-mix(in srgb, var(--theme-color) 40%, transparent);
   --md-shadow: rgba(0, 0, 0, 0.8);
   --md-edge: rgba(255, 255, 255, 0.07);
@@ -483,9 +483,9 @@
   /* 上面那条 animation:none!important 会把头像的呼吸灯一起关掉，这里补一圈常亮光晕，
      和 /css/avatar-glow.css 在 reduce 模式下的处理保持一致 */
   [data-theme="light"] #sidebar #sidebar-menus > .avatar-img {
-    box-shadow: 0 0 5px 5px var(--ag-ring, #9ff2d2), 0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.3));
+    box-shadow: 0 0 5px 5px var(--ag-ring, #9ff2d2), 0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.3));
   }
   [data-theme="dark"] #sidebar #sidebar-menus > .avatar-img {
-    box-shadow: 0 0 5px 5px var(--ag-ring, #39c5bb), 0 0 18px 7px var(--ag-halo, rgba(57, 197, 187, 0.42));
+    box-shadow: 0 0 5px 5px var(--ag-ring, #FF1493), 0 0 18px 7px var(--ag-halo, rgba(255, 20, 147, 0.42));
   }
 }

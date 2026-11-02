@@ -23,29 +23,29 @@
 var now1 = new Date();
 
 function createtime1() {
-  var grt = new Date("08/09/2022 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  var grt = new Date("05/03/2023 00:00:00"); //此处修改你的建站时间或者网站上线时间
   now1.setTime(now1.getTime() + 250);
   var days = (now1 - grt) / 1000 / 60 / 60 / 24;
   var dnum = Math.floor(days);
 
   var ascll = [
-    `欢迎来到Demoの小家!`,
+    `欢迎来到chengicliの小家!`,
     `Future is now 🍭🍭🍭`,
     `
         
-███████  ██████  ███    ███  █████  ██      ██   ██  █████  ██    ██ ████████ 
-██      ██    ██ ████  ████ ██   ██ ██      ██   ██ ██   ██ ██    ██    ██    
-█████   ██    ██ ██ ████ ██ ███████ ██      ███████ ███████ ██    ██    ██    
-██      ██    ██ ██  ██  ██ ██   ██ ██      ██   ██ ██   ██ ██    ██    ██    
-██       ██████  ██      ██ ██   ██ ███████ ██   ██ ██   ██  ██████     ██   
+█     █████  ███  █   █ █████ █   █  ███  █████  ███
+█       █   █     █   █ █     ██  █ █       █   █
+█       █   █     █████ ████  █ █ █ █ ███   █   █
+█       █   █     █   █ █     █  ██ █   █   █   █
+█████ █████  ███  █   █ █████ █   █  ███  █████  ███
                                               
 `,
-    "小站已经苟活",
+    "站点已经",
     dnum,
     "天啦!",
-    // 版权年份跟着走：2022 是建站年（与 _config.fomalhaut.yml 的 footer.owner.since 保持一致），
+    // 版权年份跟着走：2023 是建站年（与 _config.fomalhaut.yml 的 footer.owner.since 保持一致），
     // 结束年份取运行时的当前年份，省得每年手改一次。
-    "©2022-" + new Date().getFullYear() + " By Demo",
+    "©2023-" + new Date().getFullYear() + " By chengicli",
   ];
 
   setTimeout(
@@ -55,14 +55,14 @@ function createtime1() {
       // 2026-10-03 拆分时这串格式被改坏：中间多插了一个 %c 加换行把字符画顶到新行，
       // 换行被挪到「天啦!」前面把整句劈成两行，ascll[6] 版权行则整段丢失。
       `\n%c${ascll[0]} %c ${ascll[1]} %c${ascll[2]}%c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
-      "color:#39c5bb",
+      "color:#FF1493",
       "",
       // 字符画必须用等宽字体：控制台默认等宽字体可能把 U+2588(█) 当全角渲染，
       // 方块会比字符格宽一倍，整幅画糊成一片。这里显式指定带半宽方块的等宽字体。
-      "color:#39c5bb;font-family:Consolas,Menlo,Monaco,\"DejaVu Sans Mono\",\"Courier New\",monospace",
-      "color:#39c5bb",
+      "color:#FF1493;font-family:Consolas,Menlo,Monaco,\"DejaVu Sans Mono\",\"Courier New\",monospace",
+      "color:#FF1493",
       "",
-      "color:#39c5bb",
+      "color:#FF1493",
       ""
     )
   );
@@ -89,7 +89,7 @@ function createtime2() {
   setTimeout(
     console.warn.bind(
       console,
-      "%c ⚡ Powered by Demo %c 你正在访问Demoの小家",
+      "%c ⚡ Powered by chengicli %c 你正在访问chengicliの小家",
       "color:white; background-color:#f0ad4e",
       ""
     )

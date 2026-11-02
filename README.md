@@ -1,14 +1,20 @@
 # hexo-theme-fomalhaut · v1.0.5
 
 > 一套「克隆即用」的 Hexo 卡片式博客源码。主题基于 [Butterfly 4.3.1](https://butterfly.js.org/) 深度二次开发，
+>   
 > 并把**站点配置**与**主题代码**彻底分开：改配置就能搭起自己的站，升级主题不会冲掉你自己的改动。
 
-![hexo](https://img.shields.io/badge/Hexo-6.3.0-0e83c?style=flat-square&logo=hexo)
-![node](https://img.shields.io/badge/Node.js-18%20%7C%2020%20%7C%2022-339933?style=flat-square&logo=nodedotjs)
+![hexo](https://img.shields.io/badge/Hexo-6.3.0-0e83c?style=flat-square\&logo=hexo)
+
+![node](https://img.shields.io/badge/Node.js-18%20%7C%2020%20%7C%2022-339933?style=flat-square\&logo=nodedotjs)
+
 ![theme](https://img.shields.io/badge/Theme-Fomalhaut%20v1.0.5-6513df?style=flat-square)
+
 ![license](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)
-![stars](https://img.shields.io/github/stars/fomalhaut1998/hexo-theme-fomalhaut?style=flat-square&logo=github&label=Stars)
-![forks](https://img.shields.io/github/forks/fomalhaut1998/hexo-theme-fomalhaut?style=flat-square&logo=github&label=Forks)
+
+![stars](https://img.shields.io/github/stars/fomalhaut1998/hexo-theme-fomalhaut?style=flat-square\&logo=github\&label=Stars)
+
+![forks](https://img.shields.io/github/forks/fomalhaut1998/hexo-theme-fomalhaut?style=flat-square\&logo=github\&label=Forks)
 
 [界面预览](#六界面预览) · [快速开始](#五快速开始约-10-分钟) · [功能配置](#八主要功能怎么配) · [写文章](#九怎么开始写文章) · [文件地图](#七目录结构与文件地图) · [常见改动](#十最常改的地方速查)
 
@@ -60,10 +66,9 @@
 
 - 构建期往 `</body>` 前注入一段脚本：`pjax:complete` 后重放 `.js-pjax` 里因重复初始化而哑火的 wow 加类脚本，再补一次 `wow.doSync(document.body)` 并清掉失效的 boxes。
 
-**归档页与评论区两处小修**
+**归档页小修**
 
 - 归档页年份胶囊居中改用 `track.scrollBy`（不再用 `scrollIntoView`，避免整页被顶下 61px、顶栏跟着抖），新增 `--ar-bar-h`，并对 `#page-header` 监听 `nav-fixed`、pjax 往返复用同一套监听（`source/js/inject/archive-page.js`、`source/css/archive-page.css`）；
-- 评论区楼中楼展开的表情面板被后一条评论压住点不动：`.twikoo .tk-comment:has(.OwO-open)` 提到 `z-index: 3`（`source/css/twikoo.css`）。
 
 **回归脚本 13 → 14 个**（`tools/tests/`）
 
@@ -72,6 +77,7 @@
 **版本号**
 
 - 根 `package.json` / `package-lock.json`、`themes/fomalhaut/package.json`、主题 README、启动横幅（`welcome.js`）与页脚徽章 title 一起升到 `1.0.5`；上游 Butterfly 版本仍走 `scripts/butterfly-version.js`（4.3.1）。
+
 ### v1.0.4 — 美化面板预览化与导航改版（2026-10-11）
 
 这一版把「美化设置面板」从一长条滑条重做成可预览的分区，新增 5 个前端模块与 8 个回归脚本；顶栏导航抽出一份独立样式表并按设备能力降级磨砂；夜间切换改成三段小动画，整屏遮挡从 3000ms 压到约 900ms；另修一批小毛病（数字框裁切、目录连点互抢、搜索提示残留、帧率条对比度）。
@@ -83,8 +89,8 @@
 
 **主题色可自定义 + 预设色板整理为十一色**（`settings.js`、`source/css/site-inject.css`）
 
-- 面板加一个原生取色圈（视觉直径 24px、热区 44px、环宽 3px）：值以严格校验的六位 HEX 存 `themeCustomColor`，首帧校验不合法就回落默认青绿；
-- 预设删掉紫 / 灰 / 黑三个旧选项、补上抹茶绿，共十一色（红 / 橙 / 黄 / 抹茶 / 青绿 / 玉石绿 / 晴空蓝 / 柔靛蓝 / 雾蓝灰 / 紫罗兰 / 樱花粉），旧键自动迁移（`purple → purepurple`、`gray` / `black → darkblue`），375px 宽自动 6+5 换行；
+- 面板加一个原生取色圈（视觉直径 24px、热区 44px、环宽 3px）：值以严格校验的六位 HEX 存 `themeCustomColor`，首帧校验不合法就回落默认深粉红色；
+- 预设删掉紫 / 灰 / 黑三个旧选项、补上抹茶绿，共十一色（红 / 橙 / 黄 / 抹茶 / 深粉红色 / 玉石绿 / 晴空蓝 / 柔靛蓝 / 雾蓝灰 / 紫罗兰 / 樱花粉），旧键自动迁移（`purple → purepurple`、`gray` / `black → darkblue`），375px 宽自动 6+5 换行；
 - 新增 `themeOnColorInk()` 按 WCAG 相对亮度算 `--on-theme` / `--on-theme-away`：按钮、选中项、目录当前项、`::selection` 与 AI 助手面板都改读它，浅色主题色上不再白字发虚。
 
 **字体与背景预览化**（新增 `source/js/modules/appearance-fonts.js`、`appearance-backgrounds.js`）
@@ -127,6 +133,7 @@
 **版本号**
 
 - 主题自身版本（`package.json` 的 `version`）、启动横幅（`themes/fomalhaut/scripts/events/welcome.js`）与页脚徽章 title 一起升到 `1.0.4`；上游 Butterfly 版本仍走 `scripts/butterfly-version.js`（4.3.1），两者照旧分开。
+
 ### v1.0.3 — 归档页卡片改版与时间轴统计（2026-10-09）
 
 这一版把 `/archives/` 从「日期 + 标题」的列表换成卡片墙（新增 3 个文件，站点级实现、不动主题源码），时间线档案页的统计口径拆细，另修一个 pjax 换页后日历热力图永远转圈的老 bug。
@@ -151,7 +158,7 @@
 
 **内容**
 
-- `source/life/music/index.md` 歌单换成网易云「［轻音乐纯享］何人都有孤独之时」（105 首），热评区块同步换新。
+- `source/music/index.md` 歌单换成网易云「［轻音乐纯享］何人都有孤独之时」（105 首），热评区块同步换新。
 
 **版本号解耦（`themes/fomalhaut/scripts/butterfly-version.js`）**
 
@@ -168,6 +175,7 @@
 - 滚动改成只写不读：用 passive `scroll` 事件异步维护 `stick` 标记，写位置用 `b.scrollTop = 1e9`（越界会自动夹到最大值，省掉读 `scrollHeight` 触发的强制布局）；手动往上滚不再跟随，滚回底部自动恢复；
 - 面板空闲或悬停时预热（`requestIdleCallback` + `pointerenter`），提前建好 DOM 并强制一次样式布局；
 - 实测：三条 20 秒突发流从 63.7 / 67.6 fps 提到 89.7 / 89.9 / 90.0 fps，超过 50ms 的卡顿帧 94 / 73 降到 0，强制布局累计 5925 / 7015ms 降到 82 / 106 / 107ms。
+
 
 **Service Worker 缓存策略（`themes/fomalhaut/source/sw.js`）**
 
@@ -220,7 +228,6 @@
 
 **样式**
 
-- 评论区重做（`source/css/twikoo.css`）：三张独立白卡浮在压灰一档的面板上，配整块焦点环；
 - 侧栏作者卡新增回形针装饰（新增 `source/css/paperclip.css`）：内联 SVG、18° 倾角、针身探出卡片边缘；夜间自动切成冰蓝夜光。
 
 **工程与清理**
@@ -247,11 +254,13 @@
 - 若干**示例页面**（网址导航、画廊、八音盒、友人帐、朋友圈、网站统计、时间线归档、天文星图……）与 2 篇示例文章。
 
 它解决的问题是：Hexo 生态里大量的美化方案都靠「直接改主题源码」，一旦主题更新就得重新抄一遍。
+  
 本仓库把**主题代码**与**站点改动**放进不同目录，站点侧的东西全部通过「配置注入 + 独立 css/js 文件」实现，升级主题时只需要替换 `themes/fomalhaut/`。
 
 **来源背景**：作者从 2022 年起用 Butterfly 4.3.1 搭建个人博客，三年间持续魔改，把散落在配置与主题里的大量改动逐步抽成独立文件；2026-10 做了一次完整的重构（内部代号「屎山重构」），把 2973 行的单文件 `fomal.js` 拆成模块、把配置里的 26 段内联样式与脚本抽成独立文件，最终整理为 **v1.0.0** 开源。
 
 > ⚠️ **示例数据说明**：仓库里的站点名（Demo）、域名（example.com）、头像、友链、文章、统计 ID 全部是占位示例；
+>   
 > 图片与字体走公共 CDN（jsDelivr / picsum.photos），不依赖任何私人服务，克隆后开箱即可运行。
 
 ---
@@ -285,27 +294,28 @@ Hexo 6.3.0  ──┬─► 根 _config.yml           站点级配置（标题 /
 
 **三层配置优先级**（Hexo 5+ 行为）：
 
-| 层级 | 文件 | 作用 |
-| --- | --- | --- |
-| 站点 | 根 `_config.yml` | 站点名、作者、URL、部署、算法插件等 |
-| 主题（生效） | 根 `_config.fomalhaut.yml` | **本站真正使用的主题配置**，所有开关都在这里 |
-| 主题（默认） | `themes/fomalhaut/_config.yml` | 主题自带的默认值模板，留作参考 / 兜底 |
+| 层级     | 文件                             | 作用                       |
+| ------ | ------------------------------ | ------------------------ |
+| 站点     | 根 `_config.yml`                | 站点名、作者、URL、部署、算法插件等      |
+| 主题（生效） | 根 `_config.fomalhaut.yml`      | **本站真正使用的主题配置**，所有开关都在这里 |
+| 主题（默认） | `themes/fomalhaut/_config.yml` | 主题自带的默认值模板，留作参考 / 兜底     |
 
 ---
 
 ## 三、相比上一版改了什么
 
 上一版（仓库历史里的 3.22 版）是「整套博客直接开源」：主题仍然是 `themes/butterfly/`，配置叫 `_config.butterfly.yml`，站点页面大多是空壳。
+  
 v1.0.0 是一次结构性重写，主要变化：
 
 ### 1. 主题独立，改名为 fomalhaut
 
-| 项 | 旧版 (3.22) | 新版 (v1.0.0) |
-| --- | --- | --- |
-| 主题目录 | `themes/butterfly/` | `themes/fomalhaut/` |
-| 主题包名 | `hexo-theme-fomalhaut` v4.3.1（沿用 Butterfly 的 package.json） | `hexo-theme-fomalhaut` v1.0.0（独立版本号） |
-| 主题配置 | `_config.butterfly.yml` | `_config.fomalhaut.yml` |
-| 配置注入 | 少量 `inject` | 完整 `inject.head` / `inject.bottom` 注入体系 + 独立 css/js 文件 |
+| 项    | 旧版 (3.22)                                                  | 新版 (v1.0.0)                                            |
+| ---- | ---------------------------------------------------------- | ------------------------------------------------------ |
+| 主题目录 | `themes/butterfly/`                                        | `themes/fomalhaut/`                                    |
+| 主题包名 | `hexo-theme-fomalhaut` v4.3.1（沿用 Butterfly 的 package.json） | `hexo-theme-fomalhaut` v1.0.0（独立版本号）                   |
+| 主题配置 | `_config.butterfly.yml`                                    | `_config.fomalhaut.yml`                                |
+| 配置注入 | 少量 `inject`                                                | 完整 `inject.head` / `inject.bottom` 注入体系 + 独立 css/js 文件 |
 
 ### 2. 站点与主题彻底分离
 
@@ -315,18 +325,18 @@ v1.0.0 是一次结构性重写，主要变化：
 
 ### 3. 新增功能
 
-| 功能 | 位置 | 说明 |
-| --- | --- | --- |
-| AI 助手 | `source/js/ai-chat.js` + `scripts/ai-chat-inject.js` + `api/chat/completions.js` | 右侧悬浮对话面板，前端可直连也可走同源代理隐藏 Key |
-| 美化设置面板 | `source/js/modules/settings.js` | 访客可自选字体、主题色、暗色、阅读模式、背景、特效开关，存 localStorage |
-| 侧栏日历 / 倒计时 | `source/js/aside-calendar.js` + `source/js/lunar.js` | 带农历、节气与节日提醒 |
-| 手机端抽屉 | `source/css/mobile-drawer.css` | 独立样式表，13 个小节：面板、字标、头像、统计胶囊、菜单、遮罩、入场动效 |
-| 网站统计页 | `source/site/census/` + `source/js/census.js` | 图表看板，配色由主题色派生 |
-| 时间线归档 | `source/site/time/` + `source/js/timeline-archive.js` | 用时间线标签写站史 / 里程碑 |
-| 网址导航 | `source/box/nav/` | 圆形头像小卡式导航，纯 CSS 计数器 |
-| 天文星图 | `source/box/astronomy/voyager.html` | 独立完整页面，用 iframe 引入，`skip_render` 不参与渲染 |
-| PWA + Service Worker | `themes/fomalhaut/source/sw.js` | 离线预缓存 + 请求分流 |
-| 多平台部署 | `vercel.json`、`functions/`、`tools/deploy-vercel.js` | Vercel / Cloudflare Pages 两种方式（要用 GitHub Actions 见「十二、部署」） |
+| 功能                   | 位置                                                                               | 说明                                                         |
+| -------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| AI 助手                | `source/js/ai-chat.js` + `scripts/ai-chat-inject.js` + `api/chat/completions.js` | 右侧悬浮对话面板，前端可直连也可走同源代理隐藏 Key                                |
+| 美化设置面板               | `source/js/modules/settings.js`                                                  | 访客可自选字体、主题色、暗色、阅读模式、背景、特效开关，存 localStorage                 |
+| 侧栏日历 / 倒计时           | `source/js/aside-calendar.js` + `source/js/lunar.js`                             | 带农历、节气与节日提醒                                                |
+| 手机端抽屉                | `source/css/mobile-drawer.css`                                                   | 独立样式表，13 个小节：面板、字标、头像、统计胶囊、菜单、遮罩、入场动效                      |
+| 网站统计页                | `source/site/census/` + `source/js/census.js`                                    | 图表看板，配色由主题色派生                                              |
+| 时间线归档                | `source/site/time/` + `source/js/timeline-archive.js`                            | 用时间线标签写站史 / 里程碑                                            |
+| 网址导航                 | `source/box/nav/`                                                                | 圆形头像小卡式导航，纯 CSS 计数器                                        |
+| 天文星图                 | `source/box/astronomy/voyager.html`                                              | 独立完整页面，用 iframe 引入，`skip_render` 不参与渲染                     |
+| PWA + Service Worker | `themes/fomalhaut/source/sw.js`                                                  | 离线预缓存 + 请求分流                                               |
+| 多平台部署                | `vercel.json`、`functions/`、`tools/deploy-vercel.js`                              | Vercel / Cloudflare Pages 两种方式（要用 GitHub Actions 见「十二、部署」） |
 
 ### 4. 工程化与性能优化
 
@@ -343,12 +353,12 @@ v1.0.0 是一次结构性重写，主要变化：
 
 ## 四、环境要求
 
-| 依赖 | 版本 | 说明 |
-| --- | --- | --- |
-| Node.js | **18 / 20 / 22 LTS**（推荐 22） | 仓库自带的 GitHub Actions 工作流使用 `22.x` |
-| npm | 9+ | 随 Node 一起安装 |
-| Hexo | **6.3.0** | 已写进 `package.json` 的 `hexo.version`，无需全局安装即可用 `npx hexo` |
-| Git | 任意较新版本 | 克隆与部署用 |
+| 依赖      | 版本                          | 说明                                                       |
+| ------- | --------------------------- | -------------------------------------------------------- |
+| Node.js | **18 / 20 / 22 LTS**（推荐 22） | 仓库自带的 GitHub Actions 工作流使用 `22.x`                        |
+| npm     | 9+                          | 随 Node 一起安装                                              |
+| Hexo    | **6.3.0**                   | 已写进 `package.json` 的 `hexo.version`，无需全局安装即可用 `npx hexo` |
+| Git     | 任意较新版本                      | 克隆与部署用                                                   |
 
 除此之外不需要 Python、不需要全局 `hexo-cli`。
 
@@ -365,6 +375,7 @@ npm install          # 或 npm ci（有 package-lock.json，更快更稳）
 ```
 
 > 上面这条命令拉的是**本仓库**。想在它基础上做自己的站，clone 完把远程地址换成你自己的仓库：
+>   
 > `git remote set-url origin https://github.com/你的用户名/你的仓库名.git`
 
 > 不要在这个目录里执行 `hexo init`！那会重置 `_config.yml`，站点配置会丢。
@@ -413,12 +424,12 @@ index_img: /assets/head.jpg        # 首页大图
 footer:
   owner:
     enable: true
-    since: 2022
+    since: 2023
 
 menu:                              # 顶部导航（键 = 显示名，值 = 路径 || 图标）
   首页: / || fas fa-home
   归档: /archives/ || fas fa-archive
-  关于: /personal/about/ || fas fa-user
+  关于: /about/ || fas fa-user
 ```
 
 **第三步：写文章**
@@ -503,141 +514,143 @@ npx hexo clean && npx hexo generate && npx gulp
     └─ languages/              多语言文案
 ```
 
+
 ### 7.2 `source/css/` —— 站点级样式，各管什么
 
-| 文件 | 负责的功能 | 哪里会用到 |
-| --- | --- | --- |
-| `about-page.css` | 关于页版式（Hero、线路卡、技术栈、时间线） | 选择器全部以 `.ab2` 开头，只影响 `/personal/about/` |
-| `aside-calendar.css` | 侧栏「日历卡 + 倒计时卡」外观 | 只作用 `#aside-calendar` / `#aside-countdown`，配 `js/aside-calendar.js` |
-| `archive-page.css` | 归档页卡片改版外观（年度分布柱、年份胶囊、年份章节、卡片栅格） | 选择器全部以 `.ar-ready` 开头，只影响 `/archives/`、`/categories/*`、`/tags/*` |
-| `avatar-glow.css` | 侧栏头像呼吸灯（颜色跟随主题色） | 全站侧栏生效 |
-| `census.css` | 网站统计页看板排版 | 只由 `/site/census/` 页面 `<link>` 引入 |
-| `coin.css` | 投币按钮样式 | 文章底部「投喂」区 |
-| `gitcalendar.css` | GitHub 贡献日历底色与格子 | `#git_container`，配 `js/gitcalendar.js` |
-| `kslink.css` | 友人帐「快速申请」按钮 | `/social/link/` |
-| `paperclip.css` | 侧栏作者卡的细长回形针装饰（内联 SVG，白天蓝白高光 / 夜间冰蓝夜光） | 由 `inject.head` 引入，只影响电脑端侧栏作者卡 |
-| `mobile-drawer.css` | 手机端抽屉菜单改版（面板/字标/头像/菜单/遮罩/入场动效 13 小节） | 窄屏自动生效 |
-| `navigation.css` | 顶栏导航改版（44×44px 触控区、磨砂按能力降级、站名光晕不裁切、按钮 hover 对齐） | 由 `_config.fomalhaut.yml` 的 `inject.head` 引入，配 `?v=` 缓存戳 |
-| `site-inject.css` | 站点注入样式合集（横幅公告、PC 浅色主题、侧栏加宽、列表分页、面包屑、小站资讯卡、aplayer 音量条、页脚隐藏本站项等） | 由 `_config.fomalhaut.yml` 的 `inject.head` 以 `<link>` 引入 |
-| `stats.css` | 文章统计页图表排版 | 只由 `/tags/` 页生效 |
-| `timeline-archive.css` | 「旧时光」页时间轴外观 | `/site/time/` |
-| `twikoo.css` | Twikoo 评论区美化（表单/列表/按钮统一到主题色） | 全站评论，配 `comments.use: Twikoo` |
-| `typewriter.css` | 首页副标题打字机观感 | 配 `js/inject/typewriter.js` |
+| 文件                     | 负责的功能                                                           | 哪里会用到                                                               |
+| ---------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `about-page.css`       | 关于页版式（Hero、线路卡、技术栈、时间线）                                         | 选择器全部以 `.ab2` 开头，只影响 `/about/`                                      |
+| `aside-calendar.css`   | 侧栏「日历卡 + 倒计时卡」外观                                                | 只作用 `#aside-calendar` / `#aside-countdown`，配 `js/aside-calendar.js` |
+| `archive-page.css`     | 归档页卡片改版外观（年度分布柱、年份胶囊、年份章节、卡片栅格）                                 | 选择器全部以 `.ar-ready` 开头，只影响 `/archives/`、`/categories/*`、`/tags/*`    |
+| `avatar-glow.css`      | 侧栏头像呼吸灯（颜色跟随主题色）                                                | 全站侧栏生效                                                              |
+| `census.css`           | 网站统计页看板排版                                                       | 只由 `/site/census/` 页面 `<link>` 引入                                   |
+| `coin.css`             | 投币按钮样式                                                          | 文章底部「投喂」区                                                           |
+| `gitcalendar.css`      | GitHub 贡献日历底色与格子                                                | `#git_container`，配 `js/gitcalendar.js`                              |
+| `kslink.css`           | 友人帐「快速申请」按钮                                                     | `/social/link/`                                                     |
+| `message-page.css`     | 留言板导语卡片 + 三条留言须知                                              | 选择器全部以 `.msg` 开头，只由 `/message/` 页面 `<link>` 引入，其它页不加载                |
+| `paperclip.css`        | 侧栏作者卡的细长回形针装饰（内联 SVG，白天蓝白高光 / 夜间冰蓝夜光）                           | 由 `inject.head` 引入，只影响电脑端侧栏作者卡                                      |
+| `mobile-drawer.css`    | 手机端抽屉菜单改版（面板/字标/头像/菜单/遮罩/入场动效 13 小节）                            | 窄屏自动生效                                                              |
+| `navigation.css`       | 顶栏导航改版（44×44px 触控区、磨砂按能力降级、站名光晕不裁切、按钮 hover 对齐）                 | 由 `_config.fomalhaut.yml` 的 `inject.head` 引入，配 `?v=` 缓存戳            |
+| `site-inject.css`      | 站点注入样式合集（横幅公告、PC 浅色主题、侧栏加宽、列表分页、面包屑、小站资讯卡、aplayer 音量条、页脚隐藏本站项等） | 由 `_config.fomalhaut.yml` 的 `inject.head` 以 `<link>` 引入             |
+| `stats.css`            | 文章统计页图表排版                                                       | 只由 `/tags/` 页生效                                                     |
+| `thread-table.css`     | 螺纹规格速查页表格/筛选样式                                               | `/tools/`，配 `js/thread-table.js`                                      |
+| `macro-gen.css`        | 宏程序生成器页表单/代码区/语法高亮配色                                       | `/tools/macro/`，配 `js/macro-gen.js`                                   |
+| `typewriter.css`       | 首页副标题打字机观感                                                      | 配 `js/inject/typewriter.js`                                         |
 
 ### 7.3 `source/js/` —— 站点级脚本，各管什么
 
 **入口与模块**（由 `source/js/fomal.js` 统一按顺序加载，加载清单在 `_config.fomalhaut.yml` 的 `inject.bottom`）
 
-| 文件 | 负责的功能 |
-| --- | --- |
-| `fomal.js` | 站点主引导（105 行）。定义全局 `window.__fomal`，控制台执行 `__fomal.check()` 可自检各模块是否加载成功 |
-| `modules/reading.js` | 阅读进度条 + FPS 检测（左下角那个 FPS 数字） |
-| `modules/nav.js` | 导航栏吸顶、首屏欢迎语、侧栏「欢迎信息」卡片（腾讯位置服务）、分享按钮、「随便逛逛」 |
-| `modules/console-art.js` | 控制台字符画与版权署名 |
-| `modules/effects.js` | 页面装饰特效：星空 / 表情放大（雪花已拆到 `modules/snow.js`） |
-| `modules/snow.js` | 雪花特效：两张预渲染雪片按大小 / 透明度 / 速度分层下落，厚度随视口 14–30px；深色 / 后台 / 手机 / 减少动态都暂停 |
-| `modules/fireflies.js` | 萤火虫微光：纯 CSS 呼吸与慢漂，不需要 canvas / rAF / 轮询，桌面 14 只 / ≤600px 8 只，默认关闭、与雪花互斥 |
-| `modules/ripple.js` | 点击涟漪：按下位置 1 个爆发节点 + 两圈同心水纹，700ms 后回收、同时最多 6 枚，默认关闭 |
-| `modules/appearance-fonts.js` | 字体预览面板（阅读 5 / 个性 3 / 代码 4）：`document.fonts.load` + 12 秒超时 + 最新请求胜，失败不写偏好 |
-| `modules/appearance-backgrounds.js` | 背景预览面板（32 壁纸 + 8 渐变 + 7 纯色 + 8 在线接口）：打开分类才赋 `src`，切换走 `Image` 预加载 + token 取消 |
-| `modules/cursor.js` | 鼠标相关：右键菜单、小猫咪、听话鼠标 |
-| `modules/shell.js` | 站点「外壳」行为：快捷键、夜间动画、标题恶搞、搜索框、手机滚动条 |
-| `modules/settings.js` | **美化设置面板**（Winbox）：卡片不透明度 / 背景滤镜 / 氛围特效 / 互动挂件 / 布局与部件 / 主题色 / 字体 / 背景（字体与背景两节的面板由 `modules/appearance-*.js` 生成） |
-| `modules/footer-time.js` | 页脚「本站已运行 X 天」计时器 + 摸鱼徽章 |
-| `data/holidays.js` | 法定休息日判断（纯数据） |
-| `data/voyager1.js` | 旅行者 1 号距离模型（纯计算），页脚那行「旅行者 1 号当前距离地球…」 |
+| 文件                                  | 负责的功能                                                                                                            |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `fomal.js`                          | 站点主引导（105 行）。定义全局 `window.__fomal`，控制台执行 `__fomal.check()` 可自检各模块是否加载成功                                          |
+| `modules/reading.js`                | 阅读进度条 + FPS 检测（左下角那个 FPS 数字）                                                                                     |
+| `modules/nav.js`                    | 导航栏吸顶、首屏欢迎语、侧栏「欢迎信息」卡片（腾讯位置服务）、分享按钮、「随便逛逛」                                                                       |
+| `modules/console-art.js`            | 控制台字符画与版权署名                                                                                                      |
+| `modules/effects.js`                | 页面装饰特效：星空 / 表情放大（雪花已拆到 `modules/snow.js`）                                                                        |
+| `modules/snow.js`                   | 雪花特效：两张预渲染雪片按大小 / 透明度 / 速度分层下落，厚度随视口 14–30px；深色 / 后台 / 手机 / 减少动态都暂停                                              |
+| `modules/fireflies.js`              | 萤火虫微光：纯 CSS 呼吸与慢漂，不需要 canvas / rAF / 轮询，桌面 14 只 / ≤600px 8 只，默认关闭、与雪花互斥                                          |
+| `modules/ripple.js`                 | 点击涟漪：按下位置 1 个爆发节点 + 两圈同心水纹，700ms 后回收、同时最多 6 枚，默认关闭                                                               |
+| `modules/appearance-fonts.js`       | 字体预览面板（阅读 5 / 个性 3 / 代码 4）：`document.fonts.load` + 12 秒超时 + 最新请求胜，失败不写偏好                                         |
+| `modules/appearance-backgrounds.js` | 背景预览面板（32 壁纸 + 8 渐变 + 7 纯色 + 8 在线接口）：打开分类才赋 `src`，切换走 `Image` 预加载 + token 取消                                     |
+| `modules/cursor.js`                 | 鼠标相关：右键菜单、小猫咪、听话鼠标                                                                                               |
+| `modules/shell.js`                  | 站点「外壳」行为：快捷键、夜间动画、标题恶搞、搜索框、手机滚动条                                                                                 |
+| `modules/settings.js`               | **美化设置面板**（Winbox）：卡片不透明度 / 背景滤镜 / 氛围特效 / 互动挂件 / 布局与部件 / 主题色 / 字体 / 背景（字体与背景两节的面板由 `modules/appearance-*.js` 生成） |
+| `modules/footer-time.js`            | 页脚「本站已运行 X 天」计时器 + 摸鱼徽章                                                                                          |
+| `data/holidays.js`                  | 法定休息日判断（纯数据）                                                                                                     |
+| `data/voyager1.js`                  | 旅行者 1 号距离模型（纯计算），页脚那行「旅行者 1 号当前距离地球…」                                                                            |
 
 **独立功能脚本**（按需由配置引入或在页面里 `<script>`）
 
-| 文件 | 负责的功能 |
-| --- | --- |
-| `ai-chat.js` | AI 助手前端本体（对话面板、流式输出、Markdown 渲染） |
-| `aside-calendar.js` | 侧栏日历卡 + 倒计时卡渲染（含农历、节气、距离下一个节日） |
-| `lunar.js` | 农历 / 二十四节气换算（1900–2100） |
-| `festival.js` | 节日提醒通知卡片（25 个节日集中成一张表） |
-| `celebrate.js` | 全屏礼炮 / 烟花（只在喜庆节日被 `festival.js` 动态插入） |
-| `author-status.js` | 侧栏个人信息卡右上角状态胶囊（按时间与节假日切换） |
-| `census.js` | 网站统计页图表数据（百度统计 API） |
-| `stats.js` | 文章统计页增强 |
-| `gitcalendar.js` | GitHub 贡献日历渲染 |
-| `timeline-archive.js` | 「旧时光」页时间轴行为层 |
-| `notify.js` | 轻量通知组件（替代 Vue + Element-UI 的 `$notify`） |
-| `pjax-guard.js` | 修 pjax 选择器不匹配导致的「换页退回整页刷新」与「加载遮罩一直转圈」 |
-| `wechat-qr.js` | 社交二维码点击 → 同页灯箱展示（不跳转不下载） |
-| `kslink.js` | 友人帐「快速申请」表单填充 |
-| `coin.js` | 投币音效与动画 |
-| `footer-music.js` | 页脚「猜你想看」补一条「听点音乐」→ `/life/music/` |
-| `51la.js` | 51LA 统计与灵雀监控初始化 |
-| `jquery.min.js` / `winbox.bundle.min.js` | 第三方库 |
+| 文件                                       | 负责的功能                                   |
+| ---------------------------------------- | --------------------------------------- |
+| `ai-chat.js`                             | AI 助手前端本体（对话面板、流式输出、Markdown 渲染）        |
+| `aside-calendar.js`                      | 侧栏日历卡 + 倒计时卡渲染（含农历、节气、距离下一个节日）          |
+| `lunar.js`                               | 农历 / 二十四节气换算（1900–2100）                 |
+| `festival.js`                            | 节日提醒通知卡片（25 个节日集中成一张表）                  |
+| `celebrate.js`                           | 全屏礼炮 / 烟花（只在喜庆节日被 `festival.js` 动态插入）   |
+| `author-status.js`                       | 侧栏个人信息卡右上角状态胶囊（按时间与节假日切换）               |
+| `census.js`                              | 网站统计页图表数据（百度统计 API）                     |
+| `stats.js`                               | 文章统计页增强                                 |
+| `gitcalendar.js`                         | GitHub 贡献日历渲染                           |
+| `thread-table.js`                        | 螺纹规格速查页行为层（筛选、分组、复制）                     |
+| `macro-gen.js`                           | 宏程序生成器：6 套 Fanuc 模板 + 实时生成 + NC 语法高亮 + 复制下载  |
+| `notify.js`                              | 轻量通知组件（替代 Vue + Element-UI 的 `$notify`） |
+| `pjax-guard.js`                          | 修 pjax 选择器不匹配导致的「换页退回整页刷新」与「加载遮罩一直转圈」   |
+| `wechat-qr.js`                           | 社交二维码点击 → 同页灯箱展示（不跳转不下载）                |
+| `kslink.js`                              | 友人帐「快速申请」表单填充                           |
+| `coin.js`                                | 投币音效与动画                                 |
+| `51la.js`                                | 51LA 统计与灵雀监控初始化                         |
+| `jquery.min.js` / `winbox.bundle.min.js` | 第三方库                                    |
 
 **`source/js/inject/`**（由 `_config.fomalhaut.yml` 的 `inject.head` / `inject.bottom` 以 `<script>` 引入）
 
-| 文件 | 负责的功能 |
-| --- | --- |
-| `beauty-boot.js` | 美化模块首屏预置（把 localStorage 里的字体/主题色/背景尽早写进 `:root`，避免闪一下默认样式） |
-| `daynight-boot.js` | 全站日夜首屏预置：访客没手动选过时按真实日出日落定深浅色，并把 `window.fomalDayNight` 共享给侧栏日历与美化面板（旋钮 `window.fomalNightConfig`） |
-| `typewriter.js` | 首页副标题打字机「丝滑版」（同名 `window.Typed` 接管主题自带 Typed.js） |
-| `search-lazy.js` | Algolia 搜索按需加载（点开搜索才拉取） |
-| `scroll-gap-fix.js` | 锚点跳转补偿（常驻顶栏 70px） |
-| `webinfo-card.js` | 侧栏「小站资讯」卡：KPI 数字滚动、运行天数、站点更新时间 |
-| `ping-route.js` + `ping-route-boot.js` | 公告栏里每条部署线路的实时延迟徽标（boot 文件放可调参数 initialDelay / stagger） |
-| `about-route-probe.js` | 关于页线路卡右下角的「实时延迟」徽标 |
-| `archive-page.js` | 归档页卡片改版行为层：只读 `.article-sort` 重排成统计条 + 年份跳转 + 可折叠年份章节 + 卡片栅格（三层守卫 + 幂等，降级不改排版） |
-| `pc-local-link.js` | 版权卡「文章链接」显示当前访问域名（而不是写死主域名） |
-| `right-menu-state-boot.js` | 侧栏「右键模式」按钮的状态同步 |
-| `ft-ad-extra.js` | 页脚友链补一个「广告位招租」（靠 `a[title="广告位招租"]` 存在才生效） |
+| 文件                                     | 负责的功能                                                                                             |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `beauty-boot.js`                       | 美化模块首屏预置（把 localStorage 里的字体/主题色/背景尽早写进 `:root`，避免闪一下默认样式）                                        |
+| `daynight-boot.js`                     | 全站日夜首屏预置：访客没手动选过时按真实日出日落定深浅色，并把 `window.fomalDayNight` 共享给侧栏日历与美化面板（旋钮 `window.fomalNightConfig`） |
+| `typewriter.js`                        | 首页副标题打字机「丝滑版」（同名 `window.Typed` 接管主题自带 Typed.js）                                                  |
+| `search-lazy.js`                       | Algolia 搜索按需加载（点开搜索才拉取）                                                                           |
+| `scroll-gap-fix.js`                    | 锚点跳转补偿（常驻顶栏 70px）                                                                                 |
+| `webinfo-card.js`                      | 侧栏「小站资讯」卡：KPI 数字滚动、运行天数、站点更新时间                                                                    |
+| `ping-route.js` + `ping-route-boot.js` | 公告栏里每条部署线路的实时延迟徽标（boot 文件放可调参数 initialDelay / stagger）                                            |
+| `about-route-probe.js`                 | 关于页线路卡右下角的「实时延迟」徽标                                                                                |
+| `archive-page.js`                      | 归档页卡片改版行为层：只读 `.article-sort` 重排成统计条 + 年份跳转 + 可折叠年份章节 + 卡片栅格（三层守卫 + 幂等，降级不改排版）                    |
+| `pc-local-link.js`                     | 版权卡「文章链接」显示当前访问域名（而不是写死主域名）                                                                       |
+| `right-menu-state-boot.js`             | 侧栏「右键模式」按钮的状态同步                                                                                   |
+| `ft-ad-extra.js`                       | 页脚友链补一个「广告位招租」（靠 `a[title="广告位招租"]` 存在才生效）                                                        |
 
 ### 7.4 `scripts/` —— 站点级 Hexo 插件（构建期跑）
 
-| 文件 | 负责的功能 |
-| --- | --- |
-| `ai-chat-inject.js` | 往每个页面 `</body>` 前注入 `window.AI_CHAT_CONFIG` 与 `/js/ai-chat.js` |
-| `archive-index.js` | 给归档页 `</head>` 前插一段 `ar-index` JSON（全站每篇的标题/路径/日期/分类/字数/阅读分钟），供归档页卡片显示分类与阅读时长 |
-| `gallery-pager.js` | 相册自动分页（生成 `/box/gallery/wallpaper/p2.html` 这类分页） |
-| `magnet-local-links.js` | 修 `hexo-magnet-fomal` 首页小冰磁贴跳到外站的问题 |
-| `post-copyright-local-link.js` | 修文章版权卡「文章链接」写死主域名的问题 |
-| `sticky-post.js` | 正文标记置顶（`sticky: true` → 首页置顶角标） |
-| `swiper-lazyload-fix.js` | 修首页轮播在 pjax 往返后懒加载失效 |
-| `tag-map-local.js` | 把 `hexo-tag-map` 的 jsDelivr CDN 改成本站自托管 |
-| `vercel-api-copy.js` | 构建后把 `api/`、`functions/`、`vercel.json` 拷进 `public/` |
-| `wow-pjax-rehook.js` | pjax 换页后重放 `.js-pjax` 里哑火的 wow 加类脚本，补 `wow.doSync()` 并清掉失效 boxes |
+| 文件                             | 负责的功能                                                                         |
+| ------------------------------ | ----------------------------------------------------------------------------- |
+| `ai-chat-inject.js`            | 往每个页面 `</body>` 前注入 `window.AI_CHAT_CONFIG` 与 `/js/ai-chat.js`                |
+| `archive-index.js`             | 给归档页 `</head>` 前插一段 `ar-index` JSON（全站每篇的标题/路径/日期/分类/字数/阅读分钟），供归档页卡片显示分类与阅读时长 |
+| `gallery-pager.js`             | 相册自动分页（生成 `/box/gallery/wallpaper/p2.html` 这类分页）                              |
+| `magnet-local-links.js`        | 修 `hexo-magnet-fomal` 首页小冰磁贴跳到外站的问题                                           |
+| `post-copyright-local-link.js` | 修文章版权卡「文章链接」写死主域名的问题                                                          |
+| `sticky-post.js`               | 正文标记置顶（`sticky: true` → 首页置顶角标）                                               |
+| `swiper-lazyload-fix.js`       | 修首页轮播在 pjax 往返后懒加载失效                                                          |
+| `tag-map-local.js`             | 把 `hexo-tag-map` 的 jsDelivr CDN 改成本站自托管                                       |
+| `vercel-api-copy.js`           | 构建后把 `api/`、`functions/`、`vercel.json` 拷进 `public/`                           |
+| `wow-pjax-rehook.js`           | pjax 换页后重放 `.js-pjax` 里哑火的 wow 加类脚本，补 `wow.doSync()` 并清掉失效 boxes              |
 
 ### 7.5 `tools/tests/` —— 回归脚本
 
 用 Node 自带的 `node:test`，不需要额外依赖：
 
-| 文件 | 覆盖的行为 |
-| --- | --- |
-| `cursor-effects.test.cjs` | 小猫咪光标的读写分离与元素缓存 |
-| `fps-lifecycle.test.cjs` | 帧率监测的启动 / 停止与 generation 闭包 |
-| `mobile-scrollbar.test.cjs` | 手机端自绘滚动条的读 / 写两阶段 |
-| `scroll-listeners.test.cjs` | 滚动节流、`cancel()` 与 pjax 解绑 |
-| `sw-cache.test.cjs` | Service Worker 的域名白名单、回源写缓存、二次请求吃缓存、文本与媒体 TTL 分流、`?__pr=` 探测不写缓存 |
-| `beauty-switches.test.cjs` | 美化开关（猫咪 / 听话鼠标 / 涟漪 / 萤火虫 / 雪花）关掉后是否真的停下 |
-| `theme-color.test.cjs` | 主题色预设、自定义 HEX 校验、旧键迁移与 `--on-theme` 前景色计算 |
-| `appearance-fonts.test.cjs` | 字体面板：分组、12 秒超时与「最新请求胜」、失败不写偏好 |
-| `appearance-backgrounds.test.cjs` | 背景面板：分类懒赋 `src`、预加载 token 取消、默认背景口径 |
-| `fireflies.test.cjs` | 萤火虫数量分档、负层级与暂停开关 |
-| `snow.test.cjs` | 雪花分层下落、dt 上限、厚度上限与暂停条件 |
-| `ripple.test.cjs` | 涟漪同时存在上限、节点回收与非主键忽略 |
-| `navigation.test.cjs` | 导航触控区尺寸、磨砂降级条件与站名溢出规则 |
-| `daynight-boot.test.cjs` | 日夜首屏预置：站点旋钮与运行期 `setConfig`、手动选择优先与过期清理、8 小时自动切换是否听总开关 |
+| 文件                                | 覆盖的行为                                                            |
+| --------------------------------- | ---------------------------------------------------------------- |
+| `cursor-effects.test.cjs`         | 小猫咪光标的读写分离与元素缓存                                                  |
+| `fps-lifecycle.test.cjs`          | 帧率监测的启动 / 停止与 generation 闭包                                      |
+| `mobile-scrollbar.test.cjs`       | 手机端自绘滚动条的读 / 写两阶段                                                |
+| `scroll-listeners.test.cjs`       | 滚动节流、`cancel()` 与 pjax 解绑                                        |
+| `sw-cache.test.cjs`               | Service Worker 的域名白名单、回源写缓存、二次请求吃缓存、文本与媒体 TTL 分流、`?__pr=` 探测不写缓存 |
+| `beauty-switches.test.cjs`        | 美化开关（猫咪 / 听话鼠标 / 涟漪 / 萤火虫 / 雪花）关掉后是否真的停下                         |
+| `theme-color.test.cjs`            | 主题色预设、自定义 HEX 校验、旧键迁移与 `--on-theme` 前景色计算                        |
+| `appearance-fonts.test.cjs`       | 字体面板：分组、12 秒超时与「最新请求胜」、失败不写偏好                                    |
+| `appearance-backgrounds.test.cjs` | 背景面板：分类懒赋 `src`、预加载 token 取消、默认背景口径                              |
+| `fireflies.test.cjs`              | 萤火虫数量分档、负层级与暂停开关                                                 |
+| `snow.test.cjs`                   | 雪花分层下落、dt 上限、厚度上限与暂停条件                                           |
+| `ripple.test.cjs`                 | 涟漪同时存在上限、节点回收与非主键忽略                                              |
+| `navigation.test.cjs`             | 导航触控区尺寸、磨砂降级条件与站名溢出规则                                            |
+| `daynight-boot.test.cjs`          | 日夜首屏预置：站点旋钮与运行期 `setConfig`、手动选择优先与过期清理、8 小时自动切换是否听总开关           |
 
 跑法：`node --test "tools/tests/*.test.cjs"`（14 个脚本；部分脚本支持用环境变量指向 `bak/` 里的基线做前后对比）。
 
 ### 7.6 `themes/fomalhaut/` —— 主题本体
 
-| 目录 | 说明 |
-| --- | --- |
-| `layout/` | Pug 模板：`index` / `post` / `page` / `archive` / `category` / `tag` + `includes/` 组件（head、header、footer、aside、widget、third-party…） |
-| `source/css/` | Stylus 样式；`_custom/custom.css` 是站点自定义总表（文件头有完整索引） |
-| `source/js/` | 主题自带脚本（`main.js` 等） |
-| `scripts/tag/` | 外挂标签实现 |
-| `scripts/filters/` | 构建期过滤器（图片懒加载、随机封面） |
-| `scripts/helpers/` | 模板助手（归档、分类、相关文章、echarts…） |
-| `scripts/events/` | 启动事件（版本横幅、CDN 预解析、404、评论初始化） |
-| `scripts/butterfly-version.js` | 上游 Butterfly 版本号常量：启动横幅与 CDN 地址共用（与主题自身版本 `package.json` 的 `version` 分开） |
-| `languages/` | 多语言文案 |
+| 目录                             | 说明                                                                                                                               |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `layout/`                      | Pug 模板：`index` / `post` / `page` / `archive` / `category` / `tag` + `includes/` 组件（head、header、footer、aside、widget、third-party…） |
+| `source/css/`                  | Stylus 样式；`_custom/custom.css` 是站点自定义总表（文件头有完整索引）                                                                                |
+| `source/js/`                   | 主题自带脚本（`main.js` 等）                                                                                                              |
+| `scripts/tag/`                 | 外挂标签实现                                                                                                                           |
+| `scripts/filters/`             | 构建期过滤器（图片懒加载、随机封面）                                                                                                               |
+| `scripts/helpers/`             | 模板助手（归档、分类、相关文章、echarts…）                                                                                                        |
+| `scripts/events/`              | 启动事件（版本横幅、CDN 预解析、404、评论初始化）                                                                                                     |
+| `scripts/butterfly-version.js` | 上游 Butterfly 版本号常量：启动横幅与 CDN 地址共用（与主题自身版本 `package.json` 的 `version` 分开）                                                         |
+| `languages/`                   | 多语言文案                                                                                                                            |
 
 > 💡 **要不要改主题？** 尽量别改。能用配置解决的走 `_config.fomalhaut.yml`；配置解决不了的，写进 `source/css/*.css` 或 `source/js/`，再用 `inject` 引入——这样升级主题时直接覆盖 `themes/fomalhaut/` 就行。
 
@@ -658,10 +671,11 @@ menu:
   清单:
     友人帐: /social/link/ || fas fa-link
     朋友圈: /social/fcircle/ || faa-tada
-  关于: /personal/about/ || fas fa-user
+  关于: /about/ || fas fa-user
 ```
 
 缩进一层就是二级菜单。图标可以写 `fas fa-xxx`（Font Awesome）或 `faa-tada`、`faa-spin` 这类动画类名。
+  
 菜单项指向的页面如果不存在，直接在 `source/` 里建一个同名目录 + `index.md` 即可（见 [9.3 加新页面](#93-加一个新页面)）。
 
 ### 8.2 顶部图与封面
@@ -745,43 +759,24 @@ aside:
 ```
 
 想加**完全自定义**的卡片：写进 `source/_data/widget.yml`，用 `top:` / `bottom:` 分组，`html:` 里写任意 HTML。
+  
 侧栏的「日历卡 / 倒计时卡」就是这么做出来的（见 `source/js/aside-calendar.js` 顶部注释）。
 
 ### 8.5 评论系统
 
-支持 11 种：`Twikoo` / `Waline` / `Valine` / `Giscus` / `Utterances` / `Gitalk` / `Disqus` / `Disqusjs` / `Livere` / `Remark42` / `Facebook Comments`。
+支持 10 种：`Waline` / `Valine` / `Giscus` / `Utterances` / `Gitalk` / `Disqus` / `Disqusjs` / `Livere` / `Remark42` / `Facebook Comments`。
 
 ```yaml
 comments:
   use:
-    - Twikoo               # ★ 在这里切换用哪个
+    - Waline               # ★ 在这里切换用哪个
   text: true               # 显示「评论」二字
   lazyload: true           # 滚动到评论区才加载（开了之后评论数会失效）
   count: false             # 文章顶部显示评论数
   card_post_count: false   # 首页卡片显示评论数
 ```
 
-#### Twikoo 完整配置（推荐，无需后端服务器）
-
-1. **部署 Twikoo 服务端**（三选一）：
-   - **Vercel 一键部署**（最省事）：打开 <https://twikoo.js.org/quick-start.html> → 点「Vercel 部署」→ 登录 Vercel → 一路 Next → 部署完把首页那张图里的地址复制下来；
-   - **Docker**：`docker run -d -p 8080:8080 -v /data/twikoo:/data -e TWIKOO_THROTTLE=200 ikew0ng/twikoo`；
-   - **云函数**：腾讯云 SCF / 阿里云 FC 都有 Twikoo 模板。
-2. **在配置里填地址**：
-
-```yaml
-twikoo:
-  envId: https://你的-twikoo-地址         # ← 就这一处必填
-  region:                                # 腾讯云 SCF 部署时才需要填（如 ap-shanghai）
-  visitor: false                         # 开启访客统计（需要配合 envId 的服务端）
-  option:                                # 透传给 Twikoo 初始化，如 lang、path
-```
-
-3. **打开评论区**：把上面的 `comments.use` 设成 `Twikoo`。
-4. **（可选）美化**：仓库已带 `source/css/twikoo.css`，由 `_config.fomalhaut.yml` 的 `inject.head` 引入，把表单/列表/按钮统一到主题色。不需要就在 `inject.head` 里删掉那一行。
-5. **（可选）首页显示最新评论**：把 `aside.card_newest_comment.enable` 设为 `true`。
-
-> 其他评论系统的参数（`waline` / `valine` / `giscus` …）在同一个配置文件的 `comments` 段下方，键名与官方文档一致，照填即可。
+> 各评论系统的参数（`waline` / `valine` / `giscus` …）在同一个配置文件的 `comments` 段下方，键名与官方文档一致，照填即可。
 
 ### 8.6 搜索
 
@@ -878,34 +873,35 @@ gitcalendar:
 ### 8.8 美化设置面板（每一项都干什么）
 
 打开方式：右下角**齿轮图标**（`themes/fomalhaut/layout/includes/rightside.pug` 的 `#rightside_config`），面板本体在 `source/js/modules/settings.js`。
+  
 所有设置存在浏览器 `localStorage`，不写服务器；面板底部有「恢复默认设置」。
 
-| 分节 | 项目 | 作用 |
-| --- | --- | --- |
-| **顶部** | 卡片不透明度 | 正文卡片背景的不透明度（0–100%，默认 98%，只动卡片底色） |
-| | 背景滤镜 | 对全站背景图做模糊 / 饱和度 / 对比度处理（各一个数字框 + 滑条 + 保存） |
-| **一、氛围特效** | 星空特效（夜间模式） | 夜间背景上飘的星空粒子 |
-| | 霓虹彩灯（夜间模式） | 夜间标题的霓虹发光动画 |
-| | 雪花特效（白天模式） | 白天飘雪 + 底部薄积雪，默认关闭 |
-| | 萤火虫微光 | 下方慢慢飘的微光，默认关闭；与雪花互斥，只保留最后开启的一项 |
-| | 昼夜切换 | 入夜 / 黎明的过场动画，四档：关闭 / 轻 / 标准 / 华丽 |
-| **二、互动挂件** | 猫咪挂件 | 桌面端跟着鼠标走的小猫咪（默认开启；关掉会真的停表） |
-| | 听话鼠标 | 关闭后使用系统鼠标指针（默认开启） |
-| | 帧率监测 | 左下角 FPS 状态条（默认开启，调试用） |
-| | 点击涟漪 | 按下位置的同心水纹，默认关闭、同时最多 6 枚 |
-| **三、布局与部件** | 右侧部件 | 右下角按钮列的显示 / 隐藏 |
-| | 顶栏常驻 | 滚动时导航栏是否一直吸顶 |
-| | 侧栏显隐 | 侧栏显示 / 隐藏 |
-| | 侧栏位置 | 侧栏放左边还是右边 |
-| **四、主题色设置** | 11 个预设色 | 红 / 橙 / 黄 / 抹茶 / 青绿 / 玉石绿 / 晴空蓝 / 柔靛蓝 / 雾蓝灰 / 紫罗兰 / 樱花粉，点一下全站换色 |
-| | 自定义取色圈 | 原生调色板，值以六位 HEX 存本地，首帧校验不合法则回落默认青绿 |
-| **五、字体设置** | 阅读字体 5 款 | 霞鹜文楷Screen（默认）/ 霞鹜文楷 / 霞鹜新晰黑 / 思源宋体 / 系统默认，正文区实时预览 |
-| | 个性装饰 3 款 | 筑紫A丸 / 汉仪唐美人 / 甜甜圈海报，默认收在折叠块里 |
-| | 代码字体 4 款 | Monaco（默认）/ Consolas / Maple Mono / Hack，代码区实时预览 |
-| **六、背景设置** | 壁纸 | 8 张二次元 + 8 张风景 · 山野 + 8 张风景 · 水与森林 + 8 张适配手机（走 picsum 公共 CDN），打开分类才加载缩略图 |
-| | 色彩 | 8 个渐变色 + 7 个纯色，另有自定义纯色取色器 |
-| | 自定义 | 粘贴 HTTPS 图片链接；先预览探针再应用，失败保留旧图 |
-| | 动态壁纸 API | 收在「高级」折叠块里：每次刷新可能返回不同图片的在线接口 |
+| 分节          | 项目         | 作用                                                                       |
+| ----------- | ---------- | ------------------------------------------------------------------------ |
+| **顶部**      | 卡片不透明度     | 正文卡片背景的不透明度（0–100%，默认 98%，只动卡片底色）                                        |
+|             | 背景滤镜       | 对全站背景图做模糊 / 饱和度 / 对比度处理（各一个数字框 + 滑条 + 保存）                                |
+| **一、氛围特效**  | 星空特效（夜间模式） | 夜间背景上飘的星空粒子                                                              |
+|             | 霓虹彩灯（夜间模式） | 夜间标题的霓虹发光动画                                                              |
+|             | 雪花特效（白天模式） | 白天飘雪 + 底部薄积雪，默认关闭                                                        |
+|             | 萤火虫微光      | 下方慢慢飘的微光，默认关闭；与雪花互斥，只保留最后开启的一项                                           |
+|             | 昼夜切换       | 入夜 / 黎明的过场动画，四档：关闭 / 轻 / 标准 / 华丽                                         |
+| **二、互动挂件**  | 猫咪挂件       | 桌面端跟着鼠标走的小猫咪（默认开启；关掉会真的停表）                                               |
+|             | 听话鼠标       | 关闭后使用系统鼠标指针（默认开启）                                                        |
+|             | 帧率监测       | 左下角 FPS 状态条（默认开启，调试用）                                                    |
+|             | 点击涟漪       | 按下位置的同心水纹，默认关闭、同时最多 6 枚                                                  |
+| **三、布局与部件** | 右侧部件       | 右下角按钮列的显示 / 隐藏                                                           |
+|             | 顶栏常驻       | 滚动时导航栏是否一直吸顶                                                             |
+|             | 侧栏显隐       | 侧栏显示 / 隐藏                                                                |
+|             | 侧栏位置       | 侧栏放左边还是右边                                                                |
+| **四、主题色设置** | 11 个预设色    | 红 / 橙 / 黄 / 抹茶 / 深粉红色 / 玉石绿 / 晴空蓝 / 柔靛蓝 / 雾蓝灰 / 紫罗兰 / 樱花粉，点一下全站换色        |
+|             | 自定义取色圈     | 原生调色板，值以六位 HEX 存本地，首帧校验不合法则回落默认深粉红色                                      |
+| **五、字体设置**  | 阅读字体 5 款   | 霞鹜文楷Screen（默认）/ 霞鹜文楷 / 霞鹜新晰黑 / 思源宋体 / 系统默认，正文区实时预览                       |
+|             | 个性装饰 3 款   | 筑紫A丸 / 汉仪唐美人 / 甜甜圈海报，默认收在折叠块里                                            |
+|             | 代码字体 4 款   | Monaco（默认）/ Consolas / Maple Mono / Hack，代码区实时预览                         |
+| **六、背景设置**  | 壁纸         | 8 张二次元 + 8 张风景 · 山野 + 8 张风景 · 水与森林 + 8 张适配手机（走 picsum 公共 CDN），打开分类才加载缩略图 |
+|             | 色彩         | 8 个渐变色 + 7 个纯色，另有自定义纯色取色器                                                |
+|             | 自定义        | 粘贴 HTTPS 图片链接；先预览探针再应用，失败保留旧图                                            |
+|             | 动态壁纸 API   | 收在「高级」折叠块里：每次刷新可能返回不同图片的在线接口                                             |
 
 **改面板本身**：
 
@@ -961,6 +957,7 @@ ai_chat:
 **用法 A：直连服务商（本地 / 内网测试用）**
 
 把 Key 放进 `.ai-chat-key`（站点根目录，一行纯文本）或直接写 `ai_chat.api_key`。
+  
 这样 Key 会随页面下发到浏览器，**任何人 F12 都能看到**，别在公网用。
 
 **用法 B：同源代理（公网推荐，仓库已带实现）**
@@ -970,6 +967,7 @@ ai_chat:
 3. 请求打到 `api/chat/completions.js`（Vercel）或 `functions/api/chat/completions.js`（Cloudflare Pages），由它在服务端读环境变量再去请求服务商。
 
 代理函数自带：每 IP 限流、`max_tokens` 上限（`MAX_TOKENS_CAP = 8192`）、CORS 白名单。
+  
 白名单默认放行 `example.com`，改法：
 
 ```bash
@@ -992,17 +990,19 @@ AI_PROXY_ALLOW_SUFFIXES=your-domain.com
 
 ### 8.11 友人帐 / 朋友圈 / 画廊等页面
 
-| 页面 | 入口文件 | 数据来源 |
-| --- | --- | --- |
-| 友人帐（友链） | `source/social/link/index.md` | `source/_data/link.yml` |
-| 朋友圈 | `source/social/fcircle/index.md` | [hexo-circle-of-friends](https://github.com/Rock-Candy-Tea/hexo-circle-of-friends) 产出的静态 JSON |
-| 画廊 | `source/box/gallery/index.md` + `wallpaper/index.md` | 页面内 Markdown 图片 |
-| 网址导航 | `source/box/nav/index.md` | 页面内 HTML + `source/box/nav/icons/` 图标 |
-| 关于 | `source/personal/about/index.md` | 页面内 HTML，样式在 `source/css/about-page.css` |
-| 旧时光（时间线） | `source/site/time/index.md` | `{% timeline %}` 标签 |
-| 八音盒 | `source/life/music/index.md` | Meting API + 网易云歌单 ID |
-| 小游戏 / 动画 | `source/life/games/`、`source/box/animation/` | 外链演示 |
-| 天文星图 | `source/box/astronomy/voyager.html` | 独立 HTML，`skip_render` 不参与渲染 |
+| 页面       | 入口文件                                                 | 数据来源                                                                                          |
+| -------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| 友人帐（友链）  | `source/social/link/index.md`                        | `source/_data/link.yml`                                                                       |
+| 朋友圈      | `source/social/fcircle/index.md`                     | [hexo-circle-of-friends](https://github.com/Rock-Candy-Tea/hexo-circle-of-friends) 产出的静态 JSON |
+| 画廊       | `source/box/gallery/index.md` + `wallpaper/index.md` | 页面内 Markdown 图片                                                                               |
+| 网址导航     | `source/box/nav/index.md`                            | 页面内 HTML + `source/box/nav/icons/` 图标                                                         |
+| 关于       | `source/about/index.md`                              | 页面内 HTML，样式在 `source/css/about-page.css`                                                      |
+| 留言板      | `source/message/index.md`                            | 正文手写 HTML + **Twikoo 评论**（front-matter `comments: true`，`envId` 在 `_config.fomalhaut.yml`）；样式 `source/css/message-page.css`。评论区懒加载，滚到视口才拉脚本 |
+| 螺纹规格速查   | `source/tools/index.md`                              | 页面内 HTML，样式/脚本在 `source/css/thread-table.css`、`source/js/thread-table.js`                                  |
+| 宏程序生成器   | `source/tools/macro/index.md`                        | 页面内 HTML + 纯前端生成，样式/脚本在 `source/css/macro-gen.css`、`source/js/macro-gen.js`；6 套 Fanuc 宏程序模板都定义在 js 的 `TPL` 对象里 |
+| 八音盒      | `source/music/index.md`                         | Meting API + 网易云歌单 ID                                                                         |
+| 小游戏 / 动画 | `source/life/games/`、`source/box/animation/`         | 外链演示                                                                                          |
+| 天文星图     | `source/box/astronomy/voyager.html`                  | 独立 HTML，`skip_render` 不参与渲染                                                                   |
 
 **友人帐怎么加人**：编辑 `source/_data/link.yml`：
 
@@ -1018,6 +1018,7 @@ AI_PROXY_ALLOW_SUFFIXES=your-domain.com
 ```
 
 友人帐有三种样式，改 `flink_style: volantis`（可选 `butterfly` / `volantis` / `flexcard`）。
+  
 不需要的页面：删掉对应目录，再去 `menu:` 里去掉菜单项。
 
 ### 8.12 页脚与页脚徽标
@@ -1031,7 +1032,9 @@ AI_PROXY_ALLOW_SUFFIXES=your-domain.com
 4. **徽章列 `p#ghbdages`**（第 86–113 行）：一行小徽章，两种来源——
    - **本地 SVG**：放在 `source/assets/badge/`，用 `/assets/badge/xxx.svg` 引用（仓库自带 `Theme-Fomalhaut-6513df.svg`、`CDN-npmmirror.svg`（去掉原版投影的那一份）、`Fomalhaut-work.svg`、`Fomalhaut-rest.svg`）；
    - **shields.io 动态徽章**：`https://img.shields.io/badge/左侧文字-右侧文字-颜色.svg`，例如
+       
      `https://img.shields.io/badge/Frame-Hexo-blue.svg`、`https://img.shields.io/badge/Hosted-Vercel-brightgreen.svg`；
+       
      文字里的空格写成 `_`，颜色可用十六进制（去掉 `#`）。
 
 增删一行徽章的写法：
@@ -1041,20 +1044,22 @@ a.github-badge(target='_blank' href='https://hexo.io/' style='margin-inline:5px'
   img(src='https://img.shields.io/badge/Frame-Hexo-blue.svg' alt='')
 ```
 
+
 改完页脚记得 **重启 `hexo server`**（Hexo 只在启动时读 pug 模板）。
 
 ### 8.13 归档页卡片（`/archives/`）
 
 归档页默认由主题渲染成「日期 + 标题」列表，仓库另外叠了一层站点级卡片改版：
 
-| 想改什么 | 去哪儿改 |
-| --- | --- |
-| 每页篇数、年份 / 月份分页 | `_config.yml` 的 `archive_generator`（默认 `per_page: 12`） |
+| 想改什么                | 去哪儿改                                                                       |
+| ------------------- | -------------------------------------------------------------------------- |
+| 每页篇数、年份 / 月份分页      | `_config.yml` 的 `archive_generator`（默认 `per_page: 12`）                     |
 | 卡片外观（封面高度、列数、间距、配色） | `source/css/archive-page.css`（顶部变量 `--ar-w` / `--ar-gap` / `--ar-cover-h`） |
-| 版面结构（统计条、年份章节、折叠） | `source/js/inject/archive-page.js` |
-| 卡片上的分类与阅读时长 | `scripts/archive-index.js`（构建期写进页面的 `ar-index` JSON） |
+| 版面结构（统计条、年份章节、折叠）   | `source/js/inject/archive-page.js`                                         |
+| 卡片上的分类与阅读时长         | `scripts/archive-index.js`（构建期写进页面的 `ar-index` JSON）                       |
 
 两个引入行在 `_config.fomalhaut.yml` 的 `inject.head`（`archive-page.css` / `archive-page.js`，带 `?v=` 缓存戳，改完记得提版本）。
+  
 **回滚**：删掉那两行，归档页立刻回到主题原样——样式与脚本都带 `.ar-ready` 守卫，缺一不可；`scripts/archive-index.js` 只影响归档页的 `</head>`，留着也不会对别的页面产生输出。
 
 ---
@@ -1097,7 +1102,7 @@ cover: https://picsum.photos/id/1015/1200/675   # 卡片封面；不写则从 co
 top_img: /assets/head.jpg       # 文章页顶部大图；不写则跟随 default_top_img
 randomcover: false              # true = 每次刷新从 default_cover 随机换一张
 
-sticky: 1                       # 置顶（数值越大越靠前）；也可在正文写 <!-- sticky --> 
+sticky: 1                       # 置顶（数值越大越靠前）；也可在正文写  
 
 toc: true                       # 是否显示右侧目录
 toc_number: true                # 目录是否带序号
@@ -1137,7 +1142,7 @@ comments: false
 这一页的正文……
 ```
 
-2. 在 `_config.fomalhaut.yml` 的 `menu:` 里加一项：`工具箱: /tools/ || fas fa-toolbox`。
+1. 在 `_config.fomalhaut.yml` 的 `menu:` 里加一项：`工具箱: /tools/ || fas fa-toolbox`。
 
 页面默认套用 `themes/fomalhaut/layout/page.pug`（带侧栏、带顶部图）。**页面里可以直接写 HTML**，例如：
 
@@ -1153,11 +1158,11 @@ comments: false
 
 ### 9.4 图片怎么放
 
-| 方式 | 写法 | 适用 |
-| --- | --- | --- |
-| 站内相对路径 | `![描述](/assets/pic.jpg)` | 图片放 `source/assets/` |
-| 同目录相对路径 | `![描述](./pic.jpg)` | 需要在 `_config.yml` 打开 `post_asset_folder: true`，图片与文章同目录 |
-| 外链 / 图床 | `![描述](https://your-cdn.com/pic.jpg)` | 图片多时推荐 |
+| 方式      | 写法                                    | 适用                                                      |
+| ------- | ------------------------------------- | ------------------------------------------------------- |
+| 站内相对路径  | `![描述](/assets/pic.jpg)`              | 图片放 `source/assets/`                                    |
+| 同目录相对路径 | `![描述](./pic.jpg)`                    | 需要在 `_config.yml` 打开 `post_asset_folder: true`，图片与文章同目录 |
+| 外链 / 图床 | `![描述](https://your-cdn.com/pic.jpg)` | 图片多时推荐                                                  |
 
 ### 9.5 本地预览与发布
 
@@ -1178,27 +1183,27 @@ npx hexo deploy            # 按 _config.yml 的 deploy 段推送
 
 ## 十、最常改的地方（速查）
 
-| 我想改…… | 去哪改 |
-| --- | --- |
-| 站点名 / 作者 / 域名 / 部署仓库 | 根 `_config.yml` 的 `title` / `author` / `url` / `deploy` |
-| 首页标题下的副标题 | `_config.fomalhaut.yml` 的 `subtitle` |
-| 主题色 | `_config.fomalhaut.yml` 的 `theme_color.main`，或让访客用面板自己选 |
-| 头像 | `_config.fomalhaut.yml` 的 `avatar.img`（默认 `/assets/avatar.webp`） |
-| 首页大图 | `_config.fomalhaut.yml` 的 `index_img`；全站背景改 `inject.head` 里 `#defineBg` 那行的 `--default-bg` |
-| 文章默认封面池 | `_config.fomalhaut.yml` 的 `cover.default_cover` |
-| 顶部导航 | `_config.fomalhaut.yml` 的 `menu` |
-| 页脚文案 / 版权 / 徽章 | `themes/fomalhaut/layout/includes/footer.pug`（改完要重启 server）+ `footer.owner` / `footer.custom_text` |
-| 侧栏卡片开关 | `_config.fomalhaut.yml` 的 `aside` 段 |
-| 评论区 | `_config.fomalhaut.yml` 的 `comments.use` + 对应系统的段（如 `twikoo.envId`） |
-| 统计 ID | `_config.fomalhaut.yml` 的 `baidu_analytics` 等；51LA 在 `source/js/51la.js` |
-| AI 助手 | `_config.fomalhaut.yml` 的 `ai_chat` 段（详见 8.10） |
-| 字体 | `themes/fomalhaut/source/css/_custom/custom.css` 的「字体引入」一节 + `source/js/modules/appearance-fonts.js` 的 `APPEARANCE_TEXT_FONTS` / `APPEARANCE_CODE_FONTS` |
-| 社交图标 | `_config.fomalhaut.yml` 的 `social`（格式：`名称: 链接 || 图标类名 || 动画类名`） |
-| 首页轮播 | 根 `_config.yml` 的 `swiper` 段 |
-| 首屏加载动画 | `_config.fomalhaut.yml` 的 `preloader`（样式文件在 `themes/fomalhaut/layout/includes/loading/load_style/`） |
-| 文章置顶 | 文章 Front-matter 写 `sticky: 1` |
-| 页面里的自定义样式 | 写进 `source/css/*.css`，再在 `inject.head` 里 `<link>` 引入 |
-| 归档页每页篇数 / 卡片外观 | 根 `_config.yml` 的 `archive_generator` 与 `source/css/archive-page.css`（详见 8.13） |
+| 我想改……                | 去哪改                                                                                                                                                      |   |      |   |         |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | - | ---- | - | ------- |
+| 站点名 / 作者 / 域名 / 部署仓库 | 根 `_config.yml` 的 `title` / `author` / `url` / `deploy`                                                                                                  |   |      |   |         |
+| 首页标题下的副标题            | `_config.fomalhaut.yml` 的 `subtitle`                                                                                                                     |   |      |   |         |
+| 主题色                  | `_config.fomalhaut.yml` 的 `theme_color.main`，或让访客用面板自己选                                                                                                  |   |      |   |         |
+| 头像                   | `_config.fomalhaut.yml` 的 `avatar.img`（默认 `/assets/avatar.webp`）                                                                                         |   |      |   |         |
+| 首页大图                 | `_config.fomalhaut.yml` 的 `index_img`；全站背景改 `inject.head` 里 `#defineBg` 那行的 `--default-bg`                                                               |   |      |   |         |
+| 文章默认封面池              | `_config.fomalhaut.yml` 的 `cover.default_cover`                                                                                                          |   |      |   |         |
+| 顶部导航                 | `_config.fomalhaut.yml` 的 `menu`                                                                                                                         |   |      |   |         |
+| 页脚文案 / 版权 / 徽章       | `themes/fomalhaut/layout/includes/footer.pug`（改完要重启 server）+ `footer.owner` / `footer.custom_text`                                                       |   |      |   |         |
+| 侧栏卡片开关               | `_config.fomalhaut.yml` 的 `aside` 段                                                                                                                      |   |      |   |         |
+| 评论区                  | `_config.fomalhaut.yml` 的 `comments.use` + 对应系统的段                                                                                      |   |      |   |         |
+| 统计 ID                | `_config.fomalhaut.yml` 的 `baidu_analytics` 等；51LA 在 `source/js/51la.js`                                                                                 |   |      |   |         |
+| AI 助手                | `_config.fomalhaut.yml` 的 `ai_chat` 段（详见 8.10）                                                                                                           |   |      |   |         |
+| 字体                   | `themes/fomalhaut/source/css/_custom/custom.css` 的「字体引入」一节 + `source/js/modules/appearance-fonts.js` 的 `APPEARANCE_TEXT_FONTS` / `APPEARANCE_CODE_FONTS` |   |      |   |         |
+| 社交图标                 | `_config.fomalhaut.yml` 的 `social`（格式：\`名称: 链接                                                                                                           |   | 图标类名 |   | 动画类名\`） |
+| 首页轮播                 | 根 `_config.yml` 的 `swiper` 段                                                                                                                             |   |      |   |         |
+| 首屏加载动画               | `_config.fomalhaut.yml` 的 `preloader`（样式文件在 `themes/fomalhaut/layout/includes/loading/load_style/`）                                                      |   |      |   |         |
+| 文章置顶                 | 文章 Front-matter 写 `sticky: 1`                                                                                                                            |   |      |   |         |
+| 页面里的自定义样式            | 写进 `source/css/*.css`，再在 `inject.head` 里 `<link>` 引入                                                                                                     |   |      |   |         |
+| 归档页每页篇数 / 卡片外观       | 根 `_config.yml` 的 `archive_generator` 与 `source/css/archive-page.css`（详见 8.13）                                                                           |   |      |   |         |
 
 ---
 
@@ -1206,19 +1211,19 @@ npx hexo deploy            # 按 _config.yml 的 deploy 段推送
 
 主题注册的全部标签（实现都在 `themes/fomalhaut/scripts/tag/`）：
 
-| 标签 | 用法 | 说明 |
-| --- | --- | --- |
-| `note` | `{% note info flat %}文字{% endnote %}` | 提示块。样式：`default/primary/success/info/warning/danger`；形状：`flat/modern/simple/disabled` |
-| `tabs` | `{% tabs 组名 %}` + `<!-- tab 标题 -->` | 标签页，支持 `subtabs` / `subsubtabs` 嵌套 |
-| `timeline` | `{% timeline 标题 %}` + `<!-- timeline 日期 -->` | 时间线 |
-| `btn` | `{% btn 链接, 文字, 图标, 选项 %}` | 按钮。选项：`color outline center block larger` |
-| `label` | `{% label 文字 颜色 %}` | 行内小标签 |
-| `gallery` | `{% gallery %}` … `{% endgallery %}` | 相册（带灯箱） |
-| `galleryGroup` | `{% galleryGroup '名称' '描述' '/链接' 封面图 %}` | 相册分组入口 |
-| `mermaid` | `{% mermaid %}graph LR; A-->B;{% endmermaid %}` | Mermaid 图表 |
-| `flink` | `{% flink %}` | 读取 `source/_data/link.yml` 渲染友人帐 |
-| `hideToggle` | `{% hideToggle 标题 %}内容{% endhideToggle %}` | 折叠块，另有 `hideInline` / `hideBlock` |
-| `inlineImg` | `{% inlineImg 图片链接 宽度 %}` | 行内小图 |
+| 标签             | 用法                                              | 说明                                                                                    |
+| -------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `note`         | `{% note info flat %}文字{% endnote %}`           | 提示块。样式：`default/primary/success/info/warning/danger`；形状：`flat/modern/simple/disabled` |
+| `tabs`         | `{% tabs 组名 %}` + \`\`                          | 标签页，支持 `subtabs` / `subsubtabs` 嵌套                                                    |
+| `timeline`     | `{% timeline 标题 %}` + \`\`                      | 时间线                                                                                   |
+| `btn`          | `{% btn 链接, 文字, 图标, 选项 %}`                      | 按钮。选项：`color outline center block larger`                                             |
+| `label`        | `{% label 文字 颜色 %}`                             | 行内小标签                                                                                 |
+| `gallery`      | `{% gallery %}` … `{% endgallery %}`            | 相册（带灯箱）                                                                               |
+| `galleryGroup` | `{% galleryGroup '名称' '描述' '/链接' 封面图 %}`        | 相册分组入口                                                                                |
+| `mermaid`      | `{% mermaid %}graph LR; A-->B;{% endmermaid %}` | Mermaid 图表                                                                            |
+| `flink`        | `{% flink %}`                                   | 读取 `source/_data/link.yml` 渲染友人帐                                                      |
+| `hideToggle`   | `{% hideToggle 标题 %}内容{% endhideToggle %}`      | 折叠块，另有 `hideInline` / `hideBlock`                                                     |
+| `inlineImg`    | `{% inlineImg 图片链接 宽度 %}`                       | 行内小图                                                                                  |
 
 > ⚠️ 注意标签名：是 **`btn`** 不是 `button`，也没有 `span`，写错会报 `unknown block tag`。
 
@@ -1250,6 +1255,7 @@ npx vercel            # 首次会引导你关联项目
 ### 方案 C：Cloudflare Pages
 
 构建命令 `hexo clean && hexo generate && gulp`，输出目录 `public`。
+  
 Cloudflare Pages 认根目录的 `functions/` 作为函数目录（Vercel 认 `api/`），仓库里两份都在，构建时 `scripts/vercel-api-copy.js` 会自动把它们拷进产物。
 
 ### 方案 D：本地生成 + 手动推送
@@ -1264,27 +1270,35 @@ npx hexo clean && npx hexo generate && npx gulp
 ## 十三、常见问题
 
 **Q：执行 `hexo server` 报找不到主题？**
+  
 确认 `_config.yml` 里的 `theme:` 值与 `themes/` 下的目录名一致（默认 `fomalhaut`）。
 
 **Q：改了 `themes/` 下的 `.pug` 文件没生效？**
+  
 重启 `hexo server`。Hexo 只在启动时读取模板；改样式（`.styl` / `.css`）与文章则不需要重启。
 
 **Q：`_config.fomalhaut.yml` 和 `themes/fomalhaut/_config.yml` 改哪个？**
+  
 改**根目录**的 `_config.fomalhaut.yml`。主题目录里那份只是默认值模板，会被根目录那份覆盖。
 
 **Q：首页文章列表没有封面图？**
+  
 在文章 Front-matter 写 `cover: 图片链接`，或在 `_config.fomalhaut.yml` 的 `cover.default_cover` 里配置封面池。
 
 **Q：字体 / 图片挂了？**
+  
 默认走公共 CDN（`cdn.jsdelivr.net` 的 `@fontsource/*` 与 `picsum.photos`）。若所在网络访问不畅，把 `themes/fomalhaut/source/css/_custom/custom.css` 里的 `@font-face` 换成你自己的字体，把 `cover.default_cover` 换成你自己的图床即可。
 
 **Q：想彻底不用某个页面？**
+  
 删掉 `source/` 下对应目录，并把 `_config.fomalhaut.yml` 的 `menu:` 与其面板配置一并去掉。
 
 **Q：构建很慢？**
+  
 `node_modules` 首次安装最慢；之后增量构建约 2–3 秒，`gulp` 压缩约 16–20 秒。
 
 **Q：美化面板的颜色/字体改了，下次打开又变回默认？**
+  
 设置存在浏览器 `localStorage`。换了域名、清了浏览器数据或改了 `storage_key` 就会重置，这属于正常行为。
 
 ---
@@ -1301,18 +1315,25 @@ npx hexo clean && npx hexo generate && npx gulp
 ## ⭐ Star 历史
 
 <p align="center">
-  <a href="https://star-history.com/#fomalhaut1998/hexo-theme-fomalhaut&Timeline">
+  
+  <a href="https://star-history.com/#fomalhaut1998/hexo-theme-fomalhaut\&Timeline">
+  
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=fomalhaut1998/hexo-theme-fomalhaut&type=Timeline&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=fomalhaut1998/hexo-theme-fomalhaut&type=Timeline" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=fomalhaut1998/hexo-theme-fomalhaut&type=Timeline" width="100%" />
+  
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=fomalhaut1998/hexo-theme-fomalhaut\&type=Timeline\&theme=dark" />
+  
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=fomalhaut1998/hexo-theme-fomalhaut\&type=Timeline" />
+  
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=fomalhaut1998/hexo-theme-fomalhaut\&type=Timeline" width="100%" />
+  
     </picture>
+  
   </a>
+  
 </p>
 
-> 上图来自 [star-history.com](https://star-history.com/#fomalhaut1998/hexo-theme-fomalhaut&Timeline)，实时更新；顶部那两枚 Stars / Forks 徽章也是实时数据。
+> 上图来自 [star-history.com](https://star-history.com/#fomalhaut1998/hexo-theme-fomalhaut\&Timeline)，实时更新；顶部那两枚 Stars / Forks 徽章也是实时数据。
 
 感谢每一位点过星星、提过 Issue、发过 PR 的朋友 🍭
 
 如果这个项目帮到了你，欢迎点个 ⭐。
-
