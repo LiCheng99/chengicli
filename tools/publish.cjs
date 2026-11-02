@@ -93,12 +93,22 @@ if (DRY) {
   console.log('  (dry-run) 跳过');
 } else {
   let ok = false;
+  let rebased = false;
   for (let i = 1; i <= 3; i++) {
     const r = sh('git', ['push'], { env: Object.assign({}, process.env, { GIT_TERMINAL_PROMPT: '0' }) });
     const out = (r.stdout || '') + (r.stderr || '');
     if (r.status === 0) { ok = true; break; }
     if (/non-fast-forward|rejected|fetch first/i.test(out)) {
-      fail('远端有新提交，本地落后', '先跑： git pull --rebase  然后再 npm run publish');
+      if (rebased) fail('rebase 后仍被拒绝', '手动跑 git pull --rebase 看看');
+      console.log('  远端有新提交，自动 git pull --rebase --autostash ...');
+      const p = sh('git', ['pull', '--rebase', '--autostash'], { stdio: 'inherit' });
+      if (p.status !== 0) {
+        sh('git', ['rebase', '--abort']);
+        fail('自动 rebase 失败（可能有冲突）', '手动解决冲突后重新发布');
+      }
+      rebased = true;
+      i--;              // 不占用重试次数
+      continue;
     }
     console.error('  第 ' + i + ' 次失败：' + out.split('\n').filter(Boolean).slice(-1)[0]);
     if (i < 3) sleep(3000);
