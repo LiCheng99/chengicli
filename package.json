@@ -12,6 +12,8 @@
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "deploy:vercel": "node tools/deploy-vercel.js",
+    "publish": "node tools/publish.cjs",
+    "publish:src": "node tools/publish.cjs --src",
     "server": "hexo server",
     "build:clean": "hexo clean && hexo generate && gulp",
     "minify": "gulp"
