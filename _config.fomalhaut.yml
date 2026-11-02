@@ -9,6 +9,7 @@ menu:
     文章统计: /tags/ || icon-shujutongji1 || faa-tada
     随便逛逛: javascript:randomPost(); || icon-zuji1 || faa-tada
   八宝箱 || icon-xiangzi || faa-tada || hide:
+    音乐馆: /music/ || icon-yinle || faa-tada
     螺纹规格: /thread/ || fas fa-screwdriver-wrench || faa-tada
     宏程序: /macro/ || fas fa-code || faa-tada
     # 画廊: /gallery/ || icon-tubiaozhizuomoban || faa-tada
@@ -16,7 +17,6 @@ menu:
     # 朋友圈: /fcircle/ || icon-pengyouquan || faa-tada
     # 友人帐: /links/ || icon-lianjie || faa-tada
   网站 || icon-wangye || faa-tada || hide:
-    音乐馆: /music/ || icon-yinle || faa-tada
     天文馆: /astronomy/ || icon-wangyuanjing || faa-tada
     网址导航: /nav/ || icon-zhifengche || faa-tada
     旧时光: /site/time/ || icon-xianxingshalou || faa-tada
