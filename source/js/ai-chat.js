@@ -13,13 +13,13 @@
     api_base: 'https://api.deepseek.com',
     model: 'deepseek-flash',
     temperature: 0.7,
-    max_tokens: 8192,
+    max_tokens: 2048,
     has_key: false,
     welcome: '你好，我是这个页面的 AI 助手。可以帮你总结当前页面、解释名词、回答关于本页的问题。',
     first_question: '请用中文总结这个页面的内容：先用一句话概括，再列 3-5 条要点。',
     system_prompt: '你是这个博客的页面助手，语气自然、简洁、像朋友聊天。默认用中文回答；只依据给出的页面内容和对话历史作答，页面里没有的信息不要编造，确实不知道就直说。回答用 Markdown 排版，能用列表就用列表，避免长篇大论。',
-    max_history: 12,
-    max_page_chars: 32000,
+    max_history: 6,
+    max_page_chars: 12000,
     storage_key: 'ai_chat_history_v1',
     panel_width: 460,
     panel_height: 640,
@@ -553,7 +553,7 @@
       }
     }
     text = text.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n');
-    var max = px(CFG.max_page_chars, 32000);
+    var max = px(CFG.max_page_chars, 12000);
     var rawLen = text.length;
     var trunc = rawLen > max;
     if (trunc) {
@@ -923,7 +923,7 @@
         // 思考型模型会先吐 reasoning_content：如果 max_tokens 被思考吃光，正文一个字都不会有
         // （流正常结束但 finish_reason=length）。这时别再说「模型没有返回内容」——它在想，只是没写完。
         bub.innerHTML = gotThink
-          ? '这次只吐了思考过程、正文没写完就被截断了：当前 <code>max_tokens=' + px(CFG.max_tokens, 8192) + '</code> 不够用（思考的 token 也算在里面）。' +
+          ? '这次只吐了思考过程、正文没写完就被截断了：当前 <code>max_tokens=' + px(CFG.max_tokens, 2048) + '</code> 不够用（思考的 token 也算在里面）。' +
             '把 <code>_config.fomalhaut.yml</code> 里 <code>ai_chat.max_tokens</code> 再调大，或者把 <code>model</code> 换成不思考的 <code>deepseek-chat</code>，' +
             '也可以把问题问得更具体些再试。'
           : '模型没有返回内容，稍后再试一次。';

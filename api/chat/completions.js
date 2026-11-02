@@ -27,11 +27,11 @@ const UPSTREAM = String(process.env.DEEPSEEK_API_BASE || 'https://api.deepseek.c
 const MODEL = String(process.env.DEEPSEEK_MODEL || 'deepseek-chat');
 const DEFAULT_ORIGINS = 'https://lichengic.com,https://www.lichengic.com';
 const MAX_BODY_BYTES = 400 * 1024;
-const MAX_TOKENS_CAP = 8192;
-const MAX_MESSAGES = 24;
-const MAX_CONTENT_CHARS = 40000;
+const MAX_TOKENS_CAP = 2048;
+const MAX_MESSAGES = 16;
+const MAX_CONTENT_CHARS = 20000;
 const WINDOW_MS = 60 * 60 * 1000;
-const MAX_PER_WINDOW = parseInt(process.env.AI_PROXY_MAX_PER_HOUR, 10) || 120;
+const MAX_PER_WINDOW = parseInt(process.env.AI_PROXY_MAX_PER_HOUR, 10) || 60;
 const hits = new Map();
 
 function sendJson(res, code, message, extra) {
