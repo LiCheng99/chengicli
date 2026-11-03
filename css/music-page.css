@@ -1,0 +1,654 @@
+/* ============================================================================
+   音乐馆 /music/ —— 方形封面播放器
+   ----------------------------------------------------------------------------
+   版式参考 anheyu 那个全屏音乐页（唱盘 + 唱臂 + 歌词 + 进度 + 圆形按键），
+   但这里**不做全屏**：整块收进站点正文宽度（900），背景一律走 --glass-* 中性玻璃，
+   主题色只出现在「实底 / 图标 / 数值」上（中心孔、进度条、播放键、当前行序号、
+   正在唱的那一句），不拿来做面 —— 这是 10-28 定下的规矩，粉主题下才不会整页发粉。
+
+   类名前缀统一 .mp-*（music player），与旧版 .mv-* 没有关系。
+   ========================================================================== */
+
+/* ------------------------------ 容器与卡片 ------------------------------ */
+#article-container .mp-page {
+  max-width: none;
+  margin: 4px 0 34px;
+}
+/* 音乐馆页的布局留白（作者 10-30 第十九版要求）：
+   「右边的距离菜单按钮距离就刚刚好」「左边距离音乐胶囊也改为一样，两边相等」
+   → 左右统一 96px。
+   「我现在发现有点太大了 再改小一点」→ 不再铺满（去掉 max-width:none），
+   给一个 1440px 的上限，比全站的 1560px 略窄。
+   （宽度与内边距的总规则已挪到 site-inject.css 的「全站宽度改造」块里统一管理，
+     这里只保留窄屏的收敛，避免两处各写一份对不上。） */
+/* 音乐馆页的左右留白统一由 site-inject.css 的「全站宽度改造」块管理（186px / 172px），
+   这里**不再另写一套窄屏数值** —— 之前这条 max-width:1200px 的 88px/88px 覆盖了宽屏规则，
+   导致「卡片右 → 工具条左」在 1200px 以下变成 81px、以上是 165px，断点处跳变。
+   作者要求（10-30 第二十版）：这个距离**不管窗口多大都保持一样**。
+   只有 ≤860px（手机/窄屏，胶囊与工具条已叠在内容上）才允许收窄。 */
+@media (max-width: 860px) {
+  body:has(#article-container .mp-page) .layout { padding-left: 16px; padding-right: 16px; }
+}
+#article-container .mp-page p { margin: 0; }
+#article-container .mp-page img { border-radius: 0; box-shadow: none; transition: none; }
+#article-container .mp-page img:hover { transform: none; }
+
+#article-container .mp-card {
+  position: relative;
+  background: var(--glass-bg);
+  border: var(--glass-bd);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+}
+#article-container .mp-deck-card {
+  position: relative;
+  padding: 26px 30px 22px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+/* 极光底色：两团主题色光斑慢慢漂；播放时整体更亮一点（纯 CSS 呼吸） */
+#article-container .mp-deck-card::before {
+  content: '';
+  position: absolute;
+  inset: -46%;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 44% at 24% 30%, color-mix(in srgb, var(--glass-accent) 26%, transparent), transparent 70%),
+    radial-gradient(34% 40% at 78% 66%, color-mix(in srgb, var(--glass-accent) 15%, transparent), transparent 72%),
+    radial-gradient(26% 30% at 62% 14%, color-mix(in srgb, #7c6bff 15%, transparent), transparent 70%);
+  filter: blur(34px);
+  opacity: .45;
+  animation: mp-aurora 16s ease-in-out infinite alternate;
+}
+/* 播放时极光更亮一点（纯 CSS 呼吸，不用音频数据） */
+#article-container .mp-page.is-playing .mp-deck-card::before {
+  animation: mp-aurora 16s ease-in-out infinite alternate, mp-breathe 3.4s ease-in-out infinite alternate;
+}
+@keyframes mp-breathe {
+  from { opacity: .38; }
+  to   { opacity: .72; }
+}
+@keyframes mp-aurora {
+  0%   { transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate3d(3%, 2%, 0) rotate(6deg) scale(1.06); }
+  100% { transform: translate3d(-2%, 3%, 0) rotate(-4deg) scale(1.02); }
+}
+#article-container .mp-top,
+#article-container .mp-seek,
+#article-container .mp-keys { position: relative; z-index: 1; }
+
+/* -------------------------------- 歌词区 ----------------------------------
+   版式按作者画的三个框：
+     左下大框 = 当前这一句（最大字号）
+     右上小框 = 接下来的一句
+     右下小框 = 再接下来的一句
+   三行是同一批 DOM 元素在「换角色」：唱到下一句时，右上那句滑到左边当当前句、
+   右下那句滑到右上，原来的当前句淡出 —— 是滚动过渡，不是直接换字。 */
+#article-container .mp-lyric {
+  position: relative;
+  /* 高度要装得下「右下那句与封面下边对齐」的位置：封面 190px，
+     当前句居中（占 ~31px），后两句在下面，右下那句底边落在封面底。
+     158px 会把最后一句裁掉 → 放宽到 186px。 */
+  height: 186px;
+  margin: -26px 0 0;          /* 上移：让右上那句与标题齐平 */
+  overflow: hidden;
+  /* 三个歌词框的垂直位置由 JS 按「专辑封面的实际位置」算好后写进来：
+       --mp-top-cur  当前句（与封面垂直居中）
+       --mp-top-nx1  接下来的一句
+       --mp-top-nx2  再接下来的一句（与封面下边对齐）
+     下面几个默认值只是 JS 还没跑之前的兜底。 */
+  --mp-fs-cur: 23px;
+  --mp-fs-nx: 18px;           /* 后两句的字号 */
+  --mp-nx-gap: 10px;          /* 后两句之间的行距 */
+  --mp-top-cur: 62px;
+  --mp-top-nx1: 100px;
+  --mp-top-nx2: 134px;
+}
+#article-container .mp-lyric-stage {
+  position: absolute;
+  inset: 0;
+}
+#article-container .mp-lyric-row {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0 2px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    left .62s cubic-bezier(.22, .61, .36, 1),
+    top .62s cubic-bezier(.22, .61, .36, 1),
+    font-size .62s cubic-bezier(.22, .61, .36, 1),
+    font-weight .4s ease,
+    color .35s ease,
+    opacity .45s ease;
+  will-change: left, top, opacity;
+}
+#article-container .mp-lyric-row.is-cur {
+  left: 3%;                    /* 往右挪一点，别贴着封面 */
+  top: var(--mp-top-cur);
+  max-width: 55%;
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--glass-ink);
+  opacity: 1;
+  z-index: 3;
+}
+#article-container .mp-lyric-row.is-nx1 {
+  left: 50%;
+  top: var(--mp-top-nx1);
+  max-width: 44%;
+  font-size: 18px;         /* 又大 1 号 */
+  font-weight: 400;
+  color: var(--glass-dim);
+  opacity: .85;
+  z-index: 2;
+}
+#article-container .mp-lyric-row.is-nx2 {
+  left: 63%;
+  top: var(--mp-top-nx2);
+  max-width: 34%;
+  font-size: 18px;         /* 又大 1 号 */
+  font-weight: 400;
+  color: var(--glass-dim);
+  opacity: .6;
+  z-index: 1;
+}
+/* 换出去的那句：往上挪一点淡出 */
+#article-container .mp-lyric-row.is-out {
+  left: 3%;
+  top: calc(var(--mp-top-cur) - 18px);
+  font-size: 17px;
+  opacity: 0;
+  z-index: 0;
+}
+/* 新进场的那句：先透明再亮起 */
+#article-container .mp-lyric-row.is-fade { opacity: 0; }
+/* 窄屏换句时新句的起始位置（在第二行下面，等过渡滑上来） */
+#article-container .mp-lyric-row.is-enter { top: calc(var(--mp-top-nx1) + 40px); }
+/* 没歌词时的占位 */
+#article-container .mp-lyric-row.mp-lyric-idle {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--glass-dim);
+  opacity: .5;
+  letter-spacing: .1em;
+}
+
+/* ------------------------------ 顶部：封面 + 信息 -------------------------- */
+#article-container .mp-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+#article-container .mp-cover-wrap {
+  position: relative;
+  flex: 0 0 190px;
+  width: 190px;
+  height: 190px;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--glass-ink) 6%, transparent);
+  box-shadow:
+    0 10px 24px -14px rgba(0, 0, 0, .5),
+    0 0 0 1px color-mix(in srgb, var(--glass-ink) 10%, transparent);
+}
+#article-container .mp-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+#article-container .mp-page.is-playing .mp-cover-wrap {
+  box-shadow:
+    0 14px 44px -16px rgba(0, 0, 0, .55),
+    0 0 0 1px color-mix(in srgb, var(--glass-accent) 38%, transparent),
+    0 0 30px -6px color-mix(in srgb, var(--glass-accent) 42%, transparent);
+}
+/* 播放时封面底部浮出三段跳动的均衡器条，当作「正在播」的暗示（替代原来的唱针） */
+#article-container .mp-cover-eq {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  padding-bottom: 12px;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5));
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+#article-container .mp-cover-eq i {
+  width: 4px;
+  height: 10px;
+  border-radius: 2px;
+  background: #fff;
+}
+#article-container .mp-cover-wrap.is-playing .mp-cover-eq { opacity: 1; }
+#article-container .mp-cover-wrap.is-playing .mp-cover-eq i { animation: mp-eq .9s ease-in-out infinite; }
+#article-container .mp-cover-wrap.is-playing .mp-cover-eq i:nth-child(2) { animation-delay: .25s; }
+#article-container .mp-cover-wrap.is-playing .mp-cover-eq i:nth-child(3) { animation-delay: .5s; }
+@keyframes mp-eq { 0%, 100% { height: 10px; } 50% { height: 36px; } }
+#article-container .mp-meta { flex: 1 1 auto; min-width: 0; }
+
+/* -------------------------------- 曲名 ---------------------------------- */
+#article-container .mp-title {
+  margin: 0;
+  text-align: left;
+  font-size: 25px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--glass-ink);
+  letter-spacing: .01em;
+  /* 歌名/歌手排成一行 flex：歌名过长时自己截断，绝不横向伸到右侧歌词区去
+     （之前是普通 block，长歌名整行铺开，把右上那句歌词压住了）。 */
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  max-width: 46%;
+  min-width: 0;
+}
+#article-container .mp-title b {
+  font-weight: 600;
+  flex: 0 1 auto;      /* 只让歌名被压缩 */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#article-container .mp-artist {
+  flex: 0 0 auto;      /* 歌手优先保持完整 */
+  max-width: 24%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--glass-dim);
+}
+
+/* ------------------------------- 进度条 --------------------------------- */
+#article-container .mp-seek {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0 4px;
+}
+#article-container .mp-time {
+  width: 36px;
+  font-size: 11px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--glass-dim);
+  text-align: center;
+}
+#article-container .mp-bar {
+  position: relative;
+  flex: 1 1 auto;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-ink) 14%, transparent);
+  cursor: pointer;
+  outline: none;
+}
+/* 3px 的条太细点不准，上下各垫 9px 的隐形热区 */
+#article-container .mp-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9px;
+  bottom: -9px;
+}
+#article-container .mp-buf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-ink) 26%, transparent);
+}
+#article-container .mp-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: var(--glass-accent);
+}
+#article-container .mp-knob {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+  border-radius: 50%;
+  background: var(--glass-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-accent) 18%, transparent);
+  opacity: 0;
+  transition: opacity .18s ease, transform .18s ease;
+}
+#article-container .mp-bar:hover .mp-knob,
+#article-container .mp-bar:focus-visible .mp-knob,
+#article-container .mp-page.is-playing .mp-knob { opacity: 1; }
+#article-container .mp-bar:hover .mp-knob { transform: scale(1.15); }
+
+/* -------------------------------- 按键 ---------------------------------- */
+#article-container .mp-keys {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 18px 0 2px;
+  padding: 0 2px;
+}
+#article-container .mp-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--glass-accent) 22%, transparent);
+  border-radius: 50%;
+  /* 常态是「浅主题色」：图标用主题色的淡版，底色带一点主题色薄雾，
+     跟着 --glass-accent 走（= --theme-color），换个主题色整套跟着变。 */
+  background: color-mix(in srgb, var(--glass-accent) 10%, transparent);
+  color: color-mix(in srgb, var(--glass-accent) 78%, transparent);
+  cursor: pointer;                       /* 主题的 button 重置里没有 cursor:pointer */
+  transition: transform .16s ease, background-color .16s ease, color .16s ease, box-shadow .16s ease;
+}
+#article-container .mp-key svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+/* 悬停反馈照抄左下角胶囊那一套（放大 8% + 主题色光环 + 阴影加深）：
+   原来只有「上移 1px + 底色变深」，在实底圆键上几乎看不出反馈。 */
+#article-container .mp-key:hover {
+  color: var(--glass-accent);
+  background: color-mix(in srgb, var(--glass-accent) 17%, transparent);
+  border-color: color-mix(in srgb, var(--glass-accent) 40%, transparent);
+  transform: translateY(-1px) scale(1.08);
+  filter: brightness(1.06);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--glass-accent) 18%, transparent),
+    0 6px 16px color-mix(in srgb, var(--glass-accent) 30%, transparent);
+}
+#article-container .mp-key:active { transform: translateY(0) scale(.94); }
+#article-container .mp-key:focus-visible {
+  color: var(--glass-ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-accent) 28%, transparent);
+}
+#article-container .mp-key.is-on {
+  color: var(--glass-accent);
+  border-color: color-mix(in srgb, var(--glass-accent) 30%, transparent);
+}
+#article-container .mp-play {
+  width: 64px;
+  height: 64px;
+  border: 0;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--glass-accent) 86%, #fff),
+    var(--glass-accent));
+  color: var(--on-theme, #fff);
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--glass-accent) 90%, transparent);
+}
+#article-container .mp-play svg { width: 28px; height: 28px; }
+/* 播放时按钮会带上 .is-on（= 正在播），而 .mp-key.is-on 会把前景色改成主题色；
+   图标的 fill 跟着 currentColor 走 → 粉色图标压在粉色底上，等于没图标。
+   这里把播放键（播放/暂停两个状态）的前景色钉回 --on-theme。 */
+#article-container .mp-play.is-on,
+#article-container .mp-play.is-on svg {
+  color: var(--on-theme, #fff);
+  fill: var(--on-theme, #fff);
+  border-color: transparent;
+}
+/* 播放中的光环：固定节奏的扩散圈（不依赖音频数据） */
+#article-container .mp-page.is-playing .mp-play {
+  animation: mp-halo 2.4s ease-out infinite;
+}
+/* 悬停时停掉播放光环动画：animation 里的 box-shadow 优先级高于普通声明，
+   不停掉的话悬停的圈会被扩散动画盖住，看不出反馈。 */
+#article-container .mp-page.is-playing .mp-play:hover {
+  animation: none;
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--glass-accent) 22%, transparent),
+    0 10px 26px -8px color-mix(in srgb, var(--glass-accent) 95%, transparent);
+}
+@keyframes mp-halo {
+  0%   { box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--glass-accent) 90%, transparent),
+         0 0 0 7px color-mix(in srgb, var(--glass-accent) 22%, transparent); }
+  70%  { box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--glass-accent) 90%, transparent),
+         0 0 0 18px transparent; }
+  100% { box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--glass-accent) 90%, transparent),
+         0 0 0 18px transparent; }
+}
+#article-container .mp-play:hover {
+  color: var(--on-theme, #fff);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--glass-accent) 86%, #fff),
+    var(--glass-accent));
+  transform: translateY(-1px) scale(1.06);
+  filter: brightness(1.05);
+  /* animation 的 box-shadow 优先级高于普通声明，悬停时先停掉光环动画，
+     不然悬停的圈会被扩散动画盖住、看不出反馈 */
+  animation: none;
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--glass-accent) 22%, transparent),
+    0 10px 26px -8px color-mix(in srgb, var(--glass-accent) 95%, transparent);
+}
+#article-container .mp-play:active { transform: translateY(0) scale(.94); }
+#article-container .mp-play:focus-visible {
+  color: var(--on-theme, #fff);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--glass-accent) 26%, transparent);
+}
+
+/* ------------------------------ 歌单卡片 -------------------------------- */
+#article-container .mp-list-card {
+  margin-top: 16px;
+  padding: 16px 18px 12px;
+}
+#article-container .mp-list-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--glass-ink);
+}
+#article-container .mp-dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--glass-accent);
+}
+#article-container .mp-list-name {
+  min-width: 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#article-container .mp-list-count {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--glass-dim);
+}
+#article-container .mp-list-tip {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--glass-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#article-container .mp-list-tools { margin: 10px 0 6px; }
+#article-container .mp-search {
+  width: 100%;
+  height: 34px;
+  padding: 0 14px;
+  font-size: 12.5px;
+  color: var(--glass-ink);
+  background: color-mix(in srgb, var(--glass-ink) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--glass-ink) 10%, transparent);
+  border-radius: 999px;
+  outline: none;
+  transition: border-color .18s ease, background-color .18s ease;
+}
+#article-container .mp-search:focus {
+  border-color: color-mix(in srgb, var(--glass-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--glass-ink) 6%, transparent);
+}
+#article-container .mp-search::placeholder { color: var(--glass-dim); }
+
+/* 宽屏两列：页面变宽之后单列 47 行太长 */
+@media (min-width: 1280px) {
+  body:has(#article-container .mp-page) #article-container .mp-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    align-content: start;
+  }
+  #article-container .mp-list .mp-row { height: 46px; }
+}
+#article-container .mp-list {
+  max-height: 460px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  /* 关键：不能用 contain —— 它会把滚轮锁在列表里，滚到底后页面再也滚不动。
+     auto = 列表滚到边界时把滚动「传递」给外层页面，于是列表到底 → 整页接着滚；
+     往上同理（列表在顶部时继续往上滚 → 整页往上滚）。 */
+  overscroll-behavior: auto;
+  list-style: none;
+}
+#article-container .mp-list::-webkit-scrollbar { width: 6px; }
+#article-container .mp-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-ink) 18%, transparent);
+}
+#article-container .mp-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 10px;
+  border-radius: 9px;
+  font-size: 13px;
+  color: var(--glass-ink);
+  cursor: pointer;
+  transition: background-color .15s ease;
+}
+#article-container .mp-row:hover { background: color-mix(in srgb, var(--glass-ink) 6%, transparent); }
+#article-container .mp-row.is-on {
+  background: color-mix(in srgb, var(--glass-ink) 8%, transparent);
+  font-weight: 600;
+}
+#article-container .mp-row.is-on .mp-row-idx { color: var(--glass-accent); }
+#article-container .mp-row-idx {
+  flex: 0 0 26px;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--glass-dim);
+  text-align: center;
+}
+#article-container .mp-row-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#article-container .mp-row-artist {
+  flex: 0 1 34%;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--glass-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#article-container .mp-row-dur {
+  flex: 0 0 40px;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--glass-dim);
+  text-align: right;
+}
+#article-container .mp-vip {
+  flex: 0 0 auto;
+  padding: 1px 5px;
+  font-size: 10px;
+  line-height: 1.5;
+  border-radius: 4px;
+  color: var(--glass-accent);
+  border: 1px solid color-mix(in srgb, var(--glass-accent) 40%, transparent);
+}
+#article-container .mp-empty {
+  padding: 26px 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--glass-dim);
+}
+
+/* -------------------------------- 手机端 -------------------------------- */
+@media (max-width: 700px) {
+  #article-container .mp-deck-card { padding: 16px 12px 14px; }
+  #article-container .mp-top { gap: 12px; }
+  #article-container .mp-cover-wrap { flex-basis: 92px; width: 92px; height: 92px; border-radius: 12px; }
+  /* 手机端只显示两句，纵向排列：当前句在上、下一句在下。
+     换句时整列向上滚一行：当前句上滑出顶，下一句从下面滑上来占第一行，
+     新的下一句从更下面滑进第二行（is-enter 是它的起始位置）。 */
+  #article-container .mp-lyric {
+    /* 手机端两行：当前句居中于封面、下一句在下面 —— 高度按封面上半 + 两行留足 */
+    height: 84px; margin: 2px 0 0;
+    --mp-fs-cur: 16px;
+    --mp-fs-nx: 14.5px;        /* 下一句也大 1 号 */
+    --mp-nx-gap: 6px;
+  }
+  #article-container .mp-lyric-row.is-cur {
+    left: 0; top: var(--mp-top-cur); max-width: 100%; font-size: 16px;
+  }
+  #article-container .mp-lyric-row.is-nx1 {
+    left: 0; top: var(--mp-top-nx1); max-width: 100%; font-size: 14.5px;
+  }
+  #article-container .mp-lyric-row.is-out {
+    left: 0; top: calc(var(--mp-top-cur) - 40px); font-size: 15px;
+  }
+  #article-container .mp-lyric-row.is-enter { top: calc(var(--mp-top-nx1) + 40px); }
+  /* 手机端没有第三句 */
+  #article-container .mp-lyric-row.is-nx2 { display: none; }
+  #article-container .mp-title { font-size: 15px; max-width: 100%; flex-wrap: wrap; gap: 0 10px; }
+  #article-container .mp-artist { flex-basis: 100%; max-width: 100%; font-size: 12px; }
+  #article-container .mp-seek { gap: 8px; margin-top: 12px; }
+  #article-container .mp-time { width: 30px; font-size: 10.5px; }
+  #article-container .mp-keys { gap: 9px; margin-top: 16px; }
+  #article-container .mp-key { width: 36px; height: 36px; }
+  #article-container .mp-key svg { width: 16px; height: 16px; }
+  #article-container .mp-play { width: 46px; height: 46px; }
+  #article-container .mp-play svg { width: 20px; height: 20px; }
+  #article-container .mp-list-card { padding: 14px 12px 10px; }
+  #article-container .mp-list { max-height: 340px; }
+  #article-container .mp-row { height: 40px; gap: 8px; padding: 0 6px; }
+  #article-container .mp-row-artist { flex-basis: 30%; font-size: 11.5px; }
+  #article-container .mp-row-dur { display: none; }
+}

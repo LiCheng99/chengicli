@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="'Noto Sans SC','Microsoft YaHei',system-ui,sans-serif">
+  <rect width="1200" height="760" fill="#ffffff"/>
+
+  <text x="60" y="62" font-size="26" font-weight="700" fill="#1b1f27">把眼部识别打开：四级菜单，一次设完</text>
+  <text x="60" y="96" font-size="17" fill="#7b8494">MENU → 拍摄设置 → 自动对焦 → 被摄体检测 → 人物 + 眼睛检测，之后不用再进来</text>
+
+  <!-- 屏幕通用样式 -->
+  <g>
+    <!-- S1 -->
+    <rect x="60" y="150" width="240" height="380" rx="16" fill="#17191d" stroke="#333941" stroke-width="2"/>
+    <text x="60" y="136" font-size="16" font-weight="700" fill="#cf4b36">① MENU</text>
+    <g>
+      <rect x="76" y="166" width="34" height="22" rx="5" fill="#cf4b36"/>
+      <rect x="116" y="166" width="34" height="22" rx="5" fill="#3a4048"/>
+      <rect x="156" y="166" width="34" height="22" rx="5" fill="#3a4048"/>
+      <rect x="196" y="166" width="34" height="22" rx="5" fill="#3a4048"/>
+    </g>
+    <text x="76" y="222" font-size="15" fill="#e8ecf2">图像画质</text>
+    <rect x="68" y="236" width="224" height="36" rx="6" fill="#cf4b36" opacity="0.22"/>
+    <rect x="68" y="236" width="4" height="36" rx="2" fill="#cf4b36"/>
+    <text x="76" y="260" font-size="15" fill="#ffffff" font-weight="700">自动对焦</text>
+    <text x="76" y="304" font-size="15" fill="#e8ecf2">快门模式</text>
+    <text x="76" y="348" font-size="15" fill="#e8ecf2">ISO 感光度</text>
+    <text x="76" y="392" font-size="15" fill="#e8ecf2">白平衡</text>
+    <text x="76" y="436" font-size="15" fill="#8b95a3">照片风格</text>
+    <text x="76" y="480" font-size="15" fill="#8b95a3">测光模式</text>
+    <text x="80" y="512" font-size="12" fill="#5c6672">Q/设置 确认　INFO 说明</text>
+  </g>
+
+  <!-- 箭头 -->
+  <path d="M312 340 H340" stroke="#cf4b36" stroke-width="3"/>
+  <path d="M334 332 L346 340 L334 348 Z" fill="#cf4b36"/>
+
+  <!-- S2 -->
+  <g>
+    <rect x="350" y="150" width="240" height="380" rx="16" fill="#17191d" stroke="#333941" stroke-width="2"/>
+    <text x="350" y="136" font-size="16" font-weight="700" fill="#cf4b36">② 自动对焦</text>
+    <text x="366" y="188" font-size="13" fill="#8b95a3">AF 页</text>
+    <text x="366" y="222" font-size="15" fill="#e8ecf2">AF 操作</text>
+    <rect x="358" y="236" width="224" height="36" rx="6" fill="#cf4b36" opacity="0.22"/>
+    <rect x="358" y="236" width="4" height="36" rx="2" fill="#cf4b36"/>
+    <text x="366" y="260" font-size="15" fill="#ffffff" font-weight="700">被摄体检测</text>
+    <text x="366" y="304" font-size="15" fill="#e8ecf2">AF 区域</text>
+    <text x="366" y="348" font-size="15" fill="#e8ecf2">伺服 AF</text>
+    <text x="366" y="392" font-size="15" fill="#e8ecf2">连续 AF</text>
+    <text x="366" y="436" font-size="15" fill="#8b95a3">手动对焦峰值</text>
+    <text x="366" y="480" font-size="15" fill="#8b95a3">对焦环灵敏度</text>
+    <text x="366" y="512" font-size="12" fill="#5c6672">这里决定“对谁对焦”</text>
+  </g>
+
+  <path d="M602 340 H630" stroke="#cf4b36" stroke-width="3"/>
+  <path d="M624 332 L636 340 L624 348 Z" fill="#cf4b36"/>
+
+  <!-- S3 -->
+  <g>
+    <rect x="640" y="150" width="240" height="380" rx="16" fill="#17191d" stroke="#333941" stroke-width="2"/>
+    <text x="640" y="136" font-size="16" font-weight="700" fill="#cf4b36">③ 被摄体检测</text>
+    <text x="656" y="188" font-size="13" fill="#8b95a3">选“人”</text>
+    <rect x="648" y="196" width="224" height="36" rx="6" fill="#cf4b36" opacity="0.22"/>
+    <rect x="648" y="196" width="4" height="36" rx="2" fill="#cf4b36"/>
+    <text x="656" y="220" font-size="15" fill="#ffffff" font-weight="700">人物 ✓</text>
+    <text x="656" y="264" font-size="15" fill="#e8ecf2">动物</text>
+    <text x="656" y="308" font-size="15" fill="#e8ecf2">车辆</text>
+    <text x="656" y="352" font-size="15" fill="#e8ecf2">无（关闭检测）</text>
+    <line x1="656" y1="376" x2="872" y2="376" stroke="#333941" stroke-width="1"/>
+    <text x="656" y="406" font-size="14" fill="#cf8b7a">不选“人物”的话，</text>
+    <text x="656" y="430" font-size="14" fill="#cf8b7a">后面那条眼睛检测</text>
+    <text x="656" y="454" font-size="14" fill="#cf8b7a">根本不会出现。</text>
+  </g>
+
+  <path d="M892 340 H920" stroke="#cf4b36" stroke-width="3"/>
+  <path d="M914 332 L926 340 L914 348 Z" fill="#cf4b36"/>
+
+  <!-- S4 -->
+  <g>
+    <rect x="930" y="150" width="240" height="380" rx="16" fill="#17191d" stroke="#333941" stroke-width="2"/>
+    <text x="930" y="136" font-size="16" font-weight="700" fill="#cf4b36">④ 眼睛检测</text>
+    <text x="946" y="188" font-size="13" fill="#8b95a3">人物检测下的子项</text>
+    <rect x="938" y="196" width="224" height="36" rx="6" fill="#cf4b36" opacity="0.22"/>
+    <rect x="938" y="196" width="4" height="36" rx="2" fill="#cf4b36"/>
+    <text x="946" y="220" font-size="15" fill="#ffffff" font-weight="700">启用 ✓</text>
+    <text x="946" y="264" font-size="15" fill="#e8ecf2">关闭</text>
+    <line x1="946" y1="292" x2="1162" y2="292" stroke="#333941" stroke-width="1"/>
+    <text x="946" y="322" font-size="14" fill="#9fb0c2">效果：对焦框自己咬住</text>
+    <text x="946" y="346" font-size="14" fill="#9fb0c2">离镜头近的那只眼睛。</text>
+    <text x="946" y="378" font-size="14" fill="#9fb0c2">你只负责构图，</text>
+    <text x="946" y="402" font-size="14" fill="#9fb0c2">半按快门就够。</text>
+  </g>
+
+  <!-- 备注 -->
+  <line x1="60" y1="580" x2="1170" y2="580" stroke="#e3e7ee" stroke-width="2"/>
+  <text x="60" y="618" font-size="17" fill="#3a4250">另外两件顺手一起改：</text>
+  <text x="60" y="652" font-size="17" fill="#3a4250">· AF 区域放到“整个区域自动”，让机身自己找脸，别用单点硬怼；</text>
+  <text x="60" y="686" font-size="17" fill="#3a4250">· 伺服 AF 只在拍会动的人时开（走动、说话、小孩），静态摆拍用单次 AF，更省电也更准。</text>
+  <text x="60" y="726" font-size="15" fill="#8b95a3">不同固件版本菜单文字可能略有差异，按“被摄体检测 → 人物 → 眼睛检测”这条主线找即可。</text>
+</svg>

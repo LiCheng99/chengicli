@@ -1,0 +1,810 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><script>if ('serviceWorker' in navigator) {
+  var isLocalDev = ['localhost', '127.0.0.1', '0.0.0.0'].indexOf(location.hostname) !== -1
+  if (isLocalDev) {
+    navigator.serviceWorker.getRegistrations().then(function (rs) {
+      rs.forEach(function (r) { r.unregister() })
+    })
+  } else {
+    navigator.serviceWorker.register('/sw.js').then(function () {
+      if (localStorage.getItem('install') !== 'true') {
+        localStorage.setItem('install', 'true')
+        location.reload()
+      }
+    })
+  }
+}
+</script><head><div id="myscoll"></div><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>螺纹规格速查 | chengicli</title><meta name="keywords" content="博客,互联网,折腾,工具,自建服务,笔记,CNC"><meta name="author" content="chengicli"><meta name="copyright" content="chengicli"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="螺纹规格速查 —— 公制 &#x2F; 美制 &#x2F; 英制 &#x2F; 圆柱管螺纹 &#x2F; 梯形 &#x2F; 锥度，带大径、小径、牙高、螺距与底孔钻头">
+<meta property="og:type" content="website">
+<meta property="og:title" content="螺纹规格速查">
+<meta property="og:url" content="https://www.lichengic.com/thread/index.html">
+<meta property="og:site_name" content="chengicli">
+<meta property="og:description" content="螺纹规格速查 —— 公制 &#x2F; 美制 &#x2F; 英制 &#x2F; 圆柱管螺纹 &#x2F; 梯形 &#x2F; 锥度，带大径、小径、牙高、螺距与底孔钻头">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.lichengic.com/External-link/img/cover/cover-21.jpg">
+<meta property="article:published_time" content="2026-10-24T08:15:00.000Z">
+<meta property="article:modified_time" content="2026-11-02T09:38:47.000Z">
+<meta property="article:author" content="chengicli">
+<meta property="article:tag" content="博客,互联网,折腾,工具,自建服务,笔记,CNC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.lichengic.com/External-link/img/cover/cover-21.jpg"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://www.lichengic.com/thread/"><link rel="preconnect" href="//events.vercount.one"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/External-link/css/fontawesome/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/External-link/css/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"XAPS1H9C4E","apiKey":"f23ce571987ecaf56e6fe0c2c9cfc9f3","indexName":"chengicli","hits":{"per_page":5},"languages":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '螺纹规格速查',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2026-11-02 17:38:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/External-link/css/lxgw/lxgwwenkaigbscreen.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="/External-link/css/lxgw/lxgwwenkaigbscreen.css"></noscript><link rel="preconnect" href="https://sdk.51.la"><link rel="preconnect" href="https://sdk.51.la" crossorigin><link rel="stylesheet" href="/css/twikoo.css?v=20261102-surface"><link rel="stylesheet" href="/css/timeline-archive.css?v=20261102-surface"><link rel="stylesheet" href="/css/pdf-viewer.css?v=20261022b"><style id="themeColor"></style><style id="rightSide"></style><style id="transPercent"></style><style id="bgFilterParam"></style><span id="fps" aria-hidden="true"></span><style id="defineBg">:root{--default-bg:url(/Background-wallpaper/Daytime-background.webp);--darkmode-bg:url(/External-link/img/bg/picsum-1044.jpg);--mobileday-bg:url(/External-link/img/bg/picsum-1018.jpg);--mobilenight-bg:url(/External-link/img/bg/picsum-1039.jpg);}</style><style id="menu_shadow"></style><style id="nav-display"></style><style id="aside-show"></style><style id="aside-pos"></style><link rel="stylesheet" href="/css/site-inject.css?v=20261103-love9"><link rel="stylesheet" href="/css/daily-say.css?v=20261102-hall"><link rel="stylesheet" href="/css/navigation.css?v=20261102-navtop"><link rel="stylesheet" href="/css/mobile-drawer.css?v=20261008"><link rel="stylesheet" href="/css/avatar-glow.css?v=20261004q"><script src="/js/inject/ping-route-boot.js"></script><script src="/js/inject/ping-route.js"></script><script src="/js/inject/beauty-boot.js?v=20261102-fcall"></script><script src="/js/inject/right-menu-state-boot.js"></script><script>window.fomalNightConfig=window.fomalNightConfig||{enabled:true,latLng:null,themeKey:'theme'}</script><script src="/js/inject/daynight-boot.js?v=20261014-nightboot2"></script><script src="/js/inject/typewriter.js?v=20261004b"></script><link rel="stylesheet" href="/css/typewriter.css?v=20261004"><link rel="stylesheet" href="/css/paperclip.css?v=20261005-mobile1"><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="/External-link/css/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/External-link/css/tag_plugins.css" media="defer" onload="this.media='all'"><script src="/External-link/js/carousel-touch.js"></script><link rel="stylesheet" href="/External-link/css/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="chengicli" type="application/atom+xml">
+</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/assets/avatar.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:randomPost();"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zuji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 随便逛逛</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/thread/"><i class="fa-fw fas fa-screwdriver-wrench faa-tada"></i><span class="menu_word" style="font-size:17px"> 螺纹规格</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/macro/"><i class="fa-fw fas fa-code faa-tada"></i><span class="menu_word" style="font-size:17px"> 宏程序</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/about/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-paperplane">                   </use></svg><span class="menu_word" style="font-size:17px"> 关于</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/message/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan"></use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">chengicli</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:randomPost();"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zuji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 随便逛逛</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/thread/"><i class="fa-fw fas fa-screwdriver-wrench faa-tada"></i><span class="menu_word" style="font-size:17px"> 螺纹规格</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/macro/"><i class="fa-fw fas fa-code faa-tada"></i><span class="menu_word" style="font-size:17px"> 宏程序</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/about/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-paperplane">                   </use></svg><span class="menu_word" style="font-size:17px"> 关于</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/message/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan"></use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></div></div><center id="name-container"><a id="page-name" href="javascript:scrollToTop()">PAGE_NAME</a></center><div id="nav-right"><div id="search-button"><a class="search faa-parent animated-hover" title="检索站内任何你想要的信息"><svg class="faa-tada icon" style="height:24px;width:24px;fill:currentColor;position:relative;top:6px" aria-hidden="true"><use xlink:href="#icon-sousuo"></use></svg><span> 搜索</span></a></div><a class="meihua faa-parent animated-hover" onclick="toggleWinbox()" title="美化设置-自定义你的风格" id="meihua-button"><svg class="faa-tada icon" style="height:26px;width:26px;fill:currentColor;position:relative;top:8px" aria-hidden="true"><use xlink:href="#icon-huahua"></use></svg></a><a class="sun_moon faa-parent animated-hover" onclick="switchNightMode()" title="浅色和深色模式转换" id="nightmode-button"><svg class="faa-tada" style="height:25px;width:25px;fill:currentColor;position:relative;top:7px" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon">       </use></svg></a><div id="toggle-menu"><a><i class="fas fa-bars fa-fw"></i></a></div></div></div></nav><div id="page-site-info"><h1 id="site-title">螺纹规格速查</h1></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><link rel="stylesheet" href="/css/thread-table.css?v=20261102-frost2">
+<div class="tc-wrap">
+  <div class="tc-search">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.3-4.3"/></svg>
+    <input id="tcSearch" type="search" autocomplete="off" placeholder="搜索规格：M8、1/4、G1/2、NPT、Tr40…">
+    <button type="button" id="tcClear" class="tc-clear" title="清空">×</button>
+  </div>
+  <div class="tc-cats">
+<button type="button" class="tc-cat is-on" data-cat="all">全部</button><button type="button" class="tc-cat" data-cat="metric">公制 ISO</button><button type="button" class="tc-cat" data-cat="unc">美制 UNC/UNF</button><button type="button" class="tc-cat" data-cat="bsw">英制 BSW/BSF</button><button type="button" class="tc-cat" data-cat="pipe">圆柱管螺纹 G</button><button type="button" class="tc-cat" data-cat="trap">梯形 / T 型</button><button type="button" class="tc-cat" data-cat="taper">锥度螺纹</button><button type="button" class="tc-cat" data-cat="custom">自定义</button>
+  </div>
+  <div class="tc-count" id="tcCount"></div>
+</div>
+<section class="tc-sec" data-cat="metric">
+<h2>公制螺纹 · ISO（牙型角 60°）</h2>
+<p class="tc-note">最常用的一套。细牙必须标注螺距，粗牙默认不标。　<span class="tc-unit">除「每英寸牙数」外，单位均为 mm。</span></p>
+<h3 class="tc-sub">粗牙（Coarse，默认不标螺距）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">M1.6</td><td>1.600</td><td>1.171</td><td>0.215</td><td>0.350</td><td>1.25</td></tr>
+<tr><td class="tc-key">M2</td><td>2.000</td><td>1.509</td><td>0.245</td><td>0.400</td><td>1.60</td></tr>
+<tr><td class="tc-key">M2.5</td><td>2.500</td><td>1.948</td><td>0.276</td><td>0.450</td><td>2.05</td></tr>
+<tr><td class="tc-key">M3</td><td>3.000</td><td>2.387</td><td>0.307</td><td>0.500</td><td>2.50</td></tr>
+<tr><td class="tc-key">M3.5</td><td>3.500</td><td>2.764</td><td>0.368</td><td>0.600</td><td>2.90</td></tr>
+<tr><td class="tc-key">M4</td><td>4.000</td><td>3.141</td><td>0.429</td><td>0.700</td><td>3.30</td></tr>
+<tr><td class="tc-key">M5</td><td>5.000</td><td>4.019</td><td>0.491</td><td>0.800</td><td>4.20</td></tr>
+<tr><td class="tc-key">M6</td><td>6.000</td><td>4.773</td><td>0.613</td><td>1.000</td><td>5.00</td></tr>
+<tr><td class="tc-key">M7</td><td>7.000</td><td>5.773</td><td>0.613</td><td>1.000</td><td>6.00</td></tr>
+<tr><td class="tc-key">M8</td><td>8.000</td><td>6.466</td><td>0.767</td><td>1.250</td><td>6.80</td></tr>
+<tr><td class="tc-key">M10</td><td>10.000</td><td>8.160</td><td>0.920</td><td>1.500</td><td>8.50</td></tr>
+<tr><td class="tc-key">M12</td><td>12.000</td><td>9.853</td><td>1.074</td><td>1.750</td><td>10.20</td></tr>
+<tr><td class="tc-key">M14</td><td>14.000</td><td>11.546</td><td>1.227</td><td>2.000</td><td>12.00</td></tr>
+<tr><td class="tc-key">M16</td><td>16.000</td><td>13.546</td><td>1.227</td><td>2.000</td><td>14.00</td></tr>
+<tr><td class="tc-key">M18</td><td>18.000</td><td>14.933</td><td>1.534</td><td>2.500</td><td>15.50</td></tr>
+<tr><td class="tc-key">M20</td><td>20.000</td><td>16.933</td><td>1.534</td><td>2.500</td><td>17.50</td></tr>
+<tr><td class="tc-key">M22</td><td>22.000</td><td>18.933</td><td>1.534</td><td>2.500</td><td>19.50</td></tr>
+<tr><td class="tc-key">M24</td><td>24.000</td><td>20.319</td><td>1.840</td><td>3.000</td><td>21.00</td></tr>
+<tr><td class="tc-key">M27</td><td>27.000</td><td>23.319</td><td>1.840</td><td>3.000</td><td>24.00</td></tr>
+<tr><td class="tc-key">M30</td><td>30.000</td><td>25.706</td><td>2.147</td><td>3.500</td><td>26.50</td></tr>
+<tr><td class="tc-key">M33</td><td>33.000</td><td>28.706</td><td>2.147</td><td>3.500</td><td>29.50</td></tr>
+<tr><td class="tc-key">M36</td><td>36.000</td><td>31.093</td><td>2.454</td><td>4.000</td><td>32.00</td></tr>
+<tr><td class="tc-key">M39</td><td>39.000</td><td>34.093</td><td>2.454</td><td>4.000</td><td>35.00</td></tr>
+<tr><td class="tc-key">M42</td><td>42.000</td><td>36.479</td><td>2.760</td><td>4.500</td><td>37.50</td></tr>
+<tr><td class="tc-key">M45</td><td>45.000</td><td>39.479</td><td>2.760</td><td>4.500</td><td>40.50</td></tr>
+<tr><td class="tc-key">M48</td><td>48.000</td><td>41.866</td><td>3.067</td><td>5.000</td><td>43.00</td></tr>
+<tr><td class="tc-key">M52</td><td>52.000</td><td>45.866</td><td>3.067</td><td>5.000</td><td>47.00</td></tr>
+<tr><td class="tc-key">M56</td><td>56.000</td><td>49.252</td><td>3.374</td><td>5.500</td><td>50.50</td></tr>
+<tr><td class="tc-key">M60</td><td>60.000</td><td>53.252</td><td>3.374</td><td>5.500</td><td>54.50</td></tr>
+<tr><td class="tc-key">M64</td><td>64.000</td><td>56.639</td><td>3.681</td><td>6.000</td><td>58.00</td></tr>
+</tbody></table></div>
+<h3 class="tc-sub">细牙（Fine，必须标螺距）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">M8×1</td><td>8.000</td><td>6.773</td><td>0.613</td><td>1.000</td><td>7.00</td></tr>
+<tr><td class="tc-key">M8×0.75</td><td>8.000</td><td>7.080</td><td>0.460</td><td>0.750</td><td>7.25</td></tr>
+<tr><td class="tc-key">M10×1.25</td><td>10.000</td><td>8.466</td><td>0.767</td><td>1.250</td><td>8.80</td></tr>
+<tr><td class="tc-key">M10×1</td><td>10.000</td><td>8.773</td><td>0.613</td><td>1.000</td><td>9.00</td></tr>
+<tr><td class="tc-key">M10×0.75</td><td>10.000</td><td>9.080</td><td>0.460</td><td>0.750</td><td>9.25</td></tr>
+<tr><td class="tc-key">M12×1.5</td><td>12.000</td><td>10.160</td><td>0.920</td><td>1.500</td><td>10.50</td></tr>
+<tr><td class="tc-key">M12×1.25</td><td>12.000</td><td>10.466</td><td>0.767</td><td>1.250</td><td>10.80</td></tr>
+<tr><td class="tc-key">M12×1</td><td>12.000</td><td>10.773</td><td>0.613</td><td>1.000</td><td>11.00</td></tr>
+<tr><td class="tc-key">M14×1.5</td><td>14.000</td><td>12.160</td><td>0.920</td><td>1.500</td><td>12.50</td></tr>
+<tr><td class="tc-key">M16×1.5</td><td>16.000</td><td>14.160</td><td>0.920</td><td>1.500</td><td>14.50</td></tr>
+<tr><td class="tc-key">M18×2</td><td>18.000</td><td>15.546</td><td>1.227</td><td>2.000</td><td>16.00</td></tr>
+<tr><td class="tc-key">M18×1.5</td><td>18.000</td><td>16.160</td><td>0.920</td><td>1.500</td><td>16.50</td></tr>
+<tr><td class="tc-key">M20×2</td><td>20.000</td><td>17.546</td><td>1.227</td><td>2.000</td><td>18.00</td></tr>
+<tr><td class="tc-key">M20×1.5</td><td>20.000</td><td>18.160</td><td>0.920</td><td>1.500</td><td>18.50</td></tr>
+<tr><td class="tc-key">M22×2</td><td>22.000</td><td>19.546</td><td>1.227</td><td>2.000</td><td>20.00</td></tr>
+<tr><td class="tc-key">M22×1.5</td><td>22.000</td><td>20.160</td><td>0.920</td><td>1.500</td><td>20.50</td></tr>
+<tr><td class="tc-key">M24×2</td><td>24.000</td><td>21.546</td><td>1.227</td><td>2.000</td><td>22.00</td></tr>
+<tr><td class="tc-key">M24×1.5</td><td>24.000</td><td>22.160</td><td>0.920</td><td>1.500</td><td>22.50</td></tr>
+<tr><td class="tc-key">M27×2</td><td>27.000</td><td>24.546</td><td>1.227</td><td>2.000</td><td>25.00</td></tr>
+<tr><td class="tc-key">M30×2</td><td>30.000</td><td>27.546</td><td>1.227</td><td>2.000</td><td>28.00</td></tr>
+<tr><td class="tc-key">M30×1.5</td><td>30.000</td><td>28.160</td><td>0.920</td><td>1.500</td><td>28.50</td></tr>
+<tr><td class="tc-key">M36×3</td><td>36.000</td><td>32.319</td><td>1.840</td><td>3.000</td><td>33.00</td></tr>
+<tr><td class="tc-key">M42×3</td><td>42.000</td><td>38.319</td><td>1.840</td><td>3.000</td><td>39.00</td></tr>
+<tr><td class="tc-key">M48×3</td><td>48.000</td><td>44.319</td><td>1.840</td><td>3.000</td><td>45.00</td></tr>
+</tbody></table></div>
+</section>
+<section class="tc-sec" data-cat="unc">
+<h2>美制统一螺纹 · UNC / UNF（牙型角 60°）</h2>
+<p class="tc-note">UNC 粗牙、UNF 细牙。规格写法「号数-每英寸牙数」或「英寸分数-每英寸牙数」。钻头栏给出对应的钻号/字母钻与毫米值。　<span class="tc-unit">除「每英寸牙数」外，单位均为 mm。</span></p>
+<h3 class="tc-sub">UNC 粗牙</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">#4-40</td><td>40</td><td>2.845</td><td>2.066</td><td>0.390</td><td>0.635</td><td>#43（2.26）</td></tr>
+<tr><td class="tc-key">#5-40</td><td>40</td><td>3.175</td><td>2.396</td><td>0.390</td><td>0.635</td><td>#38（2.58）</td></tr>
+<tr><td class="tc-key">#6-32</td><td>32</td><td>3.505</td><td>2.531</td><td>0.487</td><td>0.794</td><td>#36（2.71）</td></tr>
+<tr><td class="tc-key">#8-32</td><td>32</td><td>4.166</td><td>3.192</td><td>0.487</td><td>0.794</td><td>#29（3.45）</td></tr>
+<tr><td class="tc-key">#10-24</td><td>24</td><td>4.826</td><td>3.528</td><td>0.649</td><td>1.058</td><td>#25（3.80）</td></tr>
+<tr><td class="tc-key">#12-24</td><td>24</td><td>5.486</td><td>4.188</td><td>0.649</td><td>1.058</td><td>#16（4.50）</td></tr>
+<tr><td class="tc-key">1/4-20</td><td>20</td><td>6.350</td><td>4.792</td><td>0.779</td><td>1.270</td><td>#7（5.11）</td></tr>
+<tr><td class="tc-key">5/16-18</td><td>18</td><td>7.938</td><td>6.206</td><td>0.866</td><td>1.411</td><td>F（6.53）</td></tr>
+<tr><td class="tc-key">3/8-16</td><td>16</td><td>9.525</td><td>7.577</td><td>0.974</td><td>1.588</td><td>5/16″（7.94）</td></tr>
+<tr><td class="tc-key">7/16-14</td><td>14</td><td>11.112</td><td>8.887</td><td>1.113</td><td>1.814</td><td>U（9.35）</td></tr>
+<tr><td class="tc-key">1/2-13</td><td>13</td><td>12.700</td><td>10.303</td><td>1.199</td><td>1.954</td><td>27/64″（10.72）</td></tr>
+<tr><td class="tc-key">9/16-12</td><td>12</td><td>14.288</td><td>11.691</td><td>1.298</td><td>2.117</td><td>31/64″（12.30）</td></tr>
+<tr><td class="tc-key">5/8-11</td><td>11</td><td>15.875</td><td>13.042</td><td>1.416</td><td>2.309</td><td>17/32″（13.49）</td></tr>
+<tr><td class="tc-key">3/4-10</td><td>10</td><td>19.050</td><td>15.934</td><td>1.558</td><td>2.540</td><td>21/32″（16.67）</td></tr>
+<tr><td class="tc-key">7/8-9</td><td>9</td><td>22.225</td><td>18.763</td><td>1.731</td><td>2.822</td><td>49/64″（19.45）</td></tr>
+<tr><td class="tc-key">1-8</td><td>8</td><td>25.400</td><td>21.505</td><td>1.948</td><td>3.175</td><td>7/8″（22.23）</td></tr>
+<tr><td class="tc-key">1 1/8-7</td><td>7</td><td>28.575</td><td>24.123</td><td>2.226</td><td>3.629</td><td>63/64″（25.00）</td></tr>
+<tr><td class="tc-key">1 1/4-7</td><td>7</td><td>31.750</td><td>27.298</td><td>2.226</td><td>3.629</td><td>1 7/64″（28.18）</td></tr>
+<tr><td class="tc-key">1 3/8-6</td><td>6</td><td>34.925</td><td>29.731</td><td>2.597</td><td>4.233</td><td>1 7/32″（30.96）</td></tr>
+<tr><td class="tc-key">1 1/2-6</td><td>6</td><td>38.100</td><td>32.906</td><td>2.597</td><td>4.233</td><td>1 11/32″（34.13）</td></tr>
+</tbody></table></div>
+<h3 class="tc-sub">UNF 细牙</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">#4-48</td><td>48</td><td>2.845</td><td>2.196</td><td>0.325</td><td>0.529</td><td>#42（2.37）</td></tr>
+<tr><td class="tc-key">#6-40</td><td>40</td><td>3.505</td><td>2.726</td><td>0.390</td><td>0.635</td><td>#33（2.87）</td></tr>
+<tr><td class="tc-key">#8-36</td><td>36</td><td>4.166</td><td>3.300</td><td>0.433</td><td>0.706</td><td>#29（3.45）</td></tr>
+<tr><td class="tc-key">#10-32</td><td>32</td><td>4.826</td><td>3.852</td><td>0.487</td><td>0.794</td><td>#21（4.04）</td></tr>
+<tr><td class="tc-key">1/4-28</td><td>28</td><td>6.350</td><td>5.237</td><td>0.556</td><td>0.907</td><td>#3（5.41）</td></tr>
+<tr><td class="tc-key">5/16-24</td><td>24</td><td>7.938</td><td>6.639</td><td>0.649</td><td>1.058</td><td>I（6.91）</td></tr>
+<tr><td class="tc-key">3/8-24</td><td>24</td><td>9.525</td><td>8.227</td><td>0.649</td><td>1.058</td><td>Q（8.43）</td></tr>
+<tr><td class="tc-key">7/16-20</td><td>20</td><td>11.112</td><td>9.554</td><td>0.779</td><td>1.270</td><td>25/64″（9.92）</td></tr>
+<tr><td class="tc-key">1/2-20</td><td>20</td><td>12.700</td><td>11.142</td><td>0.779</td><td>1.270</td><td>29/64″（11.51）</td></tr>
+<tr><td class="tc-key">9/16-18</td><td>18</td><td>14.288</td><td>12.556</td><td>0.866</td><td>1.411</td><td>33/64″（13.10）</td></tr>
+<tr><td class="tc-key">5/8-18</td><td>18</td><td>15.875</td><td>14.144</td><td>0.866</td><td>1.411</td><td>37/64″（14.68）</td></tr>
+<tr><td class="tc-key">3/4-16</td><td>16</td><td>19.050</td><td>17.102</td><td>0.974</td><td>1.588</td><td>11/16″（17.46）</td></tr>
+<tr><td class="tc-key">7/8-14</td><td>14</td><td>22.225</td><td>19.999</td><td>1.113</td><td>1.814</td><td>51/64″（20.24）</td></tr>
+<tr><td class="tc-key">1-12</td><td>12</td><td>25.400</td><td>22.803</td><td>1.298</td><td>2.117</td><td>59/64″（23.42）</td></tr>
+<tr><td class="tc-key">1 1/8-12</td><td>12</td><td>28.575</td><td>25.978</td><td>1.298</td><td>2.117</td><td>1 3/64″（26.59）</td></tr>
+<tr><td class="tc-key">1 1/4-12</td><td>12</td><td>31.750</td><td>29.153</td><td>1.298</td><td>2.117</td><td>1 11/64″（29.77）</td></tr>
+</tbody></table></div>
+</section>
+<section class="tc-sec" data-cat="bsw">
+<h2>英制惠氏螺纹 · BSW / BSF（牙型角 55°）</h2>
+<p class="tc-note">英国老标准，修进口设备时还会碰到。牙型角 55°，跟美制 60° 不能互换——拧得进去也是错的。　<span class="tc-unit">除「每英寸牙数」外，单位均为 mm。</span></p>
+<h3 class="tc-sub">BSW 粗牙（Whitworth）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">1/8″</td><td>40</td><td>3.175</td><td>2.362</td><td>0.407</td><td>0.635</td><td>2.50</td></tr>
+<tr><td class="tc-key">3/16″</td><td>24</td><td>4.762</td><td>3.407</td><td>0.678</td><td>1.058</td><td>3.70</td></tr>
+<tr><td class="tc-key">1/4″</td><td>20</td><td>6.350</td><td>4.724</td><td>0.813</td><td>1.270</td><td>5.10</td></tr>
+<tr><td class="tc-key">5/16″</td><td>18</td><td>7.938</td><td>6.130</td><td>0.904</td><td>1.411</td><td>6.50</td></tr>
+<tr><td class="tc-key">3/8″</td><td>16</td><td>9.525</td><td>7.492</td><td>1.017</td><td>1.588</td><td>7.90</td></tr>
+<tr><td class="tc-key">7/16″</td><td>14</td><td>11.112</td><td>8.789</td><td>1.162</td><td>1.814</td><td>9.30</td></tr>
+<tr><td class="tc-key">1/2″</td><td>12</td><td>12.700</td><td>9.989</td><td>1.355</td><td>2.117</td><td>10.50</td></tr>
+<tr><td class="tc-key">9/16″</td><td>12</td><td>14.288</td><td>11.577</td><td>1.355</td><td>2.117</td><td>12.10</td></tr>
+<tr><td class="tc-key">5/8″</td><td>11</td><td>15.875</td><td>12.918</td><td>1.479</td><td>2.309</td><td>13.50</td></tr>
+<tr><td class="tc-key">3/4″</td><td>10</td><td>19.050</td><td>15.797</td><td>1.626</td><td>2.540</td><td>16.50</td></tr>
+<tr><td class="tc-key">7/8″</td><td>9</td><td>22.225</td><td>18.611</td><td>1.807</td><td>2.822</td><td>19.30</td></tr>
+<tr><td class="tc-key">1″</td><td>8</td><td>25.400</td><td>21.334</td><td>2.033</td><td>3.175</td><td>22.00</td></tr>
+<tr><td class="tc-key">1 1/8″</td><td>7</td><td>28.575</td><td>23.928</td><td>2.323</td><td>3.629</td><td>24.80</td></tr>
+<tr><td class="tc-key">1 1/4″</td><td>7</td><td>31.750</td><td>27.103</td><td>2.323</td><td>3.629</td><td>28.00</td></tr>
+<tr><td class="tc-key">1 1/2″</td><td>6</td><td>38.100</td><td>32.679</td><td>2.711</td><td>4.233</td><td>33.80</td></tr>
+</tbody></table></div>
+<h3 class="tc-sub">BSF 细牙（British Standard Fine）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">3/16″</td><td>32</td><td>4.762</td><td>3.746</td><td>0.508</td><td>0.794</td><td>3.90</td></tr>
+<tr><td class="tc-key">1/4″</td><td>26</td><td>6.350</td><td>5.099</td><td>0.626</td><td>0.977</td><td>5.40</td></tr>
+<tr><td class="tc-key">5/16″</td><td>22</td><td>7.938</td><td>6.459</td><td>0.739</td><td>1.155</td><td>6.80</td></tr>
+<tr><td class="tc-key">3/8″</td><td>20</td><td>9.525</td><td>7.899</td><td>0.813</td><td>1.270</td><td>8.30</td></tr>
+<tr><td class="tc-key">7/16″</td><td>18</td><td>11.112</td><td>9.305</td><td>0.904</td><td>1.411</td><td>9.70</td></tr>
+<tr><td class="tc-key">1/2″</td><td>16</td><td>12.700</td><td>10.667</td><td>1.017</td><td>1.588</td><td>11.10</td></tr>
+<tr><td class="tc-key">9/16″</td><td>16</td><td>14.288</td><td>12.254</td><td>1.017</td><td>1.588</td><td>12.70</td></tr>
+<tr><td class="tc-key">5/8″</td><td>14</td><td>15.875</td><td>13.552</td><td>1.162</td><td>1.814</td><td>14.00</td></tr>
+<tr><td class="tc-key">3/4″</td><td>12</td><td>19.050</td><td>16.339</td><td>1.355</td><td>2.117</td><td>17.00</td></tr>
+<tr><td class="tc-key">7/8″</td><td>11</td><td>22.225</td><td>19.268</td><td>1.479</td><td>2.309</td><td>19.90</td></tr>
+<tr><td class="tc-key">1″</td><td>10</td><td>25.400</td><td>22.147</td><td>1.626</td><td>2.540</td><td>22.80</td></tr>
+</tbody></table></div>
+</section>
+<section class="tc-sec" data-cat="pipe">
+<h2>圆柱管螺纹 · G（BSPP，平行 55°）</h2>
+<p class="tc-note">牙是直的、不带锥度，靠密封圈/垫圈/端面密封。注意「G 1/2」指的是管子内径约 1/2″，螺纹大径其实是 20.955 mm。　<span class="tc-unit">除「每英寸牙数」外，单位均为 mm。</span></p>
+<h3 class="tc-sub">G 系列（ISO 228 / BSPP）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">G 1/8</td><td>28</td><td>9.728</td><td>8.566</td><td>0.581</td><td>0.907</td><td>8.40</td></tr>
+<tr><td class="tc-key">G 1/4</td><td>19</td><td>13.157</td><td>11.445</td><td>0.856</td><td>1.337</td><td>11.20</td></tr>
+<tr><td class="tc-key">G 3/8</td><td>19</td><td>16.662</td><td>14.950</td><td>0.856</td><td>1.337</td><td>14.70</td></tr>
+<tr><td class="tc-key">G 1/2</td><td>14</td><td>20.955</td><td>18.632</td><td>1.162</td><td>1.814</td><td>18.50</td></tr>
+<tr><td class="tc-key">G 5/8</td><td>14</td><td>22.911</td><td>20.588</td><td>1.162</td><td>1.814</td><td>20.50</td></tr>
+<tr><td class="tc-key">G 3/4</td><td>14</td><td>26.441</td><td>24.118</td><td>1.162</td><td>1.814</td><td>24.00</td></tr>
+<tr><td class="tc-key">G 7/8</td><td>14</td><td>30.201</td><td>27.878</td><td>1.162</td><td>1.814</td><td>27.75</td></tr>
+<tr><td class="tc-key">G 1</td><td>11</td><td>33.249</td><td>30.292</td><td>1.479</td><td>2.309</td><td>30.00</td></tr>
+<tr><td class="tc-key">G 1 1/8</td><td>11</td><td>37.897</td><td>34.940</td><td>1.479</td><td>2.309</td><td>34.50</td></tr>
+<tr><td class="tc-key">G 1 1/4</td><td>11</td><td>41.910</td><td>38.953</td><td>1.479</td><td>2.309</td><td>38.80</td></tr>
+<tr><td class="tc-key">G 1 1/2</td><td>11</td><td>47.803</td><td>44.846</td><td>1.479</td><td>2.309</td><td>44.80</td></tr>
+<tr><td class="tc-key">G 1 3/4</td><td>11</td><td>53.746</td><td>50.789</td><td>1.479</td><td>2.309</td><td>50.50</td></tr>
+<tr><td class="tc-key">G 2</td><td>11</td><td>59.614</td><td>56.657</td><td>1.479</td><td>2.309</td><td>56.50</td></tr>
+<tr><td class="tc-key">G 2 1/2</td><td>11</td><td>75.184</td><td>72.227</td><td>1.479</td><td>2.309</td><td>72.00</td></tr>
+<tr><td class="tc-key">G 3</td><td>11</td><td>87.884</td><td>84.927</td><td>1.479</td><td>2.309</td><td>84.50</td></tr>
+</tbody></table></div>
+</section>
+<section class="tc-sec" data-cat="trap">
+<h2>梯形螺纹（T 型）· Tr / Acme</h2>
+<p class="tc-note">传动用螺纹，常见于丝杠、升降机构、压紧螺杆。都内外螺纹配对加工，最后一列给的是内螺纹（螺母）底孔。　<span class="tc-unit">除「每英寸牙数」外，单位均为 mm。</span></p>
+<h3 class="tc-sub">Tr 梯形螺纹（ISO，牙型角 30°）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>内螺纹底孔 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">Tr 8×1.5</td><td>8.000</td><td>6.000</td><td>1.000</td><td>1.500</td><td>6.50</td></tr>
+<tr><td class="tc-key">Tr 10×2</td><td>10.000</td><td>7.500</td><td>1.250</td><td>2.000</td><td>8.00</td></tr>
+<tr><td class="tc-key">Tr 12×3</td><td>12.000</td><td>8.500</td><td>1.750</td><td>3.000</td><td>9.00</td></tr>
+<tr><td class="tc-key">Tr 14×3</td><td>14.000</td><td>10.500</td><td>1.750</td><td>3.000</td><td>11.00</td></tr>
+<tr><td class="tc-key">Tr 16×4</td><td>16.000</td><td>11.500</td><td>2.250</td><td>4.000</td><td>12.00</td></tr>
+<tr><td class="tc-key">Tr 18×4</td><td>18.000</td><td>13.500</td><td>2.250</td><td>4.000</td><td>14.00</td></tr>
+<tr><td class="tc-key">Tr 20×4</td><td>20.000</td><td>15.500</td><td>2.250</td><td>4.000</td><td>16.00</td></tr>
+<tr><td class="tc-key">Tr 22×5</td><td>22.000</td><td>16.500</td><td>2.750</td><td>5.000</td><td>17.00</td></tr>
+<tr><td class="tc-key">Tr 24×5</td><td>24.000</td><td>18.500</td><td>2.750</td><td>5.000</td><td>19.00</td></tr>
+<tr><td class="tc-key">Tr 26×5</td><td>26.000</td><td>20.500</td><td>2.750</td><td>5.000</td><td>21.00</td></tr>
+<tr><td class="tc-key">Tr 28×5</td><td>28.000</td><td>22.500</td><td>2.750</td><td>5.000</td><td>23.00</td></tr>
+<tr><td class="tc-key">Tr 30×6</td><td>30.000</td><td>23.000</td><td>3.500</td><td>6.000</td><td>24.00</td></tr>
+<tr><td class="tc-key">Tr 32×6</td><td>32.000</td><td>25.000</td><td>3.500</td><td>6.000</td><td>26.00</td></tr>
+<tr><td class="tc-key">Tr 34×6</td><td>34.000</td><td>27.000</td><td>3.500</td><td>6.000</td><td>28.00</td></tr>
+<tr><td class="tc-key">Tr 36×6</td><td>36.000</td><td>29.000</td><td>3.500</td><td>6.000</td><td>30.00</td></tr>
+<tr><td class="tc-key">Tr 38×7</td><td>38.000</td><td>30.000</td><td>4.000</td><td>7.000</td><td>31.00</td></tr>
+<tr><td class="tc-key">Tr 40×7</td><td>40.000</td><td>32.000</td><td>4.000</td><td>7.000</td><td>33.00</td></tr>
+<tr><td class="tc-key">Tr 44×7</td><td>44.000</td><td>36.000</td><td>4.000</td><td>7.000</td><td>37.00</td></tr>
+<tr><td class="tc-key">Tr 48×8</td><td>48.000</td><td>39.000</td><td>4.500</td><td>8.000</td><td>40.00</td></tr>
+<tr><td class="tc-key">Tr 52×8</td><td>52.000</td><td>43.000</td><td>4.500</td><td>8.000</td><td>44.00</td></tr>
+<tr><td class="tc-key">Tr 56×9</td><td>56.000</td><td>46.000</td><td>5.000</td><td>9.000</td><td>47.00</td></tr>
+<tr><td class="tc-key">Tr 60×9</td><td>60.000</td><td>50.000</td><td>5.000</td><td>9.000</td><td>51.00</td></tr>
+<tr><td class="tc-key">Tr 70×10</td><td>70.000</td><td>59.000</td><td>5.500</td><td>10.000</td><td>60.00</td></tr>
+<tr><td class="tc-key">Tr 80×10</td><td>80.000</td><td>69.000</td><td>5.500</td><td>10.000</td><td>70.00</td></tr>
+</tbody></table></div>
+<h3 class="tc-sub">Acme 梯形螺纹（美制，牙型角 29°）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>内螺纹底孔 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">1/4-16″</td><td>6.350</td><td>4.254</td><td>1.048</td><td>1.588</td><td>4.76</td></tr>
+<tr><td class="tc-key">5/16-14″</td><td>7.938</td><td>5.615</td><td>1.161</td><td>1.814</td><td>6.12</td></tr>
+<tr><td class="tc-key">3/8-12″</td><td>9.525</td><td>6.900</td><td>1.312</td><td>2.117</td><td>7.41</td></tr>
+<tr><td class="tc-key">1/2-10″</td><td>12.700</td><td>9.652</td><td>1.524</td><td>2.540</td><td>10.16</td></tr>
+<tr><td class="tc-key">5/8-8″</td><td>15.875</td><td>12.192</td><td>1.842</td><td>3.175</td><td>12.70</td></tr>
+<tr><td class="tc-key">3/4-6″</td><td>19.050</td><td>14.309</td><td>2.371</td><td>4.233</td><td>14.82</td></tr>
+<tr><td class="tc-key">7/8-6″</td><td>22.225</td><td>17.484</td><td>2.371</td><td>4.233</td><td>17.99</td></tr>
+<tr><td class="tc-key">1-5″</td><td>25.400</td><td>19.812</td><td>2.794</td><td>5.080</td><td>20.32</td></tr>
+<tr><td class="tc-key">1 1/8-5″</td><td>28.575</td><td>22.987</td><td>2.794</td><td>5.080</td><td>23.49</td></tr>
+<tr><td class="tc-key">1 1/4-5″</td><td>31.750</td><td>26.162</td><td>2.794</td><td>5.080</td><td>26.67</td></tr>
+<tr><td class="tc-key">1 1/2-4″</td><td>38.100</td><td>31.242</td><td>3.429</td><td>6.350</td><td>31.75</td></tr>
+<tr><td class="tc-key">2-4″</td><td>50.800</td><td>43.942</td><td>3.429</td><td>6.350</td><td>44.45</td></tr>
+</tbody></table></div>
+</section>
+<section class="tc-sec" data-cat="taper">
+<h2>锥度螺纹（密封用）· NPT / BSPT / ZM</h2>
+<p class="tc-note">牙带 1:16 锥度，靠牙面自身密封，必须缠生料带或涂螺纹密封胶。底孔指小端（孔口）直径。　<span class="tc-unit">除「每英寸牙数」外，单位均为 mm。</span></p>
+<h3 class="tc-sub">NPT 美制锥管螺纹（牙型角 60°）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">NPT 1/16</td><td>27</td><td>7.895</td><td>6.390</td><td>0.753</td><td>0.941</td><td>6.10</td></tr>
+<tr><td class="tc-key">NPT 1/8</td><td>27</td><td>10.242</td><td>8.737</td><td>0.753</td><td>0.941</td><td>8.60</td></tr>
+<tr><td class="tc-key">NPT 1/4</td><td>18</td><td>13.616</td><td>11.358</td><td>1.129</td><td>1.411</td><td>11.10</td></tr>
+<tr><td class="tc-key">NPT 3/8</td><td>18</td><td>17.055</td><td>14.797</td><td>1.129</td><td>1.411</td><td>14.70</td></tr>
+<tr><td class="tc-key">NPT 1/2</td><td>14</td><td>21.223</td><td>18.320</td><td>1.451</td><td>1.814</td><td>18.30</td></tr>
+<tr><td class="tc-key">NPT 3/4</td><td>14</td><td>26.568</td><td>23.665</td><td>1.451</td><td>1.814</td><td>23.70</td></tr>
+<tr><td class="tc-key">NPT 1</td><td>11.5</td><td>33.228</td><td>29.694</td><td>1.767</td><td>2.209</td><td>29.70</td></tr>
+<tr><td class="tc-key">NPT 1 1/4</td><td>11.5</td><td>41.985</td><td>38.451</td><td>1.767</td><td>2.209</td><td>38.40</td></tr>
+<tr><td class="tc-key">NPT 1 1/2</td><td>11.5</td><td>48.054</td><td>44.520</td><td>1.767</td><td>2.209</td><td>44.50</td></tr>
+<tr><td class="tc-key">NPT 2</td><td>11.5</td><td>60.092</td><td>56.558</td><td>1.767</td><td>2.209</td><td>56.50</td></tr>
+</tbody></table></div>
+<h3 class="tc-sub">BSPT 英制锥管螺纹（55°，代号 R / Rc，日本称 PT）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>每英寸牙数</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">R 1/8</td><td>28</td><td>9.728</td><td>8.566</td><td>0.581</td><td>0.907</td><td>8.40</td></tr>
+<tr><td class="tc-key">R 1/4</td><td>19</td><td>13.157</td><td>11.445</td><td>0.856</td><td>1.337</td><td>11.20</td></tr>
+<tr><td class="tc-key">R 3/8</td><td>19</td><td>16.662</td><td>14.950</td><td>0.856</td><td>1.337</td><td>14.70</td></tr>
+<tr><td class="tc-key">R 1/2</td><td>14</td><td>20.955</td><td>18.632</td><td>1.162</td><td>1.814</td><td>18.50</td></tr>
+<tr><td class="tc-key">R 3/4</td><td>14</td><td>26.441</td><td>24.118</td><td>1.162</td><td>1.814</td><td>24.00</td></tr>
+<tr><td class="tc-key">R 1</td><td>11</td><td>33.249</td><td>30.292</td><td>1.479</td><td>2.309</td><td>30.00</td></tr>
+<tr><td class="tc-key">R 1 1/4</td><td>11</td><td>41.910</td><td>38.953</td><td>1.479</td><td>2.309</td><td>38.80</td></tr>
+<tr><td class="tc-key">R 1 1/2</td><td>11</td><td>47.803</td><td>44.846</td><td>1.479</td><td>2.309</td><td>44.80</td></tr>
+<tr><td class="tc-key">R 2</td><td>11</td><td>59.614</td><td>56.657</td><td>1.479</td><td>2.309</td><td>56.50</td></tr>
+</tbody></table></div>
+<h3 class="tc-sub">米制锥螺纹 ZM（60°，锥度 1:16）</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th></tr></thead>
+<tbody>
+<tr><td class="tc-key">ZM10</td><td>10.000</td><td>8.400</td><td>0.800</td><td>1.000</td><td>8.40</td></tr>
+<tr><td class="tc-key">ZM14</td><td>14.000</td><td>11.600</td><td>1.200</td><td>1.500</td><td>11.60</td></tr>
+<tr><td class="tc-key">ZM18</td><td>18.000</td><td>15.600</td><td>1.200</td><td>1.500</td><td>15.60</td></tr>
+<tr><td class="tc-key">ZM22</td><td>22.000</td><td>19.600</td><td>1.200</td><td>1.500</td><td>19.60</td></tr>
+<tr><td class="tc-key">ZM27</td><td>27.000</td><td>23.800</td><td>1.600</td><td>2.000</td><td>23.80</td></tr>
+<tr><td class="tc-key">ZM33</td><td>33.000</td><td>29.800</td><td>1.600</td><td>2.000</td><td>29.80</td></tr>
+<tr><td class="tc-key">ZM42</td><td>42.000</td><td>38.800</td><td>1.600</td><td>2.000</td><td>38.80</td></tr>
+<tr><td class="tc-key">ZM48</td><td>48.000</td><td>44.800</td><td>1.600</td><td>2.000</td><td>44.80</td></tr>
+<tr><td class="tc-key">ZM60</td><td>60.000</td><td>56.800</td><td>1.600</td><td>2.000</td><td>56.80</td></tr>
+</tbody></table></div>
+</section>
+<section class="tc-sec" data-cat="custom" data-keep="1">
+<h2>自定义螺纹 · 非标规格计算</h2>
+<p class="tc-note">图纸上碰到非标螺纹、或者上面的表里查不到的规格，把大径和螺距填进去，直接算出小径、牙高和底孔钻头。算完可以存进下面的表，下次直接搜关键字就能翻出来（存在本机浏览器里，换电脑不会同步）。</p>
+<div class="tc-calc">
+  <div class="tc-calc-row">
+    <label>牙型角 / 螺纹类型
+      <select id="tcType">
+        <option value="60">60° 公制 / 统一（ISO、UNC、UNF）</option>
+        <option value="55">55° 惠氏 / 管螺纹（BSW、G、BSPT）</option>
+        <option value="npt">60° 锥管（NPT、ZM）</option>
+        <option value="30">30° 梯形 Tr</option>
+        <option value="29">29° 梯形 Acme（美制）</option>
+      </select>
+    </label>
+    <label>规格名称（自己起，方便搜）
+      <input id="tcName" type="text" autocomplete="off" placeholder="例：非标 M9.5">
+    </label>
+  </div>
+  <div class="tc-calc-row">
+    <label>大径 mm
+      <input id="tcD" type="number" step="0.001" min="0" placeholder="9.500">
+    </label>
+    <label>螺距 mm
+      <input id="tcP" type="number" step="0.001" min="0" placeholder="1.250">
+    </label>
+    <label>或 每英寸牙数 TPI
+      <input id="tcTpi" type="number" step="0.5" min="0" placeholder="20">
+    </label>
+    <label>螺纹高度 <span id="tcPctTxt">75</span>%
+      <input id="tcPct" type="range" min="50" max="100" step="5" value="75">
+    </label>
+  </div>
+  <div class="tc-out" id="tcOut"></div>
+  <div class="tc-calc-row">
+    <button type="button" class="tc-cat tc-save" id="tcSave">保存到下表</button>
+    <span class="tc-hint" id="tcHint"></span>
+  </div>
+</div>
+<h3 class="tc-sub">我保存的自定义螺纹</h3>
+<div class="tc-table"><table>
+<thead><tr><th>规格</th><th>大径 mm</th><th>小径 mm</th><th>牙高 mm</th><th>螺距 mm</th><th>底孔钻头 mm</th><th></th></tr></thead>
+<tbody id="tcCustomBody"></tbody>
+</table></div>
+<p class="tc-note" id="tcEmpty">还没有保存任何自定义规格。上面填好参数点「保存到下表」即可。</p>
+</section>
+<div class="tc-foot">
+  <h2>使用说明</h2>
+  <ul>
+    <li><b>表头会跟着滚</b>：往下翻页时每一张表的表头都会吸在屏幕顶部，不会跟着滚走；左边输入关键字可以只留下命中的规格。</li>
+    <li><b>非标规格</b>：用「自定义螺纹」那一栏，填大径 + 螺距（或每英寸牙数）就能算出小径、牙高和底孔，还能存下来下次直接搜。</li>
+    <li><b>小径 / 牙高怎么来的</b>：小径是<b>外螺纹</b>（螺杆）小径，牙高是单侧径向牙高，两者满足 <code>小径 = 大径 − 2 × 牙高</code>。60° 螺纹牙高 = 0.6134 P，55°（惠氏/管螺纹）牙高 = 0.6403 P，60° 锥管（NPT/ZM）牙高 = 0.8 P，梯形 Tr 牙高 = 0.5 P + 间隙。</li>
+    <li><b>底孔钻头</b>：攻丝前的底孔，公制按 <code>大径 − 螺距</code> 取常用钻头；美制给的是对应钻号 / 字母钻。不锈钢、钛合金等难加工材料建议再放大一档（或改用 60%~70% 螺纹高度）。</li>
+    <li><b>螺距换算</b>：每英寸牙数（TPI）⇄ 螺距 mm：<code>螺距 = 25.4 ÷ TPI</code>，例如 20 TPI = 1.27 mm。</li>
+    <li><b>别混用</b>：55°（G / BSPP / BSW / BSPT）与 60°（UNC / UNF / NPT）牙型角不同，看着能拧进去也一定会漏。</li>
+    <li><b>锥度螺纹</b>：NPT、BSPT、ZM 锥度都是 1:16，靠牙面密封，必须缠生料带或涂螺纹密封胶；底孔是孔口（小端）直径。</li>
+  </ul>
+  <p class="tc-disclaimer">表中数据为行业常用标准值，批量生产或关键件请以最新标准（ISO / GB / ASME B1 系列）原文为准。</p>
+</div>
+<script defer data-pjax src="/js/thread-table.js?v=20261031a"></script>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="author_top is-center"><div class="card-info-avatar"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/assets/avatar.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-status-box"><div class="author-status"><g-emoji class="g-emoji" alias="focus_arrow" fallback-src="https://cdnjson.com/images/2023/03/30/Focus.jpg">🎯</g-emoji><span>专注学习中</span></div></div></div><b><div class="author-info__name">chengicli</div></b><div class="author-info__description">一个互联网爱好者的个人博客，记点顺手的工具、自建服务和折腾路上的坑</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="/assets/wechat-qr.png" title="微信-Wechat"><span>微信-Wechat</span><i class="faa-passing animated" style="padding-left:20px;display:inline-block;vertical-align:middle;"><svg class="icon" style="height:28px;width:28px;fill:currentColor;position:relative;top:5px"><use xlink:href="#icon-xiaoqiche"></use></svg></i></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="/assets/qq.png" target="_blank" title="QQ"><svg class="social_icon faa-tada" aria-hidden="true" style="width:1.15em;height:1.15em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-QQ"></use></svg></a><a class="social-icon faa-parent animated-hover" href="mailto:root@licic.net" target="_blank" title="邮箱"><svg class="social_icon faa-tada" aria-hidden="true" style="width:1.15em;height:1.15em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxiang"></use></svg></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><a class="faa-parent animated-hover"><svg class="faa-tada icon" style="height:25px;width:25px;fill:currentColor;position:relative;top:5px" aria-hidden="true"><use xlink:href="#icon-gonggao"></use></svg></a><span style="font-weight:bold">公告栏</span></div><div class="announcement_content"><div class="anno2">
+  <div class="a-sect">
+    <div class="a-row a-flat">
+      <span class="a-lb">个人网站</span>
+    </div>
+    <p style="margin:.4em 0 0">一个 CNC 机械加工从业者的数字自留地。用文字和代码，记录每一次主轴旋转的轨迹。</p>
+  </div>
+  <div class="a-sect">
+    <div class="a-row a-flat">
+      <span class="a-lb">分站入口</span>
+    </div>
+    <div class="a-row">
+      <span class="a-lb">chengic</span>
+        <a class="a-chip" href="https://www.lichengic.com/" target="_blank" rel="noopener">
+          <i class="a-dot"></i>lichengic.com
+        </a>
+      <span class="a-note">Vercel</span>
+    </div>
+  </div>
+  <div class="a-row a-sub">
+      <span class="a-lb"></span>
+        <a class="a-chip" href="https://www.licic.net/" target="_blank" rel="noopener">
+          <i class="a-dot"></i>licic.net
+        </a>
+      <span class="a-note">阿里云</span>
+  </div>
+</div>
+</div><div id="daily-say"><div class="ds-head"><svg class="ds-ico" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 3v9.28a4.39 4.39 0 0 0-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"></path></svg><span class="ds-title">每日一言·······悬停音乐</span><button class="ds-music" type="button" title="打开音乐播放器" aria-label="打开音乐播放器"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 10h2v4H6zM10.5 6h2v12h-2zM15 8.5h2v7h-2z"></path></svg></button></div><p class="ds-quote">正在收集今天的句子…</p><p class="ds-from"></p></div></div><div class="card-widget card-calendar" id="aside-calendar"><div class="item-headline"><i class="icon-rili"></i><span>日历</span></div><div class="item-content"><div class="cal-skeleton">日历加载中…</div>
+<link rel="stylesheet" href="/css/aside-calendar.css?v=20261002">
+<script src="/js/aside-calendar.js?v=20261002"></script>
+</div></div><div class="card-widget card-countdown" id="aside-countdown"><div class="item-headline"><i class="icon-shijian"></i><span>倒计时</span></div><div class="item-content"><div class="cal-skeleton">倒计时加载中…</div>
+<script>
+  (function () {
+    function up() {
+      var f = window.fomalAsideCalendar;
+      if (!f) return;
+      // 用 layoutCards 而不是只搬自己：pjax 换页时本内联脚本可能比
+      // /js/aside-calendar.js（外部脚本，要等异步加载）先跑，只搬自己会把两张卡顺序弄反。
+      if (f.layoutCards) f.layoutCards();
+      else if (f.hoistCard) f.hoistCard('aside-countdown');
+    }
+    up();   // 解析期就能摆（本卡在公告栏之后解析）
+    document.addEventListener('DOMContentLoaded', up);
+  })();
+</script>
+</div></div><div class="sticky_layout"><div class="card-widget card-webinfo"><div class="item-headline"><a class="faa-parent animated-hover"><svg class="faa-tada icon" style="height:25px;width:25px;fill:currentColor;position:relative;top:5px" aria-hidden="true"><use xlink:href="#icon-shujutongji2"></use></svg></a><span style="font-weight:bold">小站资讯</span></div><div class="wi"><div class="wi-kpi"><div class="wi-kpi-item"><div class="wi-kpi-num" data-countup="9152" data-format="w">9152</div><div class="wi-kpi-label">总字数</div></div><div class="wi-kpi-item"><div class="wi-kpi-num" data-countup="2288" data-format="k">2.3k</div><div class="wi-kpi-label">篇均字</div></div><a class="wi-kpi-item" href="/links/"><div class="wi-kpi-num" data-countup="5">5</div><div class="wi-kpi-label">友链</div></a></div><div class="wi-time"><span class="wi-time-item"><span class="wi-time-k">已运行</span><span class="wi-time-v wi-run" data-run-since="2023-05-02T16:00:00.000Z">1280 天</span></span><span class="wi-time-sep">·</span><span class="wi-time-item"><span class="wi-time-k">距上次发文</span><span class="wi-time-v wi-last" data-last-post="2026-10-30T01:00:00.000Z">4 天</span></span><span class="wi-time-sep">·</span><span class="wi-time-item wi-deploy" title="博客最近一次部署时间（部署产物里的 deploy.json）"><span class="wi-time-k">更新</span><span class="wi-time-v wi-deploy-v" data-deploy-build="2026-11-03T05:41:49.631Z" data-deploy-api="/deploy.json">11-3</span></span></div><div class="wi-chart"><div class="wi-chart-head"><span>年度产出</span><span class="wi-chart-sub">共 4 个写作日</span></div><div class="wi-bars"><div class="wi-bar"><div class="wi-bar-n">4</div><div class="wi-bar-fill" style="height:68%"></div></div></div><div class="wi-years"><div class="wi-year">2026</div></div></div><div class="wi-visit"><div class="wi-visit-item"><div class="wi-visit-num" id="busuanzi_value_site_uv">—</div><div class="wi-visit-label">本站访客数</div></div><div class="wi-visit-item"><div class="wi-visit-num" id="busuanzi_value_site_pv">—</div><div class="wi-visit-label">本站总访问量</div></div></div></div></div></div></div></main><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">格言🧬</p><div class="bg-ad"><div>再看看那个光点，它就在这里，这是家园，这是我们 —— 你所爱的每一个人，你认识的每一个人，你听说过的每一个人，曾经有过的每一个人，都在它上面度过他们的一生✨</div><div class="btn-xz-box"><a class="btn-xz" href="/box/astronomy/">点击开启星辰之旅</a></div></div></div><div class="t-t-r"><p class="ft-t t-l-t">猜你想看💡</p><ul class="ft-links"><li><a href="/music/">治愈音乐</a><a href="/nav/">网址导航</a></li><li><a href="/links/">我的朋友</a><a href="/macro/">程序生成</a></li><li><a href="/about/">关于作者</a><a href="/archives/">文章归档</a></li><li><a href="/categories/">文章分类</a><a href="/tags/">文章标签</a></li><li><a href="/gallery/">我的画廊</a><a href="/thread/">螺纹规格</a></li></ul></div></div></div><div class="ft-item-2"><p class="ft-t">推荐友链⌛</p><div class="ft-img-group"><div class="img-group-item"><a href="https://www.lichengic.com/" title="本站"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/assets/favicon.svg" alt=""/></a></div><div class="img-group-item"><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/" title="Hexo"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/External-link/img/badge/hexo-logo.svg" alt=""/></a></div><div class="img-group-item"><a target="_blank" rel="noopener" href="https://butterfly.js.org/" title="Butterfly"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/External-link/img/badge/butterfly-icon.png" alt=""/></a></div><div class="img-group-item"><a href="#" title="暂无"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://api.zxki.cn/api/sjtx?r=1" alt=""/></a></div></div></div></div><div class="copyright"><span><b>&copy;2023-2026</b></span><span><b>&nbsp;&nbsp;By chengicli</b></span><span id="ftRun"></span></div><div class="footer_custom_text"><a class="ft-icp" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">域名正在备案中~</a><span class="ft-sep">｡･ﾟﾟ･🌸･ﾟﾟ･｡</span><span id="ftLove">已经和女朋友<b>--</b>天啦</span><svg class="ft-love-heart" width="30" height="27" viewBox="0 0 30 27" aria-hidden="true"><defs><clipPath id="ft-love-clip"><path d="M15 26C15 26 2 17.5 2 9.5 2 5.5 5 3 8.5 3 11.2 3 13.4 4.4 15 6.5 16.6 4.4 18.8 3 21.5 3 25 3 28 5.5 28 9.5 28 17.5 15 26 15 26Z"></path></clipPath><linearGradient id="ft-love-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8fb3"></stop><stop offset="1" stop-color="#ff2e63"></stop></linearGradient></defs><g class="ft-love-clip"><rect class="ft-love-base" x="0" y="0" width="30" height="27"></rect><rect class="ft-love-bar b1" x="3.4" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b2" x="6.1" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b3" x="8.8" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b4" x="11.5" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b5" x="14.2" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b6" x="16.9" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b7" x="19.6" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b8" x="22.3" y="0" width="2.55" height="26"></rect><rect class="ft-love-bar b9" x="25" y="0" width="2.55" height="26"></rect></g></svg></div><div id="workboard"></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button class="share" type="button" title="右键模式" onclick="changeMouseMode()"><i class="fas fa-mouse"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog right_side"></i></button><button class="share" type="button" title="分享链接" onclick="share()"><i class="fas fa-share-nodes"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i><span id="percent">0<span>%</span></span></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div></div><div class="js-pjax" id="rightMenu"><div class="rightMenu-group rightMenu-small"><a class="rightMenu-item" href="javascript:window.history.back();"><i class="fa fa-arrow-left"></i></a><a class="rightMenu-item" href="javascript:window.history.forward();"><i class="fa fa-arrow-right"></i></a><a class="rightMenu-item" href="javascript:window.location.reload();"><i class="fa fa-refresh"></i></a><a class="rightMenu-item" href="javascript:rmf.scrollToTop();"><i class="fa fa-arrow-up"></i></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-text"><a class="rightMenu-item" href="javascript:rmf.copySelect();"><i class="fa fa-copy"></i><span>复制</span></a><a class="rightMenu-item" href="javascript:window.open(&quot;https://www.baidu.com/s?wd=&quot;+window.getSelection().toString());window.location.reload();"><i class="fa fa-search"></i><span>百度搜索</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-too"><a class="rightMenu-item" href="javascript:window.open(window.getSelection().toString());window.location.reload();"><i class="fa fa-link"></i><span>转到链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-paste"><a class="rightMenu-item" href="javascript:rmf.paste()"><i class="fa fa-copy"></i><span>粘贴</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-post"><a class="rightMenu-item" href="#post-comment"><i class="fas fa-comment"></i><span>空降评论</span></a><a class="rightMenu-item" href="javascript:rmf.copyWordsLink()"><i class="fa fa-link"></i><span>复制本文地址</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-to"><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>新窗口打开</span></a><a class="rightMenu-item" id="menu-too" href="javascript:rmf.open()"><i class="fa fa-link"></i><span>转到链接</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-img"><a class="rightMenu-item" href="javascript:rmf.saveAs()"><i class="fa fa-download"></i><span>保存图片</span></a><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>在新窗口打开</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制图片链接</span></a></div><div class="rightMenu-group rightMenu-line"><a class="rightMenu-item" href="javascript:randomPost()"><i class="fa fa-paper-plane"></i><span>随便逛逛</span></a><a class="rightMenu-item" href="javascript:switchNightMode();"><i class="fa fa-moon"></i><span>昼夜切换</span></a><a class="rightMenu-item" href="javascript:rmf.switchReadMode();"><i class="fa fa-book"></i><span>阅读模式</span></a><a class="rightMenu-item" href="/about/"><i class="fa fa-info-circle"></i><span>关于博客</span></a><a class="rightMenu-item" href="javascript:toggleWinbox();"><i class="fas fa-cog"></i><span>美化设置</span></a><a class="rightMenu-item" href="javascript:rmf.fullScreen();"><i class="fas fa-expand"></i><span>切换全屏</span></a><a class="rightMenu-item" href="javascript:window.print();"><i class="fa-solid fa-print"></i><span>打印页面</span></a></div></div><div><script src="/js/utils.js?v=20261005-scroll1"></script><script src="/js/main.js?v=20261027-wrap"></script><script src="/External-link/js/fancybox.umd.js"></script><script src="/External-link/js/instantpage.js" type="module"></script><script src="/External-link/js/lazyload.iife.min.js"></script><script>window.__SEARCH_LAZY__ = ["/External-link/js/algoliasearch-lite.umd.js","/External-link/js/instantsearch.production.min.js","/js/search/algolia.js"]</script><script async="async">var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())
+setTimeout(function(){preloader.endLoading();}, 5000);
+document.getElementById('loading-box').addEventListener('click',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.2/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer src="/js/timeline-archive.js?v=20261102a"></script><script defer src="/js/pdf-viewer.js?v=20261026-mimefix"></script><script defer src="/js/unlock-secret.js?v=20261027-wrap"></script><script defer src="/js/open-assets-blank.js?v=20261025"></script><script defer src="/js/love-days.js?v=20261025c"></script><script defer charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script><script defer src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script><script defer src="/js/51la.js"></script><script src="/js/jquery.min.js"></script><script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script><script async src="/External-link/js/clipboard.min.js"></script><script async src="/External-link/js/pace.min.js"></script><script defer src="/js/winbox.bundle.min.js"></script><script async src="/External-link/js/iconfont/font_3586335.js"></script><script async src="/External-link/js/iconfont/font_3636804.js"></script><script async src="/External-link/js/iconfont/font_3612150.js"></script><script async src="/External-link/js/iconfont/font_5239918.js"></script><canvas id="universe"></canvas><canvas id="snow"></canvas><script defer src="/js/notify.js"></script><script defer src="/js/lunar.js"></script><script defer src="/js/data/voyager1.js"></script><script defer src="/js/data/holidays.js"></script><script defer src="/js/modules/console-art.js"></script><script defer src="/js/modules/shell.js?v=20261027g"></script><script defer src="/js/modules/snow.js?v=20261010-snow1"></script><script defer src="/js/modules/effects.js?v=20261010-snow1"></script><script defer src="/js/modules/reading.js?v=20261028-fpsbadge"></script><script defer src="/js/modules/nav.js?v=20261102-flickerfix"></script><script defer src="/js/inject/nav-scroll-rebind.js?v=20261102a"></script><script defer src="/js/music-bus.js?v=20261102-resume5"></script><script defer src="/js/music-page.js?v=20261031a"></script><script defer src="/js/daily-say.js?v=20261102-resume"></script><script defer src="/js/modules/cursor.js?v=20261028-dot"></script><script defer src="/js/modules/footer-time.js?v=20261031a"></script><script defer src="/js/inject/archive-page.js?v=20261018-scrollfix"></script><script defer src="/js/modules/appearance-fonts.js?v=20261102-fc2"></script><script defer src="/js/modules/appearance-backgrounds.js?v=20261011-bgflash1"></script><script defer src="/js/modules/fireflies.js?v=20261010-fireflies1"></script><script defer src="/js/modules/ripple.js?v=20261014-ripple1"></script><script defer src="/js/modules/settings.js?v=20261102-box1002"></script><script defer src="/js/stats.js?v=20261102-neutral"></script><script defer src="/js/fomal.js"></script><script defer src="/js/wechat-qr.js?v=20261028-qr"></script><script defer src="/js/festival.js"></script><script defer src="/js/author-status.js"></script><script defer src="/js/pjax-guard.js?v=20261005"></script><script defer src="/js/pjax-relink.js?v=20261030-about2"></script><script defer src="/js/inject/search-lazy.js?v=20261011b"></script><script src="/js/inject/scroll-gap-fix.js?v=20261011"></script><script src="/js/inject/webinfo-card.js"></script><script src="/js/inject/ft-ad-extra.js"></script><script src="/js/inject/pc-local-link.js"></script><script defer src="/js/inject/about-route-probe.js?v=20261030"></script><script defer src="/js/inject/about-live.js?v=20261030"></script><link rel="stylesheet" href="/External-link/css/APlayer.min.css" media="print" onload="this.media='all'"><script src="/External-link/js/APlayer.min.js"></script><script src="/External-link/js/Meting.min.js"></script><script src="/External-link/js/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show","#web_bg",".js-pjax","body > title","#app","#tag-echarts","#posts-echart","#categories-echarts"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  ;['tocScrollFn', 'scrollCollect'].forEach(name => {
+    const handler = window[name]
+    if (!handler) return
+    window.removeEventListener('scroll', handler)
+    if (typeof handler.cancel === 'function') handler.cancel()
+    window[name] = null
+  })
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//events.vercount.one/js"></script></div><!-- hexo injector body_end start --><script id="swiper-lazyload-fix">
+(function () {
+  if (window.__swiperLazyFix) return;
+  window.__swiperLazyFix = true;
+
+  function sync () {
+    try {
+      var inst = window.lazyLoadInstance;
+      if (inst && typeof inst.update === 'function') inst.update();
+    } catch (e) {}
+  }
+
+  function burst () {
+    [0, 120, 300, 700, 1500, 2600].forEach(function (d) { setTimeout(sync, d); });
+  }
+
+  // 1) 首次加载 + 站内 pjax 返回后：等异步的 data-pjax 脚本（swiper_init.js）跑完再补登记
+  document.addEventListener('pjax:complete', burst);
+  window.addEventListener('load', burst);
+  if (document.readyState !== 'loading') burst();
+  else document.addEventListener('DOMContentLoaded', burst);
+
+  // 2) Swiper 重建循环克隆时会增删 .blog-slider__wrp 的子节点（pjax 换页后容器会被替换，故持续重挂）
+  setTimeout(function watchWrp () {
+    var wrp = document.querySelector('.blog-slider__wrp');
+    if (wrp && wrp !== window.__swiperLazyWrp) {
+      try { if (window.__swiperLazyMo) window.__swiperLazyMo.disconnect(); } catch (e) {}
+      window.__swiperLazyWrp = wrp;
+      try {
+        window.__swiperLazyMo = new MutationObserver(function () {
+          clearTimeout(window.__swiperLazyTimer);
+          window.__swiperLazyTimer = setTimeout(sync, 100);
+        });
+        window.__swiperLazyMo.observe(wrp, { childList: true });
+      } catch (e) {}
+    }
+    setTimeout(watchWrp, 800);
+  }, 800);
+})();
+</script><script id="wow-pjax-rehook">
+(function () {
+  if (window.__wowPjaxRehook) return;
+  window.__wowPjaxRehook = true;
+
+  // 插件生成的加类脚本特征：调 classList.add 又写 data-wow-duration 的，就是它
+  function isWowInjector(code) {
+    return !!code && code.indexOf('classList.add') > -1 && code.indexOf('data-wow-duration') > -1;
+  }
+
+  // 把 .js-pjax 里哑火的加类脚本重放一遍（照抄 pjax.pug 的重放手法：换新节点才会执行）
+  function replayInjectors() {
+    var scripts = document.querySelectorAll('.js-pjax script');
+    for (var i = 0; i < scripts.length; i++) {
+      var old = scripts[i];
+      if (old.getAttribute('data-pjax') !== null) continue; // 主题自己会重放，别跑两遍
+      var code = old.text || old.textContent || old.innerHTML || '';
+      if (!isWowInjector(code)) continue;
+      var neu = document.createElement('script');
+      neu.setAttribute('data-wow-pjax-replay', '');
+      neu.appendChild(document.createTextNode(code));
+      old.parentNode.replaceChild(neu, old);
+    }
+  }
+
+  // wow 实例兜底 + 清理被 pjax 换掉的旧节点（否则 wow.boxes 会一直 accumulate）
+  function resyncBoxes() {
+    var wow = window.wow;
+    if (!wow && typeof window.WOW === 'function') {
+      // 等价于 node_modules/hexo-butterfly-wowjs/lib/wow_init.js
+      window.wow = new window.WOW({
+        boxClass: 'wow',
+        animateClass: 'animate__animated',
+        offset: 0,
+        mobile: false,
+        live: true
+      });
+      window.wow.init();
+      return;
+    }
+    if (!wow) return;
+    try {
+      if (wow.boxes && wow.boxes.length) {
+        wow.boxes = wow.boxes.filter(function (el) { return el && document.contains(el); });
+      }
+      // 关键一步：让 wow 自己把新插入的 .wow 卡片登记进 boxes（会顺手隐藏 + 置 scrolled）
+      if (typeof wow.doSync === 'function') {
+        wow.doSync(document.body);
+      } else if (wow.boxes && wow.applyStyle) {
+        // 老版本 wow.js 没有 doSync，手动补：从没被 wow 摸过的块（没有 inline visibility）收进来
+        var nodes = document.querySelectorAll('.wow');
+        for (var i = 0; i < nodes.length; i++) {
+          var el = nodes[i];
+          if (el.style.visibility) continue;
+          if (wow.all && wow.all.indexOf(el) > -1) continue;
+          wow.boxes.push(el);
+          if (wow.all) wow.all.push(el);
+          wow.applyStyle(el, true);
+        }
+        wow.scrolled = true;
+      }
+      // 再补一次 scroll 事件，保证 50ms 轮询这一拍立刻跑
+      window.dispatchEvent(new Event('scroll'));
+    } catch (e) {}
+  }
+
+  function run() {
+    try { replayInjectors(); } catch (e) {}
+    try { resyncBoxes(); } catch (e) {}
+  }
+
+  document.addEventListener('pjax:complete', function () {
+    // 主题的 pjax:complete 监听器（pjax.pug）先重放 script[data-pjax]（轮播/磁贴注入脚本在里面），
+    // 所以这里延后一拍，保证重放顺序在它之后；300ms 那次兜底给异步补内容的场景。
+    setTimeout(run, 0);
+    setTimeout(run, 300);
+  });
+
+  // 调试用：控制台里 window.__wowPjaxRehookNow() 可手动触发一次
+  window.__wowPjaxRehookNow = run;
+})();
+</script> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="/categories/%E6%97%A0%E9%94%A1%E5%85%83%E5%9F%BA/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚙️ 无锡元基 (2)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="/categories/CNC%E5%B7%A5%E8%89%BA/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚙️ CNC工艺 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="/categories/" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #e9e9e9;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: var(--text-bg-hover)}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__fadeIn');
+    arr[i].setAttribute('data-wow-duration', '700ms');
+    arr[i].setAttribute('data-wow-delay', '0');
+    arr[i].setAttribute('data-wow-offset', '0');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__fadeIn');
+    arr[i].setAttribute('data-wow-duration', '700ms');
+    arr[i].setAttribute('data-wow-delay', '0');
+    arr[i].setAttribute('data-wow-offset', '0');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script></div><script defer src="/External-link/js/wow.min.js"></script><script defer src="/External-link/js/wow_init.js"></script><!-- hexo injector body_end end --><script id="ai-chat-boot">window.AI_CHAT_CONFIG={"enable":true,"api_base":"https://api.deepseek.com","api_key":"sk-a67319783b3e4d9cbc8beb619cb8a632","api_key_file":".ai-chat-key","proxy_api_base":"/api","proxy_key_stub":"via-proxy","model":"deepseek-chat","temperature":0.7,"max_tokens":2048,"system_prompt":"你是这个博客的页面助手，语气自然、简洁、像朋友聊天。默认用中文回答；\n只依据下面给出的页面内容和对话历史作答，页面里没有的信息不要编造，确实不知道就直说。\n回答用 Markdown 排版，能用列表就用列表，避免长篇大论。\n","welcome":"你好，我是这个页面的 AI 助手。可以帮你总结当前页面、解释名词、回答关于本页的问题。","first_question":"请用中文总结这个页面的内容：先用一句话概括，再列 3-5 条要点。","max_history":6,"max_page_chars":12000,"storage_key":"ai_chat_history_v1","panel_width":460,"panel_height":640,"panel_right":88,"timeout_ms":10000,"has_key":true};</script><script defer src="/js/ai-chat.js?v=mvz2gxes-1dvl"></script></body></html>

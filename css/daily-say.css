@@ -1,0 +1,813 @@
+/* ==========================================================================
+   每日一言 + QQ 音乐播放器（侧栏公告卡底部）
+   --------------------------------------------------------------------------
+   结构（渲染出来长这样，模板在 themes/fomalhaut/layout/includes/widget/card_announcement.pug）
+     #daily-say.ds-card                 卡片本体，悬停它 = 打开播放器
+       .ds-head   [音符图标] 每日一言  ...................... [喇叭按钮]
+       p.ds-quote                      一言正文（24 秒换一条，淡入淡出）
+       p.ds-from                       —「出处」
+   播放器面板由 JS 建在 <body> 末尾，position:fixed（不放进卡片里，避免被
+   .card-widget 的圆角裁切 / 被侧栏的层叠上下文压住），打开时用 getBoundingClientRect()
+   定位到卡片正上方；上方空间不够就翻到卡片下方。
+   --------------------------------------------------------------------------
+   配色全部走主题变量，深浅色、卡片不透明度、主题色三者都自动跟随：
+     --anno-accent / --anno-strong / --anno-muted / --anno-soft-bg / --anno-soft-bd
+     来自 source/css/site-inject.css 的 annoV2 段（由 --theme-color 派生）
+     --trans-light / --trans-dark 来自美化面板的「卡片不透明度」，写死 var(--card-bg)
+     会不跟随，所以播放器面板必须用这两个
+   ========================================================================== */
+
+/* ---------- 一、卡片本体 ---------- */
+#daily-say {
+  position: relative;
+  margin-top: 12px;
+  padding: 10px 12px 9px;
+  border-radius: 14px;
+  background: var(--anno-soft-bg, rgba(255, 20, 147, .06));
+  border: 1px solid var(--anno-soft-bd, rgba(255, 20, 147, .18));
+  transition: border-color .25s ease, box-shadow .25s ease;
+  /* 卡片自己是个定位上下文：::before 的悬停热区靠它撑出去 */
+}
+/* 悬停热区往上多探 16px：用户说「鼠标放到这个窗口偏上一点」就该出播放器。
+   16 正好是 .card-widget 之间的间距，只覆盖空白、不会挡住上面卡片的按钮点击。 */
+#daily-say::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 16px;
+}
+#daily-say:hover {
+  border-color: var(--anno-chip-bd, rgba(255, 20, 147, .3));
+}
+
+#daily-say .ds-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--anno-muted, rgba(60, 60, 67, .55));
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  line-height: 1;
+}
+#daily-say .ds-ico {
+  flex: 0 0 auto;
+  fill: currentColor;
+  opacity: .9;
+}
+#daily-say .ds-music {
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--anno-muted, rgba(60, 60, 67, .55));
+  display: grid;
+  place-items: center;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+#daily-say .ds-music svg { fill: currentColor; display: block; }
+#daily-say .ds-music:hover {
+  background: var(--anno-chip-bg, rgba(255, 20, 147, .08));
+  color: var(--anno-accent, #FF1493);
+}
+#daily-say .ds-music:active { transform: scale(.92); }
+
+#daily-say .ds-quote {
+  margin: 7px 0 0;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--font-color, #1f2937);
+  word-break: break-word;
+  transition: opacity .26s ease;
+}
+#daily-say .ds-from {
+  margin: 4px 0 0;
+  min-height: 17px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--anno-muted, rgba(60, 60, 67, .55));
+  transition: opacity .26s ease;
+}
+/* 换句子时先淡出、换完再淡入（JS 里切 class，260ms 与这里的时长对齐） */
+#daily-say.is-fading .ds-quote,
+#daily-say.is-fading .ds-from { opacity: 0; }
+
+/* ---------- 二、播放器面板 ---------- */
+#ds-player {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 900;                 /* 高于卡片、低于右下角设置面板（10000+） */
+  box-sizing: border-box;
+  width: 300px;
+  padding: 12px 12px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--ds-soft-bd);
+  background: var(--trans-light, rgba(255, 255, 255, .9));
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 14px 40px rgba(31, 41, 55, .18), 0 2px 6px rgba(31, 41, 55, .07);
+  color: var(--font-color, #1f2937);
+  /* 面板内部色阶：主题的 --anno-muted / --anno-strong 是给浅色卡片写的，
+     直接拿到深色面板上会「灰字压黑底」看不清，所以这里单开三个变量。 */
+  --ds-ink: #1f2937;
+  --ds-dim: rgba(60, 60, 67, .55);
+  --ds-accent: var(--theme-color, #FF1493);
+  --ds-cur: #b00f5e;
+  --ds-cur: color-mix(in srgb, var(--ds-accent) 52%, #101418);
+  /* 面板是 append 到 <body> 的，不在 .card-announcement 里面 —— 那边 site-inject.css 定义的
+     --anno-* 一个都继承不到。以前这里直接写 var(--anno-chip-bg, rgba(255,20,147,.12))，
+     变量取不到就全落到粉色回退值：把主题色换成黑色后，进度条底槽、按钮悬停底、面板描边
+     仍然是粉的，就是这处漏的。现在面板自带一套，只从 --ds-accent（= 主题色）派生。 */
+  --ds-chip-bg: rgba(255, 20, 147, .08);
+  --ds-chip-bg: color-mix(in srgb, var(--ds-accent) 9%, transparent);
+  --ds-chip-bd: rgba(255, 20, 147, .22);
+  --ds-chip-bd: color-mix(in srgb, var(--ds-accent) 22%, transparent);
+  --ds-soft-bd: rgba(255, 20, 147, .16);
+  --ds-soft-bd: color-mix(in srgb, var(--ds-accent) 16%, transparent);
+  /* 进度条底槽用「文字色」而不是主题色去混：主题色是纯黑时，黑色底槽压在浅色面板上
+     分不清，压在深色面板上又直接看不见；用 --ds-ink 混 14% 两套主题都稳。 */
+  --ds-track-bg: rgba(31, 41, 55, .14);
+  --ds-track-bg: color-mix(in srgb, var(--ds-ink) 14%, transparent);
+  font-size: 13px;
+  /* 用 visibility 而不是 display:none —— 隐藏时仍能量 offsetHeight，定位才不会跳一下 */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px) scale(.97);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  transition: opacity .26s ease, transform .26s cubic-bezier(.22, .61, .36, 1), visibility .26s;
+}
+#ds-player.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+[data-theme="dark"] #ds-player {
+  background: var(--trans-dark, rgba(28, 28, 28, .92));
+  border-color: rgba(255, 255, 255, .1);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .5);
+  --ds-ink: rgba(255, 255, 255, .9);
+  --ds-dim: rgba(255, 255, 255, .52);
+  --ds-cur: #ff8ac0;
+  --ds-cur: color-mix(in srgb, var(--ds-accent) 55%, #fff);
+}
+
+/* 头部：封面 + 歌名/歌手 + 播放律动条 */
+#ds-player .ds-p-head { display: flex; align-items: center; gap: 10px; }
+#ds-player .ds-cover {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--ds-chip-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .16);
+}
+#ds-player .ds-meta { flex: 1 1 auto; min-width: 0; }
+#ds-player .ds-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ds-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#ds-player .ds-artist {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--ds-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 三根跳动的柱子：只有真正在播时才动 */
+#ds-player .ds-eq { display: flex; align-items: flex-end; gap: 2px; height: 16px; flex: 0 0 auto; }
+#ds-player .ds-eq i {
+  width: 2.5px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--ds-accent);
+  opacity: .3;
+  transition: opacity .2s ease;
+}
+#ds-player.is-playing .ds-eq i { opacity: 1; animation: ds-eq .9s ease-in-out infinite; }
+#ds-player.is-playing .ds-eq i:nth-child(2) { animation-delay: .18s; }
+#ds-player.is-playing .ds-eq i:nth-child(3) { animation-delay: .36s; }
+@keyframes ds-eq {
+  0%, 100% { height: 5px; }
+  50% { height: 15px; }
+}
+
+/* 歌词：固定高度视窗，上下用 mask 淡出，currentTime 变化时整体位移 */
+#ds-player .ds-lyric {
+  position: relative;
+  height: 104px;
+  margin: 10px 0 4px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+}
+#ds-player .ds-lyric-in {
+  will-change: transform;
+  transition: transform .42s cubic-bezier(.22, .61, .36, 1);
+}
+#ds-player .ds-line {
+  margin: 0;
+  padding: 5px 2px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--ds-dim);
+  opacity: .62;
+  transition: color .3s ease, opacity .3s ease, transform .3s ease;
+}
+#ds-player .ds-line.is-cur {
+  color: var(--ds-cur);
+  font-weight: 700;
+  opacity: 1;
+  transform: scale(1.04);
+}
+/* 没歌词 / 出错时的说明行 */
+#ds-player .ds-line.is-tip { opacity: .75; font-style: italic; padding-top: 34px; }
+
+/* 进度条 */
+#ds-player .ds-prog {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-dim);
+}
+#ds-player .ds-bar {
+  position: relative;
+  flex: 1 1 auto;
+  height: 14px;
+  display: flex;
+  align-items: center;
+}
+#ds-player .ds-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--ds-track-bg);
+}
+#ds-player .ds-bar-f {
+  position: relative;
+  height: 3px;
+  width: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--ds-accent), var(--ds-cur));
+  transition: width .18s linear;
+}
+#ds-player .ds-bar-f::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--ds-accent);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .35);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+#ds-player:hover .ds-bar-f::after { opacity: 1; }
+
+/* 控制条 */
+#ds-player .ds-ctl { display: flex; align-items: center; gap: 5px; margin-top: 6px; }
+#ds-player .ds-ctl button {
+  width: 32px;              /* 28 → 32：作者说上一首/下一首偏小（面板和胶囊都要改） */
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ds-ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;          /* theme 的 button 重置里没有 cursor，不写就是箭头 */
+  transition: background .2s ease, transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+#ds-player .ds-ctl button svg { fill: currentColor; display: block; }
+/* 只放大两个副键的图标（SVG 带 16 的 width 属性，得用 CSS 压过去）；
+   播放键的三角/双竖线保持原大小，否则 36 的圆里会顶满。 */
+#ds-player .ds-ctl button:not(.ds-play) svg { width: 18px; height: 18px; }
+#ds-player .ds-ctl button:hover { background: var(--ds-chip-bg); }
+#ds-player .ds-ctl button:active { transform: scale(.9); }
+/* 注意选择器里的 button.ds-play：上面「button:hover」那条是 (1,2,1)，
+   写成 .ds-play 只有 (1,2,0)，鼠标悬停时会被 hover 的浅色底盖掉 —— 播放键会变成一块淡粉。
+   加上元素名 + 自己的 :hover 就能压住。 */
+#ds-player .ds-ctl button.ds-play {
+  width: 36px;
+  height: 36px;
+  background: var(--ds-accent);
+  color: var(--on-theme, #fff);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--ds-accent) 40%, transparent);
+}
+/* 播放键的悬停反馈（跟左下角胶囊那颗同一套：放大 8% + 主题色光环）。
+   原来只写了 filter: brightness(1.08)，实底圆上几乎看不出来，
+   作者反馈「移到暂停键上一点反应都没有」。 */
+#ds-player .ds-ctl button.ds-play:hover {
+  background: var(--ds-accent);
+  filter: brightness(1.08);
+  transform: scale(1.08);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, .08);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ds-accent) 18%, transparent),
+              0 6px 16px color-mix(in srgb, var(--ds-accent) 40%, transparent);
+}
+#ds-player .ds-count {
+  margin-left: auto;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-dim);
+}
+/* 自动播放被浏览器拦下时，播放键轻跳两下提示「点我」 */
+#ds-player .ds-play.is-hint { animation: ds-hint 1.4s ease-in-out 2; }
+#ds-player .ds-ctl button:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; }
+@keyframes ds-hint {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.14); }
+  70% { transform: scale(.96); }
+}
+
+/* 手机：面板别超出屏幕，交给 JS 定位时也做了 clamp，这里只兜个底 */
+@media (max-width: 768px) {
+  #ds-player { width: min(88vw, 320px); }
+  #ds-player .ds-lyric { height: 92px; }
+}
+/* 用户开了「减少动态效果」就把律动/位移动画都关掉 */
+@media (prefers-reduced-motion: reduce) {
+  #ds-player .ds-eq i,
+  #ds-player .ds-play.is-hint { animation: none !important; }
+  #ds-player .ds-lyric-in { transition: none; }
+}
+
+/* 音乐在播、但面板已经收起时，喇叭按钮亮成主题色 —— 提醒「有声音在响」，再点一下就是暂停 */
+#daily-say.is-playing .ds-music { color: var(--anno-accent, #FF1493); }
+
+/* ==========================================================================
+   左下角迷你胶囊（#ds-mini）
+   --------------------------------------------------------------------------
+   位置：左下角竖向胶囊组的**上半格**（bottom 72），下半格是 #fps（52×52，贴底 12）。
+   两者同为 52px 宽、同为 999px 圆角、同色玻璃底，竖着叠成一组控件而不是一个浮层。
+   为什么竖向（10-28 二次调整）：横排 320/144 都会压住正文（文章卡片左边界最窄只有约 60px），
+   竖排 52px 只擦到卡片内边距；代价是歌词只能竖排显示几行，所以鼠标移入时胶囊**整体加宽**
+   （52 → 96），三个键长在胶囊内部：上一首在歌词上方、播放键在歌词右侧垂直居中、
+   下一首在歌词下方 —— 对应作者草图的布局。正文当行照旧高亮滚在面板里。
+   显示时机由 JS 控制：第一次真的播出声才加 .is-on，之后暂停也不摘；
+   正文 = 当前歌词行（没歌词就回落到歌名），静音/暂停时整体压暗一档。
+   ========================================================================== */
+#ds-mini {
+  /* 配色不在这里定义 —— 全部接 site-inject.css 的 --glass-*（和 #fps 是同一块玻璃），
+     而 --glass-* 又是照抄主题卡片那三件套：--trans-light/--trans-dark（背景）+
+     --border-style（1px 实线）+ --font-color（文字）。别再往这里掺主题色。
+     主题色只剩两处：--dm-accent（音符、播放键实底）、帧率数值的状态色（在 site-inject.css）。 */
+  --dm-bg: var(--glass-bg, rgba(250, 250, 250, .97));
+  --dm-fg: var(--glass-ink, #1f2937);
+  --dm-dim: var(--glass-dim, rgba(31, 41, 55, .62));
+  --dm-bd: var(--glass-bd, 1px solid rgba(169, 169, 169, .7));
+  --dm-accent: var(--glass-accent, var(--theme-color, #FF1493));
+  --dm-chip: var(--glass-chip, rgba(0, 0, 0, .08));
+  /* 两列宽度：左列 = 音符 + 竖排歌词（收起态就是整个胶囊的宽度），
+     右列 = 三个按键。收起时右列被 overflow:hidden 整列裁掉，悬停加宽才露出来。 */
+  --dm-col: 52px;
+  --dm-keys: 46px;
+
+  position: fixed;
+  left: 10px;                                          /* 与 #fps 左对齐 */
+  left: calc(10px + env(safe-area-inset-left, 0px));
+  bottom: 72px;                                        /* 12 + #fps 52 + 8 */
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  z-index: 1001;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;          /* 左列歌词 | 右列按键 */
+  align-items: stretch;
+  width: 52px;                   /* 竖排：10 + 52 = 62，只擦到卡片内边距，不压正文 */
+  max-width: 52px;
+  /* 高度不再写死 172（作者 10-28：「歌词显示不完整，要按歌词自适应」）：
+     底边钉在 72px 上，内容多高胶囊就多高，于是**向上**长；
+     min-height 保证右列四个按键竖排得下（10-29 加了列表键，140 → 164），
+     max-height 兜住超长句（再长由 JS 缩字号，见 daily-say.js 的 fitMiniText）。 */
+  height: auto;
+  min-height: 200px;
+  max-height: min(72vh, 500px);
+  padding: 10px 0 9px;
+  overflow: hidden;             /* 关键：收起时把右列整列裁掉，否则会露在胶囊外面 */
+  border: var(--dm-bd);                                 /* = 卡片那条 1px 实线 */
+  border-radius: 999px;                                 /* 胶囊 */
+  background: var(--dm-bg);
+  /* ⚠ 这里**不能**加 backdrop-filter（第一版加了 blur(18px)）：主题卡片本身没有模糊，
+     胶囊一模糊，压在照片上就是糊成一团、颜色也被背景带偏（作者原话「红红的还带模糊」）。
+     要跟卡片一样，就只能是「透下去的干净一层」。 */
+  box-shadow: var(--glass-shadow, 0 2px 10px rgba(7, 17, 27, .07));
+  color: var(--dm-fg);
+  font-size: 12.5px;               /* 收到 144 宽后 13px 两行太挤，回半档 */
+  line-height: 1;
+  /* 隐藏用 visibility 而不是 display:none —— 保留布局，展开时不会闪一下宽度 */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px) scale(.96);
+  transform-origin: 0 100%;
+  pointer-events: none;
+  transition: opacity .24s ease, transform .24s cubic-bezier(.22, .61, .36, 1), visibility .24s,
+              width .24s cubic-bezier(.22, .61, .36, 1), max-width .24s cubic-bezier(.22, .61, .36, 1),
+              height .56s cubic-bezier(.22, .61, .36, 1);   /* 换句时长短句↔长句，胶囊高度平滑伸缩 */
+}
+#ds-mini.is-on {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+/* 悬停/键盘聚焦时向右加宽一整个右列（52 + 46 = 98），三个键都在胶囊内部。
+   加宽只动 width，所以上面的 #fps 不会跳、下面的位置也不变。 */
+#ds-mini:hover,
+#ds-mini:focus-within { width: calc(var(--dm-col) + var(--dm-keys)); max-width: calc(var(--dm-col) + var(--dm-keys)); }
+/* 深色不需要单独一套色了：--glass-* 在 site-inject.css 里已经按 [data-theme="dark"] 改过
+   （底色换成 --trans-dark、ink 提亮、投影加深）。这里原来那一整块 rgba(18,29,35,.9) 的
+   覆盖会盖掉共享 token，已删除 —— 别再加回来。 */
+
+/* 左列：音符在上、歌词在下，整体宽度锁死 --dm-col。
+   加宽时它纹丝不动（flex: 0 0），否则歌词会被父级居中到整条中间、压到按键下面。 */
+#ds-mini .dm-main {
+  flex: 0 0 var(--dm-col); width: var(--dm-col); min-width: 0; min-height: 0;
+  display: flex; flex-direction: column; align-items: center;
+}
+/* 顶部音符：常驻（以前悬停时让位给「上一首」，现在上一首搬到右列去了，不必再藏） */
+#ds-mini .dm-top { position: relative; flex: 0 0 22px; width: 100%; }
+#ds-mini .dm-ico {
+  position: absolute; inset: 0; margin: auto;
+  width: 16px; height: 16px; fill: var(--dm-accent); opacity: .92;
+  transition: opacity .18s ease;
+}
+
+/* 右列：上一首 / 播放暂停 / 下一首 / 歌曲列表 竖着排成一列（10-29 加第四个键）。
+   用 space-around 而不是 center：胶囊高度现在跟着歌词走（可能 140，也可能 400），
+   四个键挤在正中间会让右列上下留出空白、像没画完；
+   拉开后正好是「上一首在上、播放键居中、下一首在下、列表垫底」，和歌词一样是竖着读的。
+   gap 兜底最小间距（短歌词、胶囊只有 min-height 时）。
+   gap 8 → 6（10-29 作者：「三个按钮的间隔缩小一点点」）—— 多了一个键，同等高度下也必须收。 */
+#ds-mini .dm-keys {
+  flex: 0 0 var(--dm-keys); width: var(--dm-keys);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-around;
+  gap: 6px;
+}
+
+/* 两个副键（上一首 / 下一首）：30px 透明圆。收起态 opacity 0 且不接事件。 */
+#ds-mini .dm-side,
+#ds-mini .dm-play {
+  flex: 0 0 auto;
+  padding: 0; border: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  cursor: pointer;                 /* 主题全局没给 button 设手型，不写这里鼠标一直是箭头 */
+  -webkit-tap-highlight-color: transparent;
+  /* filter / box-shadow 也要过渡：悬停反馈就靠这两个，不加会「啪」一下跳过去 */
+  transition: opacity .18s ease, background .18s ease, transform .18s ease,
+              box-shadow .18s ease, filter .18s ease;
+}
+#ds-mini .dm-side {
+  width: 30px; height: 30px;
+  background: transparent; color: var(--dm-fg);
+  opacity: 0; pointer-events: none;
+}
+#ds-mini .dm-side svg { display: block; width: 20px; height: 20px; fill: currentColor; }
+/* 图标方向：作者要「上一首朝上、下一首朝下」（竖排胶囊里左右既费解又和歌词的走向打架）。
+   原始 SVG 是 ⏮ / ⏭（朝左 / 朝右），rotate(90deg) 正好把它们转成朝上 / 朝下，
+   不用改 JS 里的 path —— 顺时针 90°：左(-x) → 上(-y)、右(+x) → 下(+y)。
+   10-29 起右列还多了「歌曲列表」(.dm-list)：它是横排三行 + 圆点的图形，
+   转了会变成竖杠，所以 :not(.dm-list) 把它排除在外。 */
+#ds-mini .dm-keys .dm-side:not(.dm-list):not(.dm-hall) svg { transform: rotate(90deg); }
+/* 列表键比上一首/下一首小一档（28），排在列尾不抢播放键的视觉重心 */
+#ds-mini .dm-side.dm-list { width: 28px; height: 28px; }
+#ds-mini .dm-side.dm-list svg { width: 17px; height: 17px; }
+#ds-mini .dm-side.dm-hall { width: 28px; height: 28px; }
+#ds-mini .dm-side.dm-hall svg { width: 17px; height: 17px; }
+#ds-mini .dm-list.is-on { color: var(--dm-accent); }
+#ds-mini .dm-side:hover { background: var(--dm-chip); transform: scale(1.06); }
+#ds-mini .dm-side:active { transform: scale(.9); }
+#ds-mini:hover .dm-side,
+#ds-mini:focus-within .dm-side { opacity: 1; pointer-events: auto; }
+
+/* 播放键：右列中间那一格，主题色实底。收起态同样不可见、点不到。 */
+#ds-mini .dm-play {
+  width: 34px; height: 34px;
+  background: var(--dm-accent);
+  color: var(--on-theme, #fff);
+  opacity: 0; pointer-events: none;
+  transform: scale(.86);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--dm-accent) 22%, transparent);
+}
+#ds-mini .dm-play svg { display: block; width: 18px; height: 18px; fill: currentColor; }
+#ds-mini:hover .dm-play,
+#ds-mini:focus-within .dm-play { opacity: 1; pointer-events: auto; transform: scale(1); }
+/* 悬停反馈（作者 10-28：「移到暂停键上一点反应都没有」）：
+   原来只有 brightness(1.06) —— 主题色实底上 6% 亮度肉眼看不出，等于没有反馈。
+   改成三件事一起动：放大 8% + 一圈主题色光环（半径 4，正好卡在 46 宽的右列内）+ 阴影加深。
+   注意这条必须写在上面 `#ds-mini:hover .dm-play` 之后：两者特异性都是 (1,2,0)，
+   靠书写顺序让「悬停在按钮上」压过「悬停在胶囊上」的 scale(1)。 */
+#ds-mini .dm-play:hover {
+  transform: scale(1.08);
+  filter: brightness(1.08);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--dm-accent) 20%, transparent),
+              0 4px 14px color-mix(in srgb, var(--dm-accent) 34%, transparent);
+}
+#ds-mini .dm-play:active { transform: scale(.92); }
+/* 主题的 `button { outline: 0 }` 把键盘焦点圈也一起干掉了，这里补回来
+   （:focus-visible 只在键盘操作时出现，鼠标点不会留下圈） */
+#ds-mini .dm-side:focus-visible,
+#ds-mini .dm-play:focus-visible { outline: 2px solid var(--dm-accent); outline-offset: 2px; }
+
+#ds-mini .dm-text {
+  flex: 1 1 auto;                /* 有富余就撑满（配合 min-height），超 max-height 时允许被压缩 */
+  width: 100%;                   /* 锁在左列内（父级 .dm-main 已经限宽 52） */
+  min-height: 0;
+  position: relative;            /* 换句动画的覆盖层以它为定位基准（没有它绝对定位会跑到祖先身上） */
+  /* 竖排：从右上往左下读（vertical-rl 是中文书脊方向）。
+     text-orientation:mixed 让英文按 90° 侧躺 —— 竖排里这是唯一能读的形态，
+     换成 upright 会变成「一个字母一行」，更糟。 */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  overflow: hidden;
+  /* 竖排下的「换行」等于「换列」：52px 一放两列就成了古籍排版，字还互相顶。
+     nowrap 把它锁死在单列 —— 于是文字有多少字，盒子就有多高（高度由内容决定，
+     这正是「胶囊长度随歌词走」的来源，别再给它写死 height）。 */
+  white-space: nowrap;
+  word-break: break-word;
+  line-height: 1.35;
+  letter-spacing: .3px;
+  /* 水平居中（10-28 修）：竖排里 block 轴是**横向**，行盒默认贴在 block-start（= 右边），
+     所以之前字总是靠右。text-align 管的是 inline 轴（竖直方向），对它没用。
+     竖排 + flex 时主轴 = 竖直、交叉轴 = 水平，`align-items:center` 才是横向居中。
+     竖直方向改成 center：高度改成自适应后，短句（只有 min-height 撑）上下会留白，
+     贴顶会显得胶囊「没装满」，居中才像一枚完整的胶囊。 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+/* --- 换句动画（10-30 作者要求：旧句向上滑出消失，新句同步从胶囊底部滑上来） ---
+   结构上分两层：
+     .dm-cur  = 当前句，**留在文档流里** —— 它的内容高度就是胶囊高度，
+                所以「高度随歌词长短变化」这个原有行为一点没动（绝不写死 height）。
+     .dm-line = 动画覆盖层（absolute，铺满整盒），只在换句的那半秒里存在。
+                它的居中方式与 .dm-cur 完全一致（同样 display:flex + align/justify center），
+                所以两句的水平基线严格对齐 —— 不会再出现「歌词跑到一边去」。
+   行程：两层都用「可见盒高」当单位，旧句 translateY(-盒高) 上滑出顶，
+        新句从 translateY(+盒高)（也就是胶囊底部下面）滑到 0。 */
+#ds-mini .dm-cur {
+  /* 作为 .dm-text 的 flex item 会被 blockify，渲染与原来的匿名 flex item 完全一致。
+     flex:0 0 auto —— 不参与压缩，于是它的盒高 = 这句歌词的真实高度（= 胶囊高度来源），
+     垂直居中由 .dm-text 的 justify-content:center 保证。 */
+  flex: 0 0 auto;
+}
+/* 换句动画的覆盖层：一句一个，absolute 定位。
+   · left/right:0 → 与 .dm-cur 处在同一个 52px 宽的列里，
+     内部居中写法跟 .dm-cur 完全相同 → 新旧两句横向基线严格对齐
+     （竖排里绝对定位的 left 是**物理左边缘**，用 left:0 会让字跑到一边去）。
+   · top/bottom 都不写 —— 由 JS 按「句高」算出 bottom 锚定，
+     这样盒高在动画期间伸缩时，文字不会跟着漂。
+   · height 同样由 JS 写成句自身的高度（不是 100%）。 */
+#ds-mini .dm-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* 暂停时正文压暗一档：一眼能看出「还留着但不响了」 */
+#ds-mini.is-paused .dm-text { color: var(--dm-dim); }
+#ds-mini.is-paused .dm-ico { opacity: .5; }
+/* 注：这里原来还有一条 `#ds-mini:hover .dm-ico{opacity:0}`（悬停时音符让位给「上一首」）。
+   上一首已经搬到右列去了，音符不再有人抢位，悬停时保持常驻 —— 删掉那条，别再加回来。 */
+
+/* 手机（≤600px）：先收窄一档，其余和桌面一致 —— 常驻、悬停加宽
+   ----------------------------------------------------------------------------
+   历史：10-28 曾把手机端改成「默认一颗 48 圆点、点开才展开」，作者否掉
+   （「算了 你还是改回去吧 我不喜欢现在的这个效果」）—— 多看一次点击才知道
+   现在放的是什么、还要再点一次才能切歌，比挡一点视野更难用。已回退成常驻。
+   所以这里**不要再写 display:none 的收起态**，也不要用 .is-mopen，
+   JS 里对应的 toggleMiniOpen 一并删掉了。 */
+@media (max-width: 600px) {
+  /* bottom 68 = 12（#fps 贴底）+ 48（#fps 高）+ 8（间距） */
+  #ds-mini {
+    bottom: 68px; bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+    --dm-col: 48px;
+    --dm-keys: 42px;
+    width: 48px; max-width: 48px;
+    padding: 7px 0;
+    font-size: 12px;
+    /* min-height 必须够四键竖排（10-29 起）：28 + 32 + 28 + 26（列表键）+ 3×5(gap) = 129，
+       加 padding 14 与音符 20 → 163 才不挤；space-around 会匀掉余量，写 158 刚好压满。 */
+    min-height: 158px;
+    max-height: min(56vh, 380px);
+  }
+  /* 手机上悬停加宽同样保留（48 + 42 = 90），否则按键永远摸不到 */
+  #ds-mini:hover,
+  #ds-mini:focus-within {
+    width: calc(var(--dm-col) + var(--dm-keys));
+    max-width: calc(var(--dm-col) + var(--dm-keys));
+  }
+  #ds-mini .dm-top { flex-basis: 20px; }
+  #ds-mini .dm-keys { gap: 5px; }
+  #ds-mini .dm-side { width: 28px; height: 28px; }
+  #ds-mini .dm-side.dm-list { width: 26px; height: 26px; }
+  #ds-mini .dm-side.dm-list svg { width: 16px; height: 16px; }
+  #ds-mini .dm-side svg { width: 18px; height: 18px; }
+  #ds-mini .dm-play { width: 32px; height: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ds-mini, #ds-mini .dm-side, #ds-mini .dm-play, #ds-mini .dm-ico,
+  #ds-mini .dm-line { transition: none; }
+}
+
+/* ==========================================================================
+   歌曲列表浮层（#ds-list，10-29 加）
+   --------------------------------------------------------------------------
+   入口两个：面板底栏「2 / 44」左边那颗 .ds-list-btn、胶囊右列最下面那颗 .dm-list。
+   两者共用这一个浮层，open 时挂 .is-open（visibility/opacity/位移，和 #ds-player 同一套做法：
+   隐藏时仍占位，offsetHeight 量得到，定位不会先跳一下）。
+   位置由 daily-say.js 的 positionList() 算：面板打开 → 贴面板左侧；胶囊打开 → 贴胶囊右侧。
+   颜色不走 --anno-*（那是浅色卡片的），跟面板一样在本地再声明一套 --ds-*。
+   ========================================================================== */
+#ds-list {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 902;                  /* 比面板(900)高一档：从面板打开时列表压在面板边缘之上 */
+  box-sizing: border-box;
+  width: 246px;
+  max-height: 300px;
+  padding: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--ds-soft-bd);
+  background: var(--trans-light, rgba(255, 255, 255, .92));
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 14px 40px rgba(31, 41, 55, .18), 0 2px 6px rgba(31, 41, 55, .07);
+  color: var(--ds-ink);
+  /* 与 #ds-player 同一套色阶（浮层同样挂在 <body> 下，继承不到卡片里的变量） */
+  --ds-ink: #1f2937;
+  --ds-dim: rgba(60, 60, 67, .55);
+  --ds-accent: var(--theme-color, #FF1493);
+  --ds-chip-bg: rgba(255, 20, 147, .08);
+  --ds-chip-bg: color-mix(in srgb, var(--ds-accent) 9%, transparent);
+  --ds-soft-bd: rgba(255, 20, 147, .16);
+  --ds-soft-bd: color-mix(in srgb, var(--ds-accent) 16%, transparent);
+  --ds-track-bg: rgba(31, 41, 55, .14);
+  --ds-track-bg: color-mix(in srgb, var(--ds-ink) 14%, transparent);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px) scale(.97);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s cubic-bezier(.22, .61, .36, 1), visibility .22s;
+}
+#ds-list.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+[data-theme="dark"] #ds-list {
+  background: var(--trans-dark, rgba(28, 28, 28, .94));
+  border-color: rgba(255, 255, 255, .1);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .5);
+  --ds-ink: rgba(255, 255, 255, .9);
+  --ds-dim: rgba(255, 255, 255, .52);
+}
+
+#ds-list .ds-list-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px 7px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--ds-track-bg);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ds-ink);
+}
+#ds-list .ds-list-n { font-weight: 400; font-size: 11px; color: var(--ds-dim); font-variant-numeric: tabular-nums; }
+
+#ds-list .ds-list-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* 细滚动条：默认那条在玻璃面板上很扎眼 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--ds-track-bg) transparent;
+}
+#ds-list .ds-list-body::-webkit-scrollbar { width: 6px; }
+#ds-list .ds-list-body::-webkit-scrollbar-thumb { background: var(--ds-track-bg); border-radius: 3px; }
+#ds-list .ds-list-body::-webkit-scrollbar-track { background: transparent; }
+
+/* 一条 = 序号 + 歌名 + 歌手（歌手太长省略，不换行，行高统一，滚起来才不抖） */
+#ds-list .ds-list-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ds-ink);
+  font-size: 12.5px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease;
+}
+#ds-list .ds-list-item:hover { background: var(--ds-chip-bg); }
+#ds-list .ds-list-no {
+  font-size: 11px;
+  color: var(--ds-dim);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+#ds-list .ds-list-t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#ds-list .ds-list-a {
+  max-width: 84px;
+  font-size: 11px;
+  color: var(--ds-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 当前曲：主题色 + 加粗，序号也一起亮，扫一眼就知道放到第几首 */
+#ds-list .ds-list-item.is-cur,
+#ds-list .ds-list-item.is-cur .ds-list-no,
+#ds-list .ds-list-item.is-cur .ds-list-a { color: var(--ds-accent); }
+#ds-list .ds-list-item.is-cur { background: var(--ds-chip-bg); font-weight: 700; }
+#ds-list .ds-list-tip {
+  padding: 14px 6px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ds-dim);
+}
+#ds-list .ds-list-item:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: -2px; }
+
+/* 面板底栏那颗列表键：位置就在「2 / 44」计数左边（作者 10-29 指定），
+   打开时亮成主题色，和喇叭按钮「正在播」的高亮同一套语义。 */
+#ds-player .ds-ctl .ds-list-btn.is-on { color: var(--ds-accent); background: var(--ds-chip-bg); }
+
+@media (max-width: 768px) {
+  #ds-list { max-height: 46vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ds-list { transition: none; }
+}
+
+/* 列表头部的关闭键（10-29）：手机上列表与面板同位同尺寸，没有 hover 可移开，必须有个明显出口 */
+#ds-list .ds-list-x {
+  flex: 0 0 auto;
+  width: 20px; height: 20px;
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ds-dim);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease;
+}
+#ds-list .ds-list-x svg { fill: currentColor; display: block; }
+#ds-list .ds-list-x:hover { background: var(--ds-chip-bg); color: var(--ds-accent); }

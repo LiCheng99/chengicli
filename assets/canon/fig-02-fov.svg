@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="1200" height="640" font-family="'Noto Sans SC','Microsoft YaHei',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe0ea"/>
+      <stop offset="1" stop-color="#f2ece2"/>
+    </linearGradient>
+    <clipPath id="clipA"><rect x="80" y="130" width="460" height="288" rx="10"/></clipPath>
+    <clipPath id="clipB"><rect x="700" y="130" width="460" height="288" rx="10"/></clipPath>
+
+    <!-- 同一场景，800 × 500 -->
+    <g id="scene">
+      <rect width="800" height="500" fill="url(#sky)"/>
+      <circle cx="640" cy="120" r="70" fill="#fff6e2" opacity="0.75"/>
+      <rect y="330" width="800" height="170" fill="#c8c2b4"/>
+      <rect y="330" width="800" height="10" fill="#b3ada0"/>
+      <!-- 远处楼群 -->
+      <rect x="40" y="230" width="70" height="100" fill="#b9c4cc"/>
+      <rect x="120" y="200" width="54" height="130" fill="#aab6bf"/>
+      <rect x="600" y="215" width="64" height="115" fill="#b9c4cc"/>
+      <rect x="672" y="245" width="90" height="85" fill="#aebac3"/>
+      <!-- 树 -->
+      <g fill="#8fa08a">
+        <circle cx="250" cy="250" r="62"/><circle cx="300" cy="282" r="48"/>
+        <circle cx="196" cy="286" r="42"/>
+      </g>
+      <rect x="238" y="300" width="14" height="34" fill="#6e6656"/>
+      <g fill="#9aa892">
+        <circle cx="520" cy="240" r="46"/><circle cx="556" cy="270" r="34"/>
+      </g>
+      <rect x="512" y="272" width="12" height="60" fill="#6e6656"/>
+      <!-- 人物：头肩半身，约 1/4 画面高 -->
+      <g>
+        <circle cx="404" cy="222" r="21" fill="#5c6470"/>
+        <path d="M404 244 c-26 0 -40 18 -44 44 l-12 42 h112 l-12 -42 c-4 -26 -18 -44 -44 -44 z" fill="#5c6470"/>
+      </g>
+      <!-- 前景长椅 -->
+      <rect x="60" y="404" width="190" height="16" rx="4" fill="#8c7b63"/>
+      <rect x="72" y="420" width="12" height="46" fill="#7a6a55"/>
+      <rect x="228" y="420" width="12" height="46" fill="#7a6a55"/>
+      <rect x="520" y="436" width="240" height="12" rx="4" fill="#a99b86" opacity="0.8"/>
+    </g>
+  </defs>
+
+  <rect width="1200" height="640" fill="#ffffff"/>
+
+  <text x="80" y="62" font-size="26" font-weight="700" fill="#1b1f27">同一颗 50mm，在两种画幅上看到的画面</text>
+  <text x="80" y="96" font-size="17" fill="#7b8494">R50 是 APS-C 画幅，裁切系数 1.6×，50mm 装上去等于全画幅的 80mm</text>
+
+  <!-- 左：全画幅 50mm -->
+  <g clip-path="url(#clipA)">
+    <use href="#scene" transform="translate(80,130) scale(0.575)"/>
+  </g>
+  <rect x="80" y="130" width="460" height="288" rx="10" fill="none" stroke="#c8cfda" stroke-width="2"/>
+  <!-- 左图内：1.6x 裁切框 -->
+  <rect x="166" y="184" width="288" height="180" fill="none" stroke="#cf4b36" stroke-width="3" stroke-dasharray="9 7"/>
+  <text x="166" y="172" font-size="15" fill="#cf4b36" font-weight="700">R50 实际拿到的范围</text>
+  <text x="80" y="466" font-size="19" font-weight="700" fill="#1b1f27">全画幅 + 50mm</text>
+  <text x="80" y="496" font-size="16" fill="#6b7480">视角约 47°，能装下长椅、树、楼群</text>
+
+  <!-- 右：R50 + 50mm -->
+  <g clip-path="url(#clipB)">
+    <use href="#scene" transform="translate(562,33.75) scale(0.92)"/>
+  </g>
+  <rect x="700" y="130" width="460" height="288" rx="10" fill="none" stroke="#cf4b36" stroke-width="3"/>
+  <text x="700" y="466" font-size="19" font-weight="700" fill="#1b1f27">R50 + 50mm</text>
+  <text x="700" y="496" font-size="16" fill="#6b7480">等效 80mm，视角约 30°，只剩人、树和半截长椅</text>
+
+  <!-- 底部说明 -->
+  <line x1="80" y1="536" x2="1120" y2="536" stroke="#e3e7ee" stroke-width="2"/>
+  <text x="80" y="576" font-size="17" fill="#3a4250">换算只做一件事：决定你站在哪里。</text>
+  <text x="80" y="608" font-size="17" fill="#6b7480">左上角那道红线框，就是你从全画幅换成 R50 后“凭空消失”的画面，也是 80mm 必须往后退的那一步。</text>
+</svg>

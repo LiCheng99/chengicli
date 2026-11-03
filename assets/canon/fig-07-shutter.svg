@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" font-family="'Noto Sans SC','Microsoft YaHei',system-ui,sans-serif">
+  <rect width="1200" height="500" fill="#ffffff"/>
+
+  <text x="60" y="62" font-size="26" font-weight="700" fill="#1b1f27">快门速度速查：拍什么，用多少</text>
+  <text x="60" y="96" font-size="17" fill="#7b8494">R50 无机身防抖，RF50mm F1.8 也没有 IS——手持全靠快门撑住</text>
+
+  <!-- 低速警戒区 -->
+  <rect x="120" y="220" width="276" height="60" rx="10" fill="#f2f3f5"/>
+  <text x="258" y="246" font-size="14" fill="#8b95a3" text-anchor="middle">1/30 及更慢</text>
+  <text x="258" y="266" font-size="13" fill="#a8b0bc" text-anchor="middle">只能拍静止物，最好上三脚架</text>
+
+  <!-- 底线 -->
+  <line x1="396" y1="150" x2="396" y2="330" stroke="#cf4b36" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="404" y="146" font-size="14" font-weight="700" fill="#cf4b36">手持底线 1/60</text>
+
+  <!-- 分段块：每块 = 一个刻度区间 -->
+  <g>
+    <rect x="396" y="220" width="128" height="60" rx="10" fill="#eac6b8"/>
+    <text x="460" y="180" font-size="15" font-weight="700" fill="#3a4250" text-anchor="middle">摆拍人像</text>
+    <text x="460" y="202" font-size="13" fill="#8b95a3" text-anchor="middle">对方是静止的</text>
+    <text x="460" y="256" font-size="17" font-weight="700" fill="#7a3d2e" text-anchor="middle">1/60</text>
+
+    <rect x="524" y="220" width="128" height="60" rx="10" fill="#dfa894"/>
+    <text x="588" y="180" font-size="15" font-weight="700" fill="#3a4250" text-anchor="middle">站着说话</text>
+    <text x="588" y="202" font-size="13" fill="#8b95a3" text-anchor="middle">手会动</text>
+    <text x="588" y="256" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">1/125</text>
+
+    <rect x="652" y="220" width="128" height="60" rx="10" fill="#cf4b36"/>
+    <text x="716" y="180" font-size="15" font-weight="700" fill="#3a4250" text-anchor="middle">走动、递东西</text>
+    <text x="716" y="202" font-size="13" fill="#8b95a3" text-anchor="middle">最常用的抓拍档</text>
+    <text x="716" y="256" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">1/250</text>
+
+    <rect x="780" y="220" width="128" height="60" rx="10" fill="#ad3f2c"/>
+    <text x="844" y="180" font-size="15" font-weight="700" fill="#3a4250" text-anchor="middle">小孩跑、宠物</text>
+    <text x="844" y="202" font-size="13" fill="#8b95a3" text-anchor="middle">开伺服 AF 一起用</text>
+    <text x="844" y="256" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">1/500</text>
+
+    <rect x="908" y="220" width="128" height="60" rx="10" fill="#8c2f22"/>
+    <text x="972" y="180" font-size="15" font-weight="700" fill="#3a4250" text-anchor="middle">运动、水花</text>
+    <text x="972" y="202" font-size="13" fill="#8b95a3" text-anchor="middle">光线要求很高</text>
+    <text x="972" y="256" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">1/1000+</text>
+  </g>
+
+  <!-- 轴 -->
+  <line x1="120" y1="310" x2="1090" y2="310" stroke="#c8cfda" stroke-width="2"/>
+  <g stroke="#c8cfda" stroke-width="1.5">
+    <line x1="140" y1="310" x2="140" y2="318"/><line x1="268" y1="310" x2="268" y2="318"/>
+    <line x1="396" y1="310" x2="396" y2="318"/><line x1="524" y1="310" x2="524" y2="318"/>
+    <line x1="652" y1="310" x2="652" y2="318"/><line x1="780" y1="310" x2="780" y2="318"/>
+    <line x1="908" y1="310" x2="908" y2="318"/><line x1="1036" y1="310" x2="1036" y2="318"/>
+  </g>
+  <g font-size="14" fill="#9aa3b0" text-anchor="middle">
+    <text x="140" y="338">1/15</text><text x="268" y="338">1/30</text><text x="396" y="338">1/60</text>
+    <text x="524" y="338">1/125</text><text x="652" y="338">1/250</text><text x="780" y="338">1/500</text>
+    <text x="908" y="338">1/1000</text><text x="1036" y="338">1/2000</text>
+  </g>
+
+  <line x1="60" y1="400" x2="1140" y2="400" stroke="#e3e7ee" stroke-width="2"/>
+  <text x="60" y="436" font-size="17" fill="#3a4250">80mm 的“安全快门”按等效焦距算，理论值是 1/80。取整到 1/125 更保险，尤其拍完要放大看细节的时候。</text>
+  <text x="60" y="468" font-size="17" fill="#6b7480">光线不够怎么办？先开大光圈（1.8 → 2.0），再提 ISO，别去降快门——糊掉的片子提不回来。</text>
+</svg>

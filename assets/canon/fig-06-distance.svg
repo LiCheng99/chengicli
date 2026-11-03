@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" font-family="'Noto Sans SC','Microsoft YaHei',system-ui,sans-serif">
+  <defs>
+    <g id="person">
+      <circle cx="0" cy="-88" r="12" fill="#4a525e"/>
+      <path d="M0 -74 c-16 0 -25 11 -28 27 l-6 34 h14 l4 -22 v47 h32 v-47 l4 22 h14 l-6 -34 c-3 -16 -12 -27 -28 -27 z" fill="#4a525e"/>
+    </g>
+  </defs>
+
+  <rect width="1200" height="620" fill="#ffffff"/>
+
+  <text x="60" y="62" font-size="26" font-weight="700" fill="#1b1f27">80mm 要退多远：一张站着拍的换算表</text>
+  <text x="60" y="96" font-size="17" fill="#7b8494">按竖构图、人物撑满画面计算，R50 + 50mm（等效 80mm）</text>
+
+  <!-- 室内禁区 -->
+  <rect x="600" y="140" width="520" height="290" fill="#fdf1ed" opacity="0.7"/>
+  <line x1="600" y1="140" x2="600" y2="430" stroke="#cf4b36" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <text x="612" y="166" font-size="15" font-weight="700" fill="#cf4b36">3.5 米：普通客厅的墙</text>
+  <text x="612" y="188" font-size="14" fill="#b06a5a">越过这条线，室内基本拍不了全身</text>
+
+  <!-- 地面轴 -->
+  <line x1="100" y1="430" x2="1120" y2="430" stroke="#c8cfda" stroke-width="2"/>
+  <g stroke="#c8cfda" stroke-width="1.5">
+    <line x1="243" y1="430" x2="243" y2="438"/><line x1="386" y1="430" x2="386" y2="438"/>
+    <line x1="529" y1="430" x2="529" y2="438"/><line x1="671" y1="430" x2="671" y2="438"/>
+    <line x1="814" y1="430" x2="814" y2="438"/><line x1="957" y1="430" x2="957" y2="438"/>
+    <line x1="1100" y1="430" x2="1100" y2="438"/>
+  </g>
+  <g font-size="14" fill="#9aa3b0" text-anchor="middle">
+    <text x="100" y="458">0</text><text x="243" y="458">1 m</text><text x="386" y="458">2 m</text>
+    <text x="529" y="458">3 m</text><text x="671" y="458">4 m</text><text x="814" y="458">5 m</text>
+    <text x="957" y="458">6 m</text><text x="1100" y="458">7 m</text>
+  </g>
+
+  <!-- 相机 -->
+  <g>
+    <rect x="60" y="392" width="52" height="38" rx="7" fill="#2c3238"/>
+    <rect x="112" y="402" width="22" height="20" rx="4" fill="#171b20"/>
+    <circle cx="123" cy="412" r="6" fill="#4b6b8a"/>
+    <text x="86" y="380" font-size="14" fill="#6b7480" text-anchor="middle">你</text>
+  </g>
+
+  <!-- 四个距离 -->
+  <g>
+    <use href="#person" x="329" y="418"/>
+    <text x="329" y="316" font-size="17" font-weight="700" fill="#cf4b36" text-anchor="middle">1.6 m</text>
+    <text x="329" y="500" font-size="15" fill="#3a4250" text-anchor="middle">头肩特写</text>
+    <text x="329" y="522" font-size="13" fill="#8b95a3" text-anchor="middle">景深仅 7 cm</text>
+
+    <use href="#person" x="457" y="418"/>
+    <text x="457" y="316" font-size="17" font-weight="700" fill="#cf4b36" text-anchor="middle">2.5 m</text>
+    <text x="457" y="500" font-size="15" fill="#3a4250" text-anchor="middle">半身</text>
+    <text x="457" y="522" font-size="13" fill="#8b95a3" text-anchor="middle">最稳的距离</text>
+
+    <use href="#person" x="557" y="418"/>
+    <text x="557" y="316" font-size="17" font-weight="700" fill="#cf4b36" text-anchor="middle">3.2 m</text>
+    <text x="557" y="500" font-size="15" fill="#3a4250" text-anchor="middle">七分身</text>
+    <text x="557" y="522" font-size="13" fill="#8b95a3" text-anchor="middle">客厅刚好卡线</text>
+
+    <use href="#person" x="729" y="418"/>
+    <text x="729" y="316" font-size="17" font-weight="700" fill="#b06a5a" text-anchor="middle">4.4 m</text>
+    <text x="729" y="500" font-size="15" fill="#3a4250" text-anchor="middle">全身</text>
+    <text x="729" y="522" font-size="13" fill="#8b95a3" text-anchor="middle">只能去室外或走廊</text>
+  </g>
+
+  <!-- 拖尾虚线 -->
+
+  <line x1="60" y1="556" x2="1120" y2="556" stroke="#e3e7ee" stroke-width="2"/>
+  <text x="60" y="592" font-size="17" fill="#3a4250">横构图要再乘 1.5：全身 6.6 米、半身 3.8 米。所以在小餐馆拍对面的人，永远只能拍到头肩。</text>
+</svg>

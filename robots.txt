@@ -1,0 +1,8 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+# 图纸 / NC 程序等保密附件：不允许搜索引擎抓取（只挡守规矩的爬虫，不等于加密）
+Disallow: /assets/drawings/
+
+Sitemap: https://www.licic.net/sitemap.xml
+Sitemap: https://www.licic.net/baidusitemap.xml

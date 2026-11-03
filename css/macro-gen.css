@@ -1,0 +1,509 @@
+/* ============================================================
+ * macro-gen.css —— 宏程序生成器页面（/macro/）
+ * 只作用于 #article-container 内的 .mg-* 元素，不影响站内其它页面
+ * 配色全部由 --theme-color / --font-color / --card-bg 派生
+ * ============================================================ */
+
+/* ---------- 外层 ---------- */
+#article-container .mg-app {
+  --mg-line: rgba(128, 128, 128, .18);
+  --mg-soft: rgba(128, 128, 128, .08);
+  /* 面板底色跟着「美化设置 → 不透明度」走，和卡片用同一套变量 */
+  --mg-panel: var(--trans-light, rgba(250, 250, 250, .98));
+  margin: 0 0 20px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+[data-theme="dark"] #article-container .mg-app {
+  --mg-panel: var(--trans-dark, rgba(28, 28, 28, .98));
+}
+
+#article-container .mg-head {
+  margin: 0 0 16px;
+}
+
+/* ---------- 机型切换 ---------- */
+#article-container .mg-tabs {
+  display: inline-flex;
+  gap: 10px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+#article-container .mg-tab {
+  padding: 13px 34px;
+  border: 1px solid var(--mg-line);
+  border-radius: 13px;
+  cursor: pointer;
+  background: var(--mg-soft);
+  color: var(--font-color, #4c4948);
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  font-family: inherit;
+  transition: background .18s, color .18s, box-shadow .18s, transform .18s, border-color .18s;
+}
+
+#article-container .mg-tab:hover {
+  border-color: var(--theme-color, #49b1f5);
+  color: var(--theme-color, #49b1f5);
+}
+
+#article-container .mg-tab.is-on {
+  background: var(--theme-color, #49b1f5);
+  border-color: var(--theme-color, #49b1f5);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .18);
+}
+
+#article-container .mg-tab.is-on:hover {
+  color: #fff;
+}
+
+#article-container .mg-hint {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--font-color, #4c4948);
+  opacity: .72;
+}
+
+/* ---------- 主体两栏 ---------- */
+#article-container .mg-body {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+#article-container .mg-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- 模板选择区 ---------- */
+#article-container .mg-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 0 20px;
+}
+
+#article-container .mg-grp-title {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  letter-spacing: .06em;
+  color: var(--font-color, #4c4948);
+  opacity: .5;
+}
+
+#article-container .mg-tpls {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+#article-container .mg-tpl {
+  min-width: 0;
+  padding: 11px 8px;
+  border: 1px solid var(--mg-line);
+  border-radius: 9px;
+  cursor: pointer;
+  background: var(--mg-soft);
+  color: var(--font-color, #4c4948);
+  font-size: 13.5px;
+  font-family: inherit;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+
+#article-container .mg-tpl:hover {
+  border-color: var(--theme-color, #49b1f5);
+  color: var(--theme-color, #49b1f5);
+  background: rgba(128, 128, 128, .12);
+}
+
+#article-container .mg-tpl:active { transform: scale(.97); }
+
+#article-container .mg-tpl.is-on {
+  background: var(--theme-color, #49b1f5);
+  border-color: var(--theme-color, #49b1f5);
+  color: #fff;
+  font-weight: 600;
+}
+
+#article-container .mg-warn {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border-left: 4px solid #f59e0b;
+  background: rgba(245, 158, 11, .1);
+  font-size: 13.5px;
+}
+
+/* ---------- 参数表单 ---------- */
+#article-container .mg-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--mg-line);
+  border-radius: 12px;
+  background: var(--mg-panel);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .07);
+}
+
+#article-container .mg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+}
+
+#article-container .mg-cap {
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: var(--font-color, #4c4948);
+  opacity: .78;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#article-container .mg-field[title] .mg-cap {
+  border-bottom: 1px dashed var(--mg-line);
+  cursor: help;
+}
+
+#article-container .mg-field input,
+#article-container .mg-field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 9px;
+  border: 1px solid var(--mg-line);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--font-color, #4c4948);
+  font-size: 14px;
+  font-family: var(--global-font, inherit);
+  outline: none;
+  transition: border-color .16s, box-shadow .16s;
+}
+
+#article-container .mg-field select {
+  cursor: pointer;
+  padding-right: 4px;
+}
+
+[data-theme="dark"] #article-container .mg-field select option {
+  background: #2b2b30;
+  color: #d8d8dc;
+}
+
+#article-container .mg-field input:focus,
+#article-container .mg-field select:focus {
+  border-color: var(--theme-color, #49b1f5);
+  box-shadow: 0 0 0 3px rgba(73, 177, 245, .14);
+}
+
+#article-container .mg-form-tip {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--font-color, #4c4948);
+  opacity: .55;
+}
+
+/* ---------- 右侧输出 ---------- */
+#article-container .mg-right {
+  min-width: 0;
+}
+
+#article-container .mg-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  border-radius: 12px 12px 0 0;
+  background: var(--mg-soft);
+  border: 1px solid var(--mg-line);
+  border-bottom: none;
+}
+
+#article-container .mg-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--font-color, #4c4948);
+}
+
+#article-container .mg-acts {
+  display: flex;
+  gap: 8px;
+}
+
+#article-container .mg-acts button {
+  padding: 6px 13px;
+  border: 1px solid var(--mg-line);
+  border-radius: 7px;
+  cursor: pointer;
+  background: var(--mg-panel);
+  color: var(--font-color, #4c4948);
+  font-size: 13px;
+  font-family: inherit;
+  transition: all .16s;
+}
+
+#article-container .mg-acts button:hover:not(:disabled) {
+  border-color: var(--theme-color, #49b1f5);
+  color: var(--theme-color, #49b1f5);
+}
+
+#article-container .mg-acts button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* ---------- 代码块 ---------- */
+#article-container pre.mg-code {
+  margin: 0;
+  padding: 12px 0;
+  border: 1px solid var(--mg-line);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  background: rgba(128, 128, 128, .045);
+  overflow: auto;
+  max-height: 620px;
+  font-size: 13px;
+  line-height: 1.65;
+  tab-size: 4;
+}
+
+#article-container pre.mg-code code {
+  display: block;
+  padding: 0;
+  background: none;
+  color: var(--font-color, #4c4948);
+  font-family: Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, Monaco, monospace;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+  border: none;
+}
+
+#article-container .mg-line {
+  display: flex;
+  align-items: flex-start;
+  min-height: 1.65em;
+}
+
+#article-container .mg-line:hover {
+  background: rgba(128, 128, 128, .08);
+}
+
+#article-container .mg-ln {
+  flex: 0 0 auto;
+  width: 42px;
+  padding-right: 12px;
+  text-align: right;
+  color: #9aa4b2;
+  opacity: .65;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#article-container .mg-txt {
+  flex: 1 1 auto;
+  padding-right: 14px;
+  white-space: pre;
+}
+
+/* ---------- 语法着色（浅色） ---------- */
+#article-container .mg-t-cm   { color: #7b828b; font-style: italic; }
+#article-container .mg-t-var  { color: #b45309; font-weight: 600; }
+#article-container .mg-t-kw   { color: #7c3aed; font-weight: 600; }
+#article-container .mg-t-fn   { color: #7c3aed; }
+#article-container .mg-t-o    { color: #1d4ed8; font-weight: 700; }
+#article-container .mg-t-n    { color: #64748b; font-weight: 600; }
+#article-container .mg-t-g    { color: #0f766e; font-weight: 600; }
+#article-container .mg-t-m    { color: #be123c; font-weight: 600; }
+#article-container .mg-t-addr { color: #1e40af; }
+#article-container .mg-err    { color: #dc2626; font-weight: 600; }
+
+/* ---------- 深色适配 ---------- */
+[data-theme="dark"] #article-container .mg-t-cm   { color: #6b7280; }
+[data-theme="dark"] #article-container .mg-t-var  { color: #fbbf24; }
+[data-theme="dark"] #article-container .mg-t-kw   { color: #c4b5fd; }
+[data-theme="dark"] #article-container .mg-t-fn   { color: #c4b5fd; }
+[data-theme="dark"] #article-container .mg-t-o    { color: #93c5fd; }
+[data-theme="dark"] #article-container .mg-t-n    { color: #7c8899; }
+[data-theme="dark"] #article-container .mg-t-g    { color: #5eead4; }
+[data-theme="dark"] #article-container .mg-t-m    { color: #fb7185; }
+[data-theme="dark"] #article-container .mg-t-addr { color: #93c5fd; }
+[data-theme="dark"] #article-container .mg-err    { color: #f87171; }
+[data-theme="dark"] #article-container .mg-ln     { color: #55606d; }
+[data-theme="dark"] #article-container pre.mg-code {
+  background: rgba(255, 255, 255, .025);
+}
+
+/* ---------- 说明文字 ---------- */
+#article-container .mg-desc {
+  margin: 10px 2px 0;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--font-color, #4c4948);
+  opacity: .72;
+}
+
+/* ---------- 下方文档区 ---------- */
+#article-container .mg-doc {
+  margin-top: 28px;
+  padding-top: 4px;
+}
+
+#article-container .mg-doc h2 {
+  margin: 26px 0 12px;
+  padding-left: 11px;
+  border-left: 4px solid var(--theme-color, #49b1f5);
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+#article-container .mg-doc ul {
+  margin: 0 0 8px;
+  padding-left: 1.3em;
+}
+
+#article-container .mg-doc li {
+  margin: 7px 0;
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+
+#article-container .mg-doc pre {
+  margin: 12px 0;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#article-container .mg-doc table {
+  font-size: 14px;
+}
+
+#article-container .mg-doc td {
+  font-size: 13.5px;
+  line-height: 1.7;
+  vertical-align: top;
+}
+
+#article-container .mg-disclaimer {
+  margin: 22px 0 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border-left: 4px solid #f59e0b;
+  background: rgba(245, 158, 11, .1);
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--font-color, #4c4948);
+}
+
+#article-container .mg-doc code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(128, 128, 128, .13);
+  font-size: .92em;
+}
+
+/* ---------- 窄屏：上下排列 ---------- */
+@media screen and (max-width: 768px) {
+  #article-container .mg-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #article-container .mg-tpls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  #article-container .mg-picker {
+    gap: 14px;
+  }
+
+  #article-container .mg-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* 按钮组单独占一行，避免「下载」被挤出可视区 */
+  #article-container .mg-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  #article-container .mg-acts {
+    justify-content: flex-end;
+  }
+
+  #article-container .mg-acts button {
+    flex: 0 0 auto;
+    padding: 7px 16px;
+  }
+
+  #article-container pre.mg-code {
+    max-height: 460px;
+    font-size: 12px;
+  }
+
+  #article-container .mg-ln {
+    width: 34px;
+    padding-right: 9px;
+  }
+
+  #article-container .mg-tab {
+    padding: 11px 22px;
+    font-size: 15.5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #article-container .mg-form {
+    grid-template-columns: 1fr;
+  }
+
+  #article-container .mg-tpl {
+    padding: 9px 4px;
+    font-size: 12.5px;
+  }
+
+  #article-container .mg-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  #article-container .mg-tab {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+/* ---------- 跟随站点自定义鼠标 ----------
+ * 站点「听话鼠标」开启时，全站光标由 cursor.js 注入的 *{cursor:url(圆点)} 接管，
+ * 优先级只有 0——本文件里那些 cursor:pointer 会把它顶掉，露出系统手型，
+ * 看起来就像"鼠标样式变回电脑原来的了"。这里把整块内容交还给圆点。
+ * 特效关掉时（html 上没有这个类）仍然用系统手型，指针反馈不丢。
+ */
+html.beauty-cursor-on #article-container,
+html.beauty-cursor-on #article-container * {
+  cursor: inherit;
+}

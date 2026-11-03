@@ -1,0 +1,26 @@
+{
+  "functions": {
+    "api/chat/completions.js": {
+      "maxDuration": 60,
+      "memory": 512
+    },
+    "api/music.js": {
+      "maxDuration": 30,
+      "memory": 512
+    }
+  },
+  "regions": [
+    "hkg1"
+  ],
+  "redirects": [
+    { "source": "/box/astronomy/:path*", "destination": "/astronomy/:path*", "permanent": true },
+    { "source": "/box/gallery/:path*", "destination": "/gallery/:path*", "permanent": true },
+    { "source": "/box/nav/:path*", "destination": "/nav/:path*", "permanent": true },    { "source": "/social/link/:path*", "destination": "/links/:path*", "permanent": true },
+    { "source": "/social/fcircle/:path*", "destination": "/fcircle/:path*", "permanent": true },
+    { "source": "/life/music/:path*", "destination": "/music/:path*", "permanent": true },
+    { "source": "/tools", "destination": "/thread", "permanent": true },
+    { "source": "/tools/", "destination": "/thread/", "permanent": true },
+    { "source": "/tools/macro", "destination": "/macro", "permanent": true },
+    { "source": "/tools/macro/", "destination": "/macro/", "permanent": true }
+  ]
+}

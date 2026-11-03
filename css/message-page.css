@@ -1,0 +1,165 @@
+/* ==========================================================================
+   留言板页样式 · source/css/message-page.css
+   --------------------------------------------------------------------------
+   作用域：所有选择器都以 .msg 开头 → 只有 /message/ 一页会中招。
+   配色：从 --theme-color 派生，深色模式只覆盖 .msg 自身变量，规则本体只有一套。
+   引入：写在 source/message/index.md 正文顶部的 <link>（本页专用，其它页面不加载）。
+   回滚：删掉 index.md 里那行 <link> 再删本文件即可。
+   ========================================================================== */
+
+.msg {
+  --msg-line: rgba(128, 128, 140, 0.22);
+  --msg-line-strong: rgba(128, 128, 140, 0.34);
+  --msg-bg: var(--surface, rgba(250, 250, 252, 0.72));
+  --msg-fg: #1f2937;
+  --msg-dim: #6b7280;
+  --msg-accent: var(--theme-color, #FF1493);
+  --msg-t12: rgba(255, 20, 147, 0.12);
+  --msg-t06: rgba(255, 20, 147, 0.06);
+  --msg-radius: 14px;
+  color: var(--msg-fg);
+  margin: 4px 0 8px;
+}
+
+@supports (color: color-mix(in srgb, red 10%, transparent)) {
+  .msg {
+    --msg-t12: color-mix(in srgb, var(--msg-accent) 14%, transparent);
+    --msg-t06: color-mix(in srgb, var(--msg-accent) 7%, transparent);
+  }
+}
+
+[data-theme="dark"] .msg {
+  --msg-line: rgba(255, 255, 255, 0.14);
+  --msg-line-strong: rgba(255, 255, 255, 0.22);
+  --msg-bg: var(--surface, rgba(30, 30, 34, 0.72));
+  --msg-fg: #e5e7eb;
+  --msg-dim: #9ca3af;
+}
+
+/* 导语：左边一根主题色竖线，像贴在工位上的便签 */
+.msg-lead {
+  position: relative;
+  margin: 0 0 18px;
+  padding: 14px 18px 14px 20px;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--msg-fg);
+  background: var(--msg-bg);
+  border: 1px solid var(--msg-line);
+  border-left: 3px solid var(--msg-accent);
+  border-radius: 6px var(--msg-radius) var(--msg-radius) 6px;
+  text-indent: 0;
+}
+
+/* 三条提示：卡片行，标题 + 说明两段 */
+.msg-tips {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.msg-tips li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--msg-bg);
+  border: 1px solid var(--msg-line);
+  border-radius: var(--msg-radius);
+  line-height: 1.75;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.msg-tips li:hover {
+  border-color: var(--msg-line-strong);
+  transform: translateX(2px);
+}
+
+.msg-tips b {
+  flex: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--msg-accent);
+  white-space: nowrap;
+}
+
+/* 标题后面跟一枚小方块，弱化「表单感」 */
+.msg-tips b::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+  border-radius: 1px;
+  background: var(--msg-t12);
+  box-shadow: 0 0 0 3px var(--msg-t06);
+}
+
+.msg-tips span {
+  flex: 1 1 260px;
+  min-width: 0;
+  font-size: 0.92rem;
+  color: var(--msg-dim);
+}
+
+.msg-tips a {
+  color: var(--msg-accent);
+  border-bottom: 1px solid var(--msg-t12);
+}
+
+.msg-tips a:hover {
+  border-bottom-color: var(--msg-accent);
+}
+
+/* 收尾一句 */
+.msg-tail {
+  margin: 0 0 4px;
+  padding: 0 4px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--msg-dim);
+  text-indent: 0;
+}
+
+.msg-tail::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: var(--msg-line-strong);
+}
+
+/* 手机上：提示改竖排，标题独占一行 */
+@media (max-width: 768px) {
+  .msg-lead {
+    padding: 12px 14px 12px 16px;
+    font-size: 0.94rem;
+    line-height: 1.8;
+  }
+
+  .msg-tips li {
+    display: block;
+    padding: 12px 14px;
+  }
+
+  .msg-tips b {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .msg-tips b::after {
+    display: none;
+  }
+
+  .msg-tips span {
+    display: block;
+    font-size: 0.88rem;
+  }
+}

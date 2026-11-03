@@ -1,0 +1,228 @@
+/* ============================================================================
+ * /about/ 专用样式（2026-11-02 整体重做）
+ * 全部选择器以 .ab3 开头，只在本页生效（页面里单独 <link> 引入，全站不加载）。
+ * 配色接主题变量：--theme-color / --font-color / --card-bg / --hr-border，
+ * 深浅色都靠变量走，这里不写死颜色。
+ * ========================================================================== */
+
+.ab3 {
+  max-width: 880px;
+  margin: 0 auto;
+  color: var(--font-color, #333);
+  font-size: 15px;
+  line-height: 1.8;
+}
+.ab3 a { color: inherit; text-decoration: none; }
+
+/* ── 英雄区 ───────────────────────────────────────────────────────────── */
+.ab3-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 8px 0 4px;
+}
+.ab3-ava {
+  flex: 0 0 auto;
+  width: 104px; height: 104px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--theme-color, #FF1493);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--theme-color, #FF1493) 22%, transparent);
+}
+.ab3-ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.ab3-hero-main { flex: 1 1 auto; min-width: 0; }
+.ab3-hello { margin: 0 0 2px; font-size: 13px; opacity: .6; }
+.ab3-name {
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.ab3-role { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; padding: 0; }
+.ab3-role span {
+  font-size: 12px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--theme-color, #FF1493) 12%, transparent);
+  color: var(--theme-color, #FF1493);
+}
+.ab3-bio { margin: 0 0 14px; font-size: 14.5px; }
+
+.ab3-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.ab3-btn {
+  display: inline-flex; align-items: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  background: var(--theme-color, #FF1493);
+  color: #fff !important;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--theme-color, #FF1493) 30%, transparent);
+}
+.ab3-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px color-mix(in srgb, var(--theme-color, #FF1493) 38%, transparent); }
+.ab3-btn.is-ghost {
+  background: transparent;
+  color: var(--font-color, #333) !important;
+  border: 1px solid var(--hr-border, #ddd);
+  box-shadow: none;
+}
+.ab3-btn.is-ghost:hover { border-color: var(--theme-color, #FF1493); color: var(--theme-color, #FF1493) !important; }
+
+/* ── 数据条 ───────────────────────────────────────────────────────────── */
+.ab3-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 26px 0 8px;
+}
+.ab3-stat {
+  text-align: center;
+  padding: 16px 8px;
+  border-radius: 14px;
+  border: 1px solid var(--hr-border, #eee);
+  background: var(--surface, rgba(255,255,255,.6));
+  transition: transform .18s ease, border-color .18s ease;
+}
+.ab3-stat:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--theme-color, #FF1493) 45%, transparent); }
+.ab3-stat b { display: block; font-size: 26px; line-height: 1.2; color: var(--theme-color, #FF1493); }
+.ab3-stat span { font-size: 12px; opacity: .65; }
+
+/* ── 区块 ─────────────────────────────────────────────────────────────── */
+.ab3-sec { margin: 34px 0; }
+.ab3-h2 {
+  position: relative;
+  margin: 0 0 14px;
+  padding-left: 12px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+  border: 0;
+}
+.ab3-h2::before {
+  content: "";
+  position: absolute; left: 0; top: 50%;
+  width: 4px; height: 18px;
+  margin-top: -9px;
+  border-radius: 2px;
+  background: var(--theme-color, #FF1493);
+}
+.ab3-sec p { margin: 0 0 10px; }
+
+.ab3-quote {
+  margin: 14px 0 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--theme-color, #FF1493);
+  background: color-mix(in srgb, var(--theme-color, #FF1493) 6%, transparent);
+  border-radius: 0 10px 10px 0;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+/* ── 工具卡片 ─────────────────────────────────────────────────────────── */
+.ab3-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.ab3-card {
+  display: block;
+  padding: 16px 16px 15px;
+  border-radius: 14px;
+  border: 1px solid var(--hr-border, #eee);
+  background: var(--surface, rgba(255,255,255,.6));
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.ab3-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--theme-color, #FF1493) 50%, transparent);
+  box-shadow: 0 8px 22px rgba(0,0,0,.08);
+}
+.ab3-card-ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--theme-color, #FF1493) 12%, transparent);
+  color: var(--theme-color, #FF1493);
+}
+.ab3-card b { display: block; font-size: 15px; margin-bottom: 3px; }
+.ab3-card em { display: block; font-style: normal; font-size: 12.5px; opacity: .65; line-height: 1.6; }
+
+/* ── 技术栈标签 ───────────────────────────────────────────────────────── */
+.ab3-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab3-tag {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  border: 1px solid var(--hr-border, #eee);
+  background: var(--surface, rgba(255,255,255,.6));
+}
+.ab3-tag i { font-style: normal; font-size: 11px; opacity: .5; }
+.ab3-note { margin-top: 12px !important; font-size: 13px; opacity: .65; }
+
+/* ── 时间线 ───────────────────────────────────────────────────────────── */
+.ab3-tl {
+  position: relative;
+  margin: 0; padding: 0 0 0 22px;
+  list-style: none;
+}
+.ab3-tl::before {
+  content: "";
+  position: absolute; left: 5px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--hr-border, #eee);
+}
+.ab3-tl li { position: relative; margin: 0 0 16px; }
+.ab3-tl li::before {
+  content: "";
+  position: absolute; left: -22px; top: 7px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--theme-color, #FF1493);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-color, #FF1493) 18%, transparent);
+}
+.ab3-tl li.is-next::before { background: transparent; border: 2px solid var(--theme-color, #FF1493); }
+.ab3-tl time {
+  display: block;
+  font-size: 11.5px;
+  letter-spacing: .5px;
+  opacity: .55;
+}
+.ab3-tl b { display: inline-block; margin: 1px 8px 0 0; font-size: 14.5px; }
+.ab3-tl span { font-size: 13px; opacity: .7; }
+
+/* ── 结尾 ─────────────────────────────────────────────────────────────── */
+.ab3-end {
+  margin-top: 40px;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid var(--hr-border, #eee);
+  background: var(--surface, rgba(255,255,255,.6));
+  text-align: center;
+}
+.ab3-end p { margin: 0 0 14px; font-size: 14px; }
+.ab3-end .ab3-links { justify-content: center; }
+.ab3-copy { margin: 16px 0 0 !important; font-size: 12px !important; opacity: .45; }
+
+/* ── 响应式 ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ab3-hero { flex-direction: column; align-items: center; text-align: center; }
+  .ab3-role, .ab3-links { justify-content: center; }
+  .ab3-stats { grid-template-columns: repeat(2, 1fr); }
+  .ab3-cards { grid-template-columns: 1fr; }
+  .ab3-name { font-size: 26px; }
+  .ab3-h2 { font-size: 17px; }
+}
+
+/* 暗色：只把“玻璃底”换成半透明深色，文本/主题色都跟主题变量走 */
+html[data-theme="dark"] .ab3-stat,
+html[data-theme="dark"] .ab3-card,
+html[data-theme="dark"] .ab3-tag,
+html[data-theme="dark"] .ab3-end { background: rgba(255,255,255,.04); }
+html[data-theme="dark"] .ab3-card:hover { box-shadow: 0 8px 22px rgba(0,0,0,.35); }
