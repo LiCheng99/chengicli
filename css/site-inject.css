@@ -745,43 +745,9 @@ html[data-theme="dark"] #fps {
 /* tag-hide 的折叠按钮：底色是 $tag-hide-bg、字是 var(--white)，hover 换成 --btn-hover-color */
 #article-container .hide-button:hover { color: var(--on-theme); }
 
-/* ── 作者卡「微信 · Wechat」按钮：常态保持原样（中性玻璃底 + 正文色字，见上面那条），
-   只在 hover 时变流光（多色渐变流动），鼠标移开即复原 ──────────────
-   参考 css_流光按钮：background-size:400% + 动画平移 background-position 形成流动光带。
-   文字统一压白（图标 svg 用 fill:currentColor，跟着变白），加了 text-shadow 防浅色段看不清。 */
-#aside-content > .card-widget.card-info > #card-info-btn,
-[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn {
-  transition: color .25s ease, border-color .25s ease, box-shadow .25s ease;
-}
-
-/* 特异性用 #card-info-btn#card-info-btn 抬高，压过主题 custom.css 多条同名 !important hover；
-   渐变调深 + 文字纯白 + 多层深黑阴影，保证任意渐变段都清晰可读 */
-#aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover,
-[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover {
-  color: #fff !important;                       /* 流光底上统一白字；图标 fill:currentColor 一起变白 */
-  border-color: transparent !important;
-  background-color: transparent !important;     /* 盖掉 custom.css:hover 的 --btn-hover-color 实底 */
-  background-image: linear-gradient(90deg, #ff4d8d, #9b30ff, #2f6bff, #ff4d8d) !important;
-  background-size: 400% 100% !important;
-  background-repeat: no-repeat !important;
-  background-position: 0 0 !important;
-  box-shadow: 0 6px 18px rgba(155, 48, 255, .4) !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, .55), 0 0 6px rgba(0, 0, 0, .35) !important;
-  animation: wechat-liuguang 4s linear infinite !important;
-}
-
-@keyframes wechat-liuguang {
-  to { background-position: -400% 0; }
-}
-
-/* 尊重「减少动态效果」偏好：关掉流动，保留一帧静态渐变，不闪 */
-@media (prefers-reduced-motion: reduce) {
-  #aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover,
-  [data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover {
-    animation: none;
-    background-position: 100% 0 !important;
-  }
-}
+/* 作者卡「微信 · Wechat」按钮 hover：恢复最初样式（文字变主题色，底色交给主题自带 hover 实底） */
+#aside-content > .card-widget.card-info > #card-info-btn:hover,
+[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn:hover { color: var(--on-theme) !important; }
 
 /* 主题色：和「字体颜色」同一套色环（2px 外环 + 实心内圆 + 选中光晕）。
    热区仍是 44px 方便点，视觉直径 30px；颜色由 settings.js 写在 label 的 --tc 上，配色本身不受影响。 */
