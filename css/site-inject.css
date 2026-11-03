@@ -754,18 +754,20 @@ html[data-theme="dark"] #fps {
   transition: color .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 
-#aside-content > .card-widget.card-info > #card-info-btn:hover,
-[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn:hover {
+/* 特异性用 #card-info-btn#card-info-btn 抬高，压过主题 custom.css 多条同名 !important hover；
+   渐变调深 + 文字纯白 + 多层深黑阴影，保证任意渐变段都清晰可读 */
+#aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover,
+[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover {
   color: #fff !important;                       /* 流光底上统一白字；图标 fill:currentColor 一起变白 */
   border-color: transparent !important;
   background-color: transparent !important;     /* 盖掉 custom.css:hover 的 --btn-hover-color 实底 */
-  background-image: linear-gradient(90deg, #ff5f9e, #b14bff, #3a7bff, #ff5f9e) !important;
+  background-image: linear-gradient(90deg, #ff4d8d, #9b30ff, #2f6bff, #ff4d8d) !important;
   background-size: 400% 100% !important;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  box-shadow: 0 6px 18px rgba(177, 75, 255, .35) !important;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, .30);
-  animation: wechat-liuguang 4s linear infinite;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  box-shadow: 0 6px 18px rgba(155, 48, 255, .4) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .55), 0 0 6px rgba(0, 0, 0, .35) !important;
+  animation: wechat-liuguang 4s linear infinite !important;
 }
 
 @keyframes wechat-liuguang {
@@ -774,8 +776,8 @@ html[data-theme="dark"] #fps {
 
 /* 尊重「减少动态效果」偏好：关掉流动，保留一帧静态渐变，不闪 */
 @media (prefers-reduced-motion: reduce) {
-  #aside-content > .card-widget.card-info > #card-info-btn:hover,
-  [data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn:hover {
+  #aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover,
+  [data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn#card-info-btn:hover {
     animation: none;
     background-position: 100% 0 !important;
   }
