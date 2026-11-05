@@ -411,19 +411,27 @@ function appearanceBackgroundParse(value) {
   if(/^#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(value)) return {kind:'solid',css:value.toLowerCase(),url:''};
   if(AP_BACKGROUND_CATALOG.some(function(item) { return item.kind === 'gradient' && item.value === value; })) return {kind:'gradient',css:value,url:''};
   var match = value.match(/^url\((['"]?)(.*?)\1\)$/);
-  var url = appearanceBackgroundSafeUrl(match ? match[2] : value, false);
+  var raw = match ? match[2] : value;
+  var url = appearanceBackgroundSafeUrl(raw, false);
+  // 图库预设用的是站内相对路径（/External-link/img/bg/xxx.jpg），new URL() 无 base 会抛错。
+  // 这里按当前站点补成绝对地址，否则点预设会被判成「背景值无效」。
+  if(!url && typeof location !== 'undefined' && /^\//.test(raw) && !/^\/\//.test(raw)) {
+    try { url = appearanceBackgroundSafeUrl(new URL(raw, location.origin).href, false); } catch(error) { url = ''; }
+  }
   return url ? {kind:'image',css:'url("'+url+'")',url:url} : null;
 }
 // 站点默认背景直链（第三处副本：与 _config.fomalhaut.yml 的 #defineBg、settings.js 的 resetBg_() 同源，改地址要三处一起改）
-//   PC 日间    → picsum id/1015    PC 夜间    → picsum id/1044
-//   移动端日间  → picsum id/1018    移动端夜间  → picsum id/1039
+//   PC 日间    → /Background-wallpaper/computer-Daytime-background.webp
+//   PC 夜间    → /Background-wallpaper/computer-Night-background.webp
+//   移动端日间  → /Background-wallpaper/phone-Daytime-background.webp
+//   移动端夜间  → /Background-wallpaper/phone-Night-background.webp
 // 只在「默认背景」被选中时用，负责让面板里的预览图/名称跟随当前 设备宽度 + data-theme 变化
 function appearanceBackgroundDefaultUrl() {
   var root=document.documentElement;
   var dark=!!(root && root.getAttribute('data-theme') === 'dark');
   var width=typeof window !== 'undefined' ? window.innerWidth : (root && root.clientWidth);
   var mobile=typeof width === 'number' && width <= 768;
-  return mobile ? (dark ? '/External-link/img/bg/picsum-1039.jpg' : '/External-link/img/bg/picsum-1018.jpg') : (dark ? '/External-link/img/bg/picsum-1044.jpg' : '/External-link/img/bg/picsum-1015.jpg');
+  return mobile ? (dark ? '/Background-wallpaper/phone-Night-background.webp' : '/Background-wallpaper/phone-Daytime-background.webp') : (dark ? '/Background-wallpaper/computer-Night-background.webp' : '/Background-wallpaper/computer-Daytime-background.webp');
 }
 function appearanceBackgroundWatchEnvironment() {
   if(apBackgroundState.environmentListening) return;
@@ -442,11 +450,17 @@ function appearanceBackgroundMetadata(value) {
   var parsed = appearanceBackgroundParse(value);
   if(!parsed) return {name:'无效背景',category:'invalid',kind:'invalid',url:'',value:value};
   if(parsed.kind === 'default') return {name:'默认背景',category:'默认 · 随深浅模式和屏幕切换',kind:'default',url:appearanceBackgroundDefaultUrl(),value:'default'};
+  // 图库里存在相对路径条目（如 /External-link/img/bg/xxx.jpg），parse 会返回 null；
+  // 这里必须判空，否则 candidate.css 抛错会让整个 syncAppearanceBackground 中断，
+  // 表现为「自定义背景后，背景设置不更新/像空了」。
   var item = AP_BACKGROUND_CATALOG.find(function(entry) {
     var candidate = appearanceBackgroundParse(entry.value);
-    return candidate.css === parsed.css;
+    return candidate && candidate.css === parsed.css;
   });
-  if(item) return {id:item.id,name:item.name,category:item.kind === 'image' ? AP_BACKGROUND_CATEGORIES.find(function(c){return c.id === item.category;}).name : (item.kind === 'solid' ? '纯色' : '渐变'),kind:item.kind,url:parsed.url,thumb:item.thumb,value:parsed.css};
+  if(item) {
+    var cat = AP_BACKGROUND_CATEGORIES.find(function(c){return c.id === item.category;});
+    return {id:item.id,name:item.name,category:item.kind === 'image' ? ((cat && cat.name) || '壁纸') : (item.kind === 'solid' ? '纯色' : '渐变'),kind:item.kind,url:parsed.url,thumb:item.thumb,value:parsed.css};
+  }
   var api = AP_BACKGROUND_APIS.find(function(entry) { var candidate=appearanceBackgroundParse(appearanceBackgroundApiValue(entry.id)); return candidate && candidate.css === parsed.css; });
   if(api) return {id:'api-'+api.id,name:api.name,category:'动态 API · 刷新可能返回不同图片',kind:'image',url:parsed.url,value:parsed.css};
   return {name:parsed.kind === 'solid' ? '自定义纯色 '+parsed.css : '自定义图片',category:parsed.kind === 'solid' ? '纯色' : '自定义 · 图片链接',kind:parsed.kind,url:parsed.url,value:parsed.css};

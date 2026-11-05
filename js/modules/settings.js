@@ -933,18 +933,18 @@ function bgValToUrl(s) {
 restoreAppearanceBackground();
 // 默认背景（「恢复默认设置」reset() 会调这里；刷新后 localStorage 里没存自定义背景时也走这里）
 // 四张图与 _config.fomalhaut.yml 的 inject.head #defineBg 逐字一致，改一处必须同步另一处：
-//   --default-bg      PC 日间    /Background-wallpaper/Daytime-background.webp（source/ 下的本地图）
-//   --darkmode-bg     PC 夜间    picsum id/1044
-//   --mobileday-bg    移动端日间  picsum id/1018
-//   --mobilenight-bg  移动端夜间  picsum id/1039
+//   --default-bg      PC 日间    /Background-wallpaper/computer-Daytime-background.webp
+//   --darkmode-bg     PC 夜间    /Background-wallpaper/computer-Night-background.webp
+//   --mobileday-bg    移动端日间  /Background-wallpaper/phone-Daytime-background.webp
+//   --mobilenight-bg  移动端夜间  /Background-wallpaper/phone-Night-background.webp
 function resetBg_() {
   var el = document.getElementById("defineBg");
   if (!el) return;
   el.innerText = `:root{
-    --default-bg: url(/Background-wallpaper/Daytime-background.webp);  /* PC 日间（本地图：source/Background-wallpaper/） */
-    --darkmode-bg:url(/External-link/img/bg/picsum-1044.jpg);      /* PC 夜间 */
-    --mobileday-bg: url(/External-link/img/bg/picsum-1018.jpg);    /* 移动端日间 */
-    --mobilenight-bg: url(/External-link/img/bg/picsum-1039.jpg);  /* 移动端夜间 */
+    --default-bg: url(/Background-wallpaper/computer-Daytime-background.webp);  /* PC 日间 */
+    --darkmode-bg:url(/Background-wallpaper/computer-Night-background.webp);   /* PC 夜间 */
+    --mobileday-bg: url(/Background-wallpaper/phone-Daytime-background.webp);  /* 移动端日间 */
+    --mobilenight-bg: url(/Background-wallpaper/phone-Night-background.webp);  /* 移动端夜间 */
   }`;
 }
 
