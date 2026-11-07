@@ -7,7 +7,7 @@
   <link href="https://www.lichengic.com/atom.xml" rel="self"/>
   
   <link href="https://www.lichengic.com/"/>
-  <updated>2026-11-05T05:55:00.000Z</updated>
+  <updated>2026-11-07T07:10:00.000Z</updated>
   <id>https://www.lichengic.com/</id>
   
   <author>
@@ -16,6 +16,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  
+  <entry>
+    <title>四轴 A 轴绕远路：两个角度解与后处理的两处开关</title>
+    <link href="https://www.lichengic.com/posts/4axis-a-shortest-path.html"/>
+    <id>https://www.lichengic.com/posts/4axis-a-shortest-path.html</id>
+    <published>2026-11-07T07:10:00.000Z</published>
+    <updated>2026-11-07T07:10:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="现象">现象</h2><p>刀路看着没问题，仿真也没报错。上机一跑，A 轴没有就近转到位，而是反方向慢悠悠转了一圈，等它转回来，刀早就把不该切的地方走完了。</p><p>这类事故有个共同点：<strong>错不在刀路，在角度输出</strong>。同一个工件姿态，A 轴有两条路可走，后处理替你选错了那条。</p><span id="more"></span><h2 id="一、根源：一个姿态，两个解">一、根源：一个姿态，两个解</h2><p>A 轴是回转轴。要把工件转到 10°，数学上写 <code>A10</code> 和写 <code>A-350</code> 指向的是同一个位置——相差正好 360°。</p><p><img src="/assets/cnc/a-axis/fig-01-two-solutions.svg" alt="A10 与 A-350 指向同一位置，但转角相差 35 倍" title="正确解与错误解：同一个终点，一条 10°，一条 350°"></p><p>对机床来说两者都合法，所以它不会报错，只会老老实实按你给的角度走。后处理如果只做&quot;当前角度减目标角度&quot;的算术，不判断哪边更近，就会输出那条长的。</p><p>判断规则很简单：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">delta = target - current</span><br><span class="line">若 delta &gt;  180  →  delta -= 360</span><br><span class="line">若 delta &lt; -180  →  delta += 360</span><br></pre></td></tr></table></figure><h2 id="二、三种典型成因">二、三种典型成因</h2><p><strong>1. 没开最短路径。</strong> 后处理按绝对角度累加输出，A 从 0 到 350 就输出 350，不回头。</p><p><strong>2. 旋转方向与机床相反。</strong> 后处理认为该走 <code>-10</code>，但机床 A 轴正方向定义相反，实际执行成 <code>+350</code>。这一条最隐蔽——后处理逻辑是对的，机床理解反了。</p><p><strong>3. 角度累计没有归一。</strong> 连续多个操作里 A 值一路累加：0 → 350 → 710。中间每换一次操作，就白转一圈。</p><p><img src="/assets/cnc/a-axis/fig-02-angle-accumulation.svg" alt="角度累计与取模：同样三个姿态，输出值可以差出两整圈" title="累计输出 vs 取模后的等价值"></p><h2 id="三、后处理要改的两处">三、后处理要改的两处</h2><p>在 UG/NX 的 Post Builder 里，对应两个地方：</p><p><img src="/assets/cnc/a-axis/fig-03-post-settings.svg" alt="后处理的两处设置：方向决定往哪边转，最短路径决定转多少" title="① 旋转方向 ② 最短路径"></p><p><strong>① 旋转轴方向（Rotary Axis → Axis Direction）</strong><br>让输出的正负与机床 A 轴的实际转向一致。怎么确认：手动让 A 轴转 <code>+10</code>，看工件往哪边转，再对照程序里的符号。</p><p><strong>② 最短路径（Shortest Path / 就近旋转）</strong><br>打开后，两个等价解里自动取转角小的那个，<code>A-350</code> 变成 <code>A10</code>。同时把输出范围限制在 <code>0~360</code> 或 <code>-180~180</code>，避免跨操作累计。</p><p>顺带值得一起查的三项：A 轴是否设成模态输出、是否误用了 G91 增量、装夹零点（G54 的 A 偏置）有没有差 180°。</p><h2 id="四、程序上的差别">四、程序上的差别</h2><p>改之前，同一段换向会写成这样：</p><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">N100</span> <span class="name">G0</span> A<span class="number">0.</span></span><br><span class="line"><span class="symbol">N110</span> <span class="name">G1</span> A<span class="number">-350.</span> F<span class="number">2000</span>      <span class="comment">(反向绕一整圈)</span></span><br></pre></td></tr></table></figure><p>改之后：</p><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">N100</span> <span class="name">G0</span> A<span class="number">0.</span></span><br><span class="line"><span class="symbol">N110</span> <span class="name">G1</span> A<span class="number">10.</span> F<span class="number">2000</span></span><br></pre></td></tr></table></figure><p>不是所有系统都认 <code>A-350</code> 这种写法——有的会按增量解释，有的直接报警。<strong>输出最简解，永远比赌系统怎么理解安全。</strong></p><h2 id="五、上机前怎么验">五、上机前怎么验</h2><ol><li><strong>看刀轨</strong>：NX 里列出第四轴角度序列，正常应出现 <code>-10</code>，而不是 <code>350</code>。</li><li><strong>图形仿真</strong>：盯着 A 轴看有没有整圈回绕，别只看刀具轨迹。</li><li><strong>空运行 + 单段</strong>：在换向那几行单段执行，确认转向。</li><li><strong>首件留余量</strong>：外圆留 0.3~0.5 mm，确认 A 轴动作无误再精加工。</li></ol><h2 id="六、清单">六、清单</h2><ul><li>后处理方向与机床一致</li><li>最短路径打开</li><li>角度输出限制在 0~360 或 ±180</li><li>跨操作不累计（必要时每个操作前重新定位）</li><li>仿真只看刀轨不够，要看第四轴角度</li><li>首件留余量，单段过换向点</li></ul><p>一圈 350° 的空转，代价不只是时间。撞夹具、过切、工件松动，任何一样都比返工贵。</p>]]></content>
+    
+    
+    <summary type="html">A 轴本该转 10° 却反向绕了 350°，把一件活切废。从角度双解讲到 UG 后处理的方向与最短路径两处设置，附验证方法。</summary>
+    
+    
+    
+    <category term="CNC工艺" scheme="https://www.lichengic.com/categories/CNC%E5%B7%A5%E8%89%BA/"/>
+    
+    
+    <category term="四轴" scheme="https://www.lichengic.com/tags/%E5%9B%9B%E8%BD%B4/"/>
+    
+    <category term="A轴" scheme="https://www.lichengic.com/tags/A%E8%BD%B4/"/>
+    
+    <category term="UG" scheme="https://www.lichengic.com/tags/UG/"/>
+    
+    <category term="后处理" scheme="https://www.lichengic.com/tags/%E5%90%8E%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
   
   
   <entry>

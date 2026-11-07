@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" role="img" aria-label="A轴同一个姿态的两个角度解">
+  <rect width="900" height="460" fill="#f7f8fa"/>
+  <text x="40" y="52" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="23" font-weight="700" fill="#1f2937">同一个姿态，两个角度解</text>
+  <text x="40" y="84" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="15" fill="#4b5563">目标只是把工件转到 10°，但数学上 A10 与 A-350 指向同一位置，后处理选哪个，机床就走哪条路。</text>
+
+  <!-- 左盘：正确 -->
+  <g transform="translate(240,270)">
+    <circle r="110" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+    <line x1="0" y1="0" x2="110" y2="0" stroke="#d1d5db" stroke-width="2"/>
+    <text x="120" y="24" font-family="Arial,sans-serif" font-size="13" fill="#9ca3af">0°</text>
+    <path d="M 110 0 A 110 110 0 0 0 108.33 -19.10" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="108.33" y2="-19.10" stroke="#1f2937" stroke-width="3"/>
+    <circle r="6" fill="#1f2937"/>
+    <text x="-4" y="150" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="17" font-weight="700" fill="#2563eb">A10</text>
+    <text x="-4" y="174" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" fill="#4b5563">转角 10° · 就近</text>
+  </g>
+
+  <!-- 右盘：错误 -->
+  <g transform="translate(660,270)">
+    <circle r="110" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+    <line x1="0" y1="0" x2="110" y2="0" stroke="#d1d5db" stroke-width="2"/>
+    <text x="120" y="24" font-family="Arial,sans-serif" font-size="13" fill="#9ca3af">0°</text>
+    <path d="M 110 0 A 110 110 0 1 1 108.33 -19.10" fill="none" stroke="#ea580c" stroke-width="8" stroke-dasharray="14 10" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="108.33" y2="-19.10" stroke="#1f2937" stroke-width="3"/>
+    <circle r="6" fill="#1f2937"/>
+    <text x="-4" y="150" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="17" font-weight="700" fill="#ea580c">A-350</text>
+    <text x="-4" y="174" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" fill="#4b5563">转角 350° · 反向绕一圈</text>
+  </g>
+
+  <text x="240" y="132" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" font-weight="700" fill="#2563eb">正确</text>
+  <text x="660" y="132" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" font-weight="700" fill="#ea580c">错误</text>
+</svg>

@@ -1428,11 +1428,12 @@ html[data-theme="dark"] {
  * 统一接上「磨砂」；底色仍由各页自己的 var(--surface) 决定。
  * 2026-11-02：上一版只覆盖了卡片，正文和整页容器漏了。
  * ------------------------------------------------------------------------- */
+/* 2026-11-07 修色带：只给「最外层容器」加磨砂。
+   #article-container / .post-content / .note 都在已磨砂的 #post、#page 里面，
+   再套一层会形成嵌套 backdrop-filter —— 内外采样基准不同，边界（距卡片顶部 71px）
+   会出现一条明显色带。内层背景本来就是透明的，去掉后视觉不变。 */
 #post,
 #page,
-#article-container,
-.post-content,
-.note,
 #ai-chat-panel,
 #sidebar-menus,
 #ds-mini,

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" role="img" aria-label="后处理的两处设置">
+  <rect width="900" height="460" fill="#f7f8fa"/>
+  <text x="40" y="52" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="23" font-weight="700" fill="#1f2937">后处理里要动的两处</text>
+  <text x="40" y="84" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="15" fill="#4b5563">方向决定“往哪边转”，最短路径决定“转多少”，两者缺一，A 轴都可能绕整圈。</text>
+
+  <!-- 卡片 1 -->
+  <g>
+    <rect x="50" y="120" width="380" height="170" rx="14" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+    <circle cx="86" cy="158" r="16" fill="#dbeafe"/>
+    <text x="86" y="164" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1d4ed8">1</text>
+    <text x="116" y="164" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="18" font-weight="700" fill="#1f2937">旋转方向</text>
+    <text x="76" y="196" font-family="Consolas,'Courier New',monospace" font-size="13" fill="#6b7280">Rotary Axis · Axis Direction</text>
+    <text x="76" y="230" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" fill="#374151">输出正负要与机床 A 轴实际转向一致，</text>
+    <text x="76" y="256" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" fill="#374151">反了的话，就近解执行出来也是反的。</text>
+  </g>
+
+  <!-- 卡片 2 -->
+  <g>
+    <rect x="470" y="120" width="380" height="170" rx="14" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+    <circle cx="506" cy="158" r="16" fill="#dcfce7"/>
+    <text x="506" y="164" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#15803d">2</text>
+    <text x="536" y="164" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="18" font-weight="700" fill="#1f2937">最短路径</text>
+    <text x="496" y="196" font-family="Consolas,'Courier New',monospace" font-size="13" fill="#6b7280">Shortest Path · 就近旋转</text>
+    <text x="496" y="230" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" fill="#374151">在两个等价解里取转角小的那个，</text>
+    <text x="496" y="256" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="14" fill="#374151">并把输出限制在 0~360 或 ±180。</text>
+  </g>
+
+  <!-- 箭头 -->
+  <path d="M 240 296 L 240 326 L 660 326 L 660 296" fill="none" stroke="#9ca3af" stroke-width="3"/>
+  <path d="M 450 326 L 450 348" fill="none" stroke="#9ca3af" stroke-width="3" marker-end="url(#ar3)"/>
+
+  <!-- 输出 -->
+  <rect x="300" y="352" width="300" height="66" rx="12" fill="#1f2937"/>
+  <text x="450" y="382" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">A 角度输出</text>
+  <text x="450" y="404" text-anchor="middle" font-family="'Microsoft YaHei','PingFang SC',Arial,sans-serif" font-size="12" fill="#d1d5db">A10. 而不是 A-350.</text>
+
+  <defs>
+    <marker id="ar3" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+</svg>
