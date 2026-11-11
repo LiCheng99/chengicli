@@ -1,7 +1,7 @@
 /* ==========================================================================
    每日一言 + QQ 音乐播放器（侧栏公告卡底部）
    --------------------------------------------------------------------------
-   结构（渲染出来长这样，模板在 themes/fomalhaut/layout/includes/widget/card_announcement.pug）
+   结构（渲染出来长这样，模板在 themes/chengic/layout/includes/widget/card_announcement.pug）
      #daily-say.ds-card                 卡片本体，悬停它 = 打开播放器
        .ds-head   [音符图标] 每日一言  ...................... [喇叭按钮]
        p.ds-quote                      一言正文（24 秒换一条，淡入淡出）

@@ -5,7 +5,7 @@
    10-29 补记：装饰三款（筑紫A丸 / 汉仪唐美人 / 甜甜圈海报）原本指向 data-static.netdun.net，
    那个域名已经失效（DNS 都解析不到），所以它们一直是「点了没反应」。现在改为站内自托管
    source/fonts/*-substitute.woff2（Google Fonts 开源字体裁子集，family 名沿用原来的），
-   见 themes/fomalhaut/source/css/_custom/custom.css 的 @font-face 段。 */
+   见 themes/chengic/source/css/_custom/custom.css 的 @font-face 段。 */
 var APPEARANCE_TEXT_FONTS = [
   ['LXGW WenKai Screen', '霞鹜文楷Screen', '屏幕阅读 · 默认', 'reading'],
   ['LXGWNeoXiHei', '霞鹜新晰黑', '清晰黑体 · 技术文章', 'reading'],

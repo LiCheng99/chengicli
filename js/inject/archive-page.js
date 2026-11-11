@@ -12,7 +12,7 @@
  * 幂等：容器上打 data-ar-archive，重复执行（pjax 往返）直接 return。
  * 降级：ar-index 缺失（脚本没生效 / 被过滤）时照常排版，只是卡片不显示分类与阅读时长。
  *
- * 卸载：删掉 _config.fomalhaut.yml inject.head 里的引入行即可，无其它依赖。
+ * 卸载：删掉 _config.chengic.yml inject.head 里的引入行即可，无其它依赖。
  * 仓库路径：source/js/inject/archive-page.js
  */
 

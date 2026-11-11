@@ -300,7 +300,7 @@
 }
 
 /* ── 隐藏「通讯录」卡片（2026-10-01 用户要求去掉）──────────────────
-   开关在 _config.fomalhaut.yml 的 aside.card_friend_link.enable，但 hexo server
+   开关在 _config.chengic.yml 的 aside.card_friend_link.enable，但 hexo server
    只在启动时读主题配置，运行期改成 false 不会重新渲染 —— 这条先兜底隐藏；
    重启 server（或 hexo generate）后卡片本身不再输出，这条自动变成空转。 */
 #aside-content .card-friend-link {

@@ -1,8 +1,8 @@
 /* ======================================================================
  * 文章统计页（/tags/，即 网站 › 文章统计）增强脚本
  * ----------------------------------------------------------------------
- * 这一页的正文由主题布局 themes/fomalhaut/layout/includes/page/echarts.pug 生成，
- * 图表配色也写死在主题助手 themes/fomalhaut/scripts/helpers/hexo_echarts.js 里
+ * 这一页的正文由主题布局 themes/chengic/layout/includes/page/echarts.pug 生成，
+ * 图表配色也写死在主题助手 themes/chengic/scripts/helpers/hexo_echarts.js 里
  * （#425aef 那套蓝，和站点主题色不是一家）。为了不改主题源码，这里在浏览器里
  * 做两件事：
  *   1) 把 <center><font size="4">标题📃</font></center> 拆成
@@ -13,7 +13,7 @@
  * 触发时机：首屏 + pjax 换页（pjax:complete）+ 主题色/明暗模式变化。
  * 本文件对其它页面零影响：找不到 #posts-echart 就直接返回。
  * 回滚：删掉本文件与 /css/stats.css，并还原
- *      bak/20261005-stats-redesign/_config.fomalhaut.yml.bak。
+ *      bak/20261005-stats-redesign/_config.chengic.yml.bak。
  * ====================================================================== */
 (function () {
   'use strict'

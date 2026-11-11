@@ -4,7 +4,7 @@
  * ============================================================================
  * 改的是什么
  *   全站 .avatar-img 的呼吸灯动画。主题里这两条写死在
- *   themes/fomalhaut/source/css/_custom/custom.css:1442-1470：
+ *   themes/chengic/source/css/_custom/custom.css:1442-1470：
  *     [data-theme="light"] .avatar-img { animation: huxi_light 4s ease-in-out infinite }
  *     [data-theme="dark"]  .avatar-img { animation: huxi_dark  4s ease-in-out infinite }
  *     @keyframes huxi_light { 0%/100% { box-shadow: 0 0 1px 1px #9ff2d2 } 50% { box-shadow: 0 0 5px 5px #9ff2d2 } }
@@ -32,8 +32,8 @@
  *   （手机抽屉的尺寸/圆角/白边仍归 /css/mobile-drawer.css，动画共用这一套。）
  *
  * 回滚
- *   删掉 _config.fomalhaut.yml inject.head 里那行 <link>，呼吸灯立刻变回主题写死的颜色。
- *   配置备份：bak/20261007-avatar-glow/before/_config.fomalhaut.yml
+ *   删掉 _config.chengic.yml inject.head 里那行 <link>，呼吸灯立刻变回主题写死的颜色。
+ *   配置备份：bak/20261007-avatar-glow/before/_config.chengic.yml
  *
  * 2026-10-04 更新（第二轮性能修复）
  *   桌面作者卡的呼吸灯动画属性从 box-shadow 换成 opacity（原理与取舍见文件末尾那一大段），

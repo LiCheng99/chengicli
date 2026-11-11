@@ -10,7 +10,7 @@
  *   且条目数 ≥ 8」之后才加上。JS 没跑（被拦 / 报错 / 缓存旧版）整块失效，
  *   页面自动退回主题原样，不会出现半成品。
  * 配色全部从 --theme-color / --font-color / --card-bg 派生，跟主题色与明暗模式走。
- * 回滚：删掉 _config.fomalhaut.yml 里的这两行即可 ——
+ * 回滚：删掉 _config.chengic.yml 里的这两行即可 ——
  *   <link rel="stylesheet" href="/css/timeline-archive.css?v=20261011">
  *   <script defer src="/js/timeline-archive.js?v=20261011"></script>
  *
@@ -19,7 +19,7 @@
  *   单行 654px）把整条轨道顶到 687px，卡片撑破 390px 视口，触屏一拖整页横移。
  *   改成 minmax(0, 1fr)（配 min-width: 0）后轨道不再有 min-content 底线，
  *   长串交给卡片上已有的 overflow-wrap: break-word 断行。
- *   （配置备份 bak/20261009-timeline-archive/before/_config.fomalhaut.yml）
+ *   （配置备份 bak/20261009-timeline-archive/before/_config.chengic.yml）
  * 2026-10-08 收窄左侧留白（用户反馈：手机端左边全是空的、右边没地方了；
  *   同日续问电脑端，于是全宽也一起收）：
  *   全宽日期轨 104+28 → 62+18 —— 1440px 屏上卡片左边线 308 → 256，卡片 +52px。

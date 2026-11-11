@@ -9,7 +9,7 @@
  *   2. link.yml 里给某人写了 pin: N，就把它固定在第 N 位，其余人随机填空位；
  *   3. 没有 pin 的纯随机 —— 每个人都有机会排到最前。
  *
- * 开关：_config.fomalhaut.yml 的 flink_shuffle（false 关闭），
+ * 开关：_config.chengic.yml 的 flink_shuffle（false 关闭），
  *       模板把它写成 .flink[data-shuffle="off"]，这里读。
  * ------------------------------------------------------------------------- */
 (function () {

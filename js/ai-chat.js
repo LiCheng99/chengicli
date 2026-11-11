@@ -1,7 +1,7 @@
 /* 博客 AI 助手（前端本体）—— 站点侧文件：source/js/ai-chat.js
  * ---------------------------------------------------------------------------
  * 由 scripts/ai-chat-inject.js 注入：<script defer src="/js/ai-chat.js"></script>
- * 配置来自 _config.fomalhaut.yml 的 ai_chat: 段（window.AI_CHAT_CONFIG）。
+ * 配置来自 _config.chengic.yml 的 ai_chat: 段（window.AI_CHAT_CONFIG）。
  * 主题源码 themes/ 一行都不用改：样式、按钮、面板全部由本文件在运行时创建。
  * 依赖：无（不依赖 jQuery / Vue / 任何组件库）。
  */
@@ -229,7 +229,7 @@
     // 选中文字要看得见：白天走浅色系（浅底深字），夜间走主题色暗色系（深底浅字）
     // 颜色用 color-mix 现算，直接引用 var(--theme-color)：用户在设置里换主题色时，
     // 这些值跟着 <html> 上的 --theme-color 立刻变，不会像写死的 rgb 那样留在旧颜色上。
-    // 主题在 themes/fomalhaut/source/css/_custom/custom.css:2055 用 *::selection{background:var(--theme-color)!important} 全局钉死了选中底色，
+    // 主题在 themes/chengic/source/css/_custom/custom.css:2055 用 *::selection{background:var(--theme-color)!important} 全局钉死了选中底色，
     // 面板里要换色必须同样带 !important（更高优先级：id + 伪元素）。
     '#' + PANEL_ID + ' ::selection{background:var(--ai-sel-bg,color-mix(in srgb,var(--theme-color) 24%,#fff))!important;color:var(--ai-sel-fg,#12303a)!important}',
     '[data-theme="dark"] #' + PANEL_ID + ' ::selection{background:var(--ai-sel-bg,color-mix(in srgb,var(--theme-color) 42%,#0a1512))!important;color:var(--ai-sel-fg,#eafaf7)!important}',
@@ -836,7 +836,7 @@
     if (!key) {
       if (bub) {
         bub.parentNode.className = 'ai-row err';
-        bub.innerHTML = '还没配 API Key：打开 <code>_config.fomalhaut.yml</code>，在 <code>ai_chat</code> 段填 <code>api_key</code>；' +
+        bub.innerHTML = '还没配 API Key：打开 <code>_config.chengic.yml</code>，在 <code>ai_chat</code> 段填 <code>api_key</code>；' +
           '或者把 Key 单独存到站点根目录的 <code>.ai-chat-key</code>（已在 .gitignore 里，不会进仓库）。改完重新生成一次站点即可。';
       }
       return;
@@ -924,7 +924,7 @@
         // （流正常结束但 finish_reason=length）。这时别再说「模型没有返回内容」——它在想，只是没写完。
         bub.innerHTML = gotThink
           ? '这次只吐了思考过程、正文没写完就被截断了：当前 <code>max_tokens=' + px(CFG.max_tokens, 2048) + '</code> 不够用（思考的 token 也算在里面）。' +
-            '把 <code>_config.fomalhaut.yml</code> 里 <code>ai_chat.max_tokens</code> 再调大，或者把 <code>model</code> 换成不思考的 <code>deepseek-chat</code>，' +
+            '把 <code>_config.chengic.yml</code> 里 <code>ai_chat.max_tokens</code> 再调大，或者把 <code>model</code> 换成不思考的 <code>deepseek-chat</code>，' +
             '也可以把问题问得更具体些再试。'
           : '模型没有返回内容，稍后再试一次。';
         scrollBottom(false);

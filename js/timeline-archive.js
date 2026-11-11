@@ -30,7 +30,7 @@
  *   b. 条目数 ≥ 8。
  * 触发时机：首屏 + pjax 换页（pjax:complete / pjax:success / pjax:end）。
  * 幂等：靠 timeline 上的 data-tl-archive 标记，重复调用直接返回。
- * 回滚：删掉 _config.fomalhaut.yml 里引本文件的 <script> 一行即可。
+ * 回滚：删掉 _config.chengic.yml 里引本文件的 <script> 一行即可。
  * ====================================================================== */
 (function () {
   'use strict'

@@ -4,18 +4,18 @@
  * ============================================================================
  * 改的是什么
  *   手机端点右上角汉堡后从右边滑出来的那个抽屉：#sidebar > #sidebar-menus
- *   （themes/fomalhaut/layout/includes/sidebar.pug 渲染，DOM 顺序固定为
+ *   （themes/chengic/layout/includes/sidebar.pug 渲染，DOM 顺序固定为
  *     .avatar-img → .sidebar-site-data → hr → .menus_items，全是主题生成的，不能改结构）
  *
  * 为什么是「新增一个站点样式文件」而不是改主题
- *   主题只给了抽屉最朴素的默认样式（themes/fomalhaut/source/css/_layout/sidebar.styl：
- *   一行一个文字链接 + 一条 2px 虚线 hr；配色在 themes/fomalhaut/source/css/_custom/custom.css:2303-2312）。
+ *   主题只给了抽屉最朴素的默认样式（themes/chengic/source/css/_layout/sidebar.styl：
+ *   一行一个文字链接 + 一条 2px 虚线 hr；配色在 themes/chengic/source/css/_custom/custom.css:2303-2312）。
  *   主题没有任何开关能调出「层级 / 卡片 / 图标底衬 / 动效」这些设计感，配置项做不到，
  *   所以按站点既有约定（source/css/stats.css 同样做法）新增独立样式表，
  *   themes/ 下一行源码都不动。
  *
  * 引入
- *   _config.fomalhaut.yml → inject.head：
+ *   _config.chengic.yml → inject.head：
  *     <link rel="stylesheet" href="/css/mobile-drawer.css?v=20261007">
  *   放在 /css/site-inject.css 之后 → 层叠顺序在主题 /css/index.css 与各站点样式之后，同权重必胜。
  *
@@ -28,8 +28,8 @@
  *   改 _config.yml 的 title / description 时记得同步这两行。
  *
  * 回滚
- *   删掉 _config.fomalhaut.yml inject.head 里那行 <link>，抽屉立刻退回主题原样（本文件留着无害）。
- *   配置备份：bak/20261007-mobile-drawer/before/_config.fomalhaut.yml
+ *   删掉 _config.chengic.yml inject.head 里那行 <link>，抽屉立刻退回主题原样（本文件留着无害）。
+ *   配置备份：bak/20261007-mobile-drawer/before/_config.chengic.yml
  * ========================================================================== */
 
 /* ---------------------------------------------------------------- 变量 */
@@ -207,14 +207,14 @@
 }
 
 /* ---------------------------------------------------------------- 雪花分隔线 */
-/* 主题：hr 是 2px 虚线 + 靠左 5% 的 Font Awesome 雪花（_config.fomalhaut.yml hr_icon.icon = \f2dc），
+/* 主题：hr 是 2px 虚线 + 靠左 5% 的 Font Awesome 雪花（_config.chengic.yml hr_icon.icon = \f2dc），
    hover 会滑到右边。改成一整条两端渐隐的发丝线，雪花居中并带主题色辉光。 */
 #sidebar #sidebar-menus hr {
   position: relative;
   width: auto;
   height: 1px;
   margin: 20px 26px 16px;
-  /* 主题 themes/fomalhaut/source/css/_custom/custom.css:3520 有 hr{border:2px dashed !important}，
+  /* 主题 themes/chengic/source/css/_custom/custom.css:3520 有 hr{border:2px dashed !important}，
      这里必须跟着 !important，否则虚线框会盖掉下面这条渐变发丝线 */
   border: 0 !important;
   background: linear-gradient(90deg, transparent 0%, var(--md-line-strong) 16%, var(--md-line-strong) 84%, transparent 100%);
@@ -313,7 +313,7 @@
 
 /* ---------------------------------------------------------------- 二级菜单 */
 /* 主题靠 display:none / block 硬切；这里改成 max-height + opacity 的手风琴。
-   展开/收起由主题 JS 切换 a 上的 .hide 类（themes/fomalhaut/source/js/main.js:543-548），所以选择器照它写。 */
+   展开/收起由主题 JS 切换 a 上的 .hide 类（themes/chengic/source/js/main.js:543-548），所以选择器照它写。 */
 #sidebar #sidebar-menus .menus_items .menus_item_child,
 #sidebar #sidebar-menus .menus_items > .menus_item > a.site-page.group.hide + .menus_item_child,
 #sidebar #sidebar-menus .menus_items > .menus_item > a.site-page.group:not(.hide) + .menus_item_child {
@@ -381,9 +381,9 @@
 }
 
 /* ---------------------------------------------------------------- 入场动效 */
-/* 主题给 .open 的前 4 个子元素做了 translateX(200px) 的错位滑入（themes/fomalhaut/source/css/_global/function.styl:107-133）；
+/* 主题给 .open 的前 4 个子元素做了 translateX(200px) 的错位滑入（themes/chengic/source/css/_global/function.styl:107-133）；
    这里换成更短的「上浮 + 淡入」，节奏更贴合这块面板。 */
-/* 【踩过的坑】主题 themes/fomalhaut/source/css/_global/function.styl:129-133 有
+/* 【踩过的坑】主题 themes/chengic/source/css/_global/function.styl:129-133 有
    `#sidebar-menus.open > :nth-child(1..4) { animation: sidebarItem … }`，而 :nth-child(1) 就是头像。
    这条选择器权重 (1,2,0) 压过主题自己那条 `[data-theme] .avatar-img { animation: huxi_* }` (0,2,0)，
    所以**抽屉头像从主题原版起就没有呼吸灯**（电脑端作者卡不在 #sidebar-menus 里，不受影响）。

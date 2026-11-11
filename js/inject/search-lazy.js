@@ -3,7 +3,7 @@
  * ----------------------------------------------------------------------------
  * 【为什么】
  * 主题默认在【每一页】把 Algolia 三连脚本当成阻塞脚本加载（原
- * themes/fomalhaut/layout/includes/additional-js.pug:25-29）：
+ * themes/chengic/layout/includes/additional-js.pug:25-29）：
  *     algoliasearch-lite.umd.js        13.6 KB（压缩后约 4 KB）
  *     instantsearch.production.min.js 277   KB（压缩后约 88 KB）
  *     /js/search/algolia.js             5   KB
@@ -20,7 +20,7 @@
  *      就绪后自动聚焦输入框。也就是「最差等于原来的体验，最好等于零等待」。
  *
  * 【地址从哪来】不写死在本文件。主题 additional-js.pug 会把 CDN 配置
- * （_config.fomalhaut.yml 的 CDN.option）解析好的三条 URL 放进
+ * （_config.chengic.yml 的 CDN.option）解析好的三条 URL 放进
  * window.__SEARCH_LAZY__，本文件只消费它 —— 以后换 CDN 只改配置。
  *
  * 【为什么必须劫持 addEventListener】
@@ -71,7 +71,7 @@
  *     #algolia-hits 节点，与库是否加载无关，不受影响。
  *
  * 【回滚】见 bak/perf-search-lazy-20261004/ROLLBACK.txt：
- *   删除本文件 + 从 _config.fomalhaut.yml 的 inject.bottom 去掉那一行 +
+ *   删除本文件 + 从 _config.chengic.yml 的 inject.bottom 去掉那一行 +
  *   把 additional-js.pug 的 search 分支换回三条 <script>。
  *   2026-10-11 这次的改动前副本见 bak/search-toc-fix-20261011/before/。
  * ========================================================================== */

@@ -8,7 +8,7 @@
    兼容：pjax 换页进来时 navigation entry 是首次加载那条（对不上当前路径），
          自动退到 resource entry 里找同路径那条，取到的仍是真实耗时。
          页面上没有这些字段时整段直接 return —— 别的页面零开销。
-   回滚：删掉 _config.fomalhaut.yml → inject.bottom 那一行 <script> 再删本文件。
+   回滚：删掉 _config.chengic.yml → inject.bottom 那一行 <script> 再删本文件。
    ========================================================================== */
 (function () {
   "use strict";

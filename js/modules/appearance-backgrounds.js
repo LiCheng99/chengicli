@@ -420,7 +420,7 @@ function appearanceBackgroundParse(value) {
   }
   return url ? {kind:'image',css:'url("'+url+'")',url:url} : null;
 }
-// 站点默认背景直链（第三处副本：与 _config.fomalhaut.yml 的 #defineBg、settings.js 的 resetBg_() 同源，改地址要三处一起改）
+// 站点默认背景直链（第三处副本：与 _config.chengic.yml 的 #defineBg、settings.js 的 resetBg_() 同源，改地址要三处一起改）
 //   PC 日间    → /Background-wallpaper/computer-Daytime-background.webp
 //   PC 夜间    → /Background-wallpaper/computer-Night-background.webp
 //   移动端日间  → /Background-wallpaper/phone-Daytime-background.webp

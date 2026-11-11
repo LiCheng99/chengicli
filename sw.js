@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------
- * sw.js —— Fomalhaut CDN 分流器（2026-10-01 修订）
+ * sw.js —— chengic CDN 分流器（2026-10-01 修订）
  *
  * 历史问题（2026-09-30 版）：else 分支的 catch 没有 return，respondWith(undefined)
  * 直接抛错；注册了两个 fetch 监听器且同一 event 上 respondWith 两次；对所有同源请求

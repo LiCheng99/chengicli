@@ -1,7 +1,7 @@
 /* ============================================================================
  * source/js/inject/typewriter.js —— 首页副标题打字机「丝滑版」
  * ----------------------------------------------------------------------------
- * 背景：主题 themes/fomalhaut/layout/includes/third-party/subtitle.pug 用的是
+ * 背景：主题 themes/chengic/layout/includes/third-party/subtitle.pug 用的是
  *   Typed.js，参数是 typeSpeed:150 / backSpeed:50：逐字硬蹦、每字停 150ms，
  *   一句 30 字要打 4.5 秒，观感就是「一个字一个字往外挤」。
  *
@@ -22,9 +22,9 @@
  *   ⑤ 命中 prefers-reduced-motion 时直接显示整句，不做任何动画。
  *   外观全在 source/css/typewriter.css，本文件只负责节奏与 DOM。
  *
- * 回滚：删掉 _config.fomalhaut.yml inject.head 里的 <script src="/js/inject/typewriter.js?v=...">
+ * 回滚：删掉 _config.chengic.yml inject.head 里的 <script src="/js/inject/typewriter.js?v=...">
  *       与 <link ... href="/css/typewriter.css?v=..."> 两行即可
- *       （配置备份 bak/20261004-typewriter-smooth/before/_config.fomalhaut.yml）。
+ *       （配置备份 bak/20261004-typewriter-smooth/before/_config.chengic.yml）。
  * ========================================================================== */
 (function () {
   'use strict';

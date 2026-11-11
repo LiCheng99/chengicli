@@ -201,9 +201,12 @@
   border-radius: 4px;
 }
 
-/* ---------- 列色彩区分 ----------
- * 按表头含义给每一列上固定颜色：规格 / 大径 / 小径 / 牙高 / 螺距 / 底孔 / 每英寸牙数。
- * 表头用实色，数据格用淡色底 + 左侧色条，整页各表配色统一（脚本见 thread-table.js）。
+/* ---------- 列色彩区分（只给表头上色） ----------
+ * 2026-11-08：按用户要求，颜色只保留在表头这一行 ——
+ *   「规格 / 大径 / 小径 / 牙高 / 螺距 / 底孔 / 每英寸牙数」六个格子。
+ * 数据区不再铺淡色底、也不再画左侧色条，恢复成中性底色；
+ * 斑马纹、悬停、搜索命中高亮都是灰阶/交互态，照常保留，方便对行阅读。
+ * thread-table.js 会同时给 th 和 td 加 tc-col-* 类，这里只让 th 命中。
  */
 #article-container .tc-table th.tc-col-key    { background: #5b6cff; }
 #article-container .tc-table th.tc-col-major  { background: #e4572e; }
@@ -212,23 +215,6 @@
 #article-container .tc-table th.tc-col-pitch  { background: #3a8fd6; }
 #article-container .tc-table th.tc-col-drill  { background: #9b6dff; }
 #article-container .tc-table th.tc-col-tpi    { background: #4f9aa0; }
-
-#article-container .tc-table td.tc-col-key    { background: rgba(91, 108, 255, .12);  box-shadow: inset 3px 0 0 #5b6cff; }
-#article-container .tc-table td.tc-col-major  { background: rgba(228, 87, 46, .12);   box-shadow: inset 3px 0 0 #e4572e; }
-#article-container .tc-table td.tc-col-minor  { background: rgba(242, 165, 65, .15);  box-shadow: inset 3px 0 0 #f2a541; }
-#article-container .tc-table td.tc-col-height { background: rgba(47, 168, 79, .13);   box-shadow: inset 3px 0 0 #2fa84f; }
-#article-container .tc-table td.tc-col-pitch  { background: rgba(58, 143, 214, .13);  box-shadow: inset 3px 0 0 #3a8fd6; }
-#article-container .tc-table td.tc-col-drill  { background: rgba(155, 109, 255, .13); box-shadow: inset 3px 0 0 #9b6dff; }
-#article-container .tc-table td.tc-col-tpi    { background: rgba(79, 154, 160, .13);  box-shadow: inset 3px 0 0 #4f9aa0; }
-
-/* 暗色主题下淡色底再提一档，保证看得清 */
-[data-theme="dark"] #article-container .tc-table td.tc-col-key    { background: rgba(91, 108, 255, .22); }
-[data-theme="dark"] #article-container .tc-table td.tc-col-major  { background: rgba(228, 87, 46, .22); }
-[data-theme="dark"] #article-container .tc-table td.tc-col-minor  { background: rgba(242, 165, 65, .24); }
-[data-theme="dark"] #article-container .tc-table td.tc-col-height { background: rgba(47, 168, 79, .22); }
-[data-theme="dark"] #article-container .tc-table td.tc-col-pitch  { background: rgba(58, 143, 214, .22); }
-[data-theme="dark"] #article-container .tc-table td.tc-col-drill  { background: rgba(155, 109, 255, .22); }
-[data-theme="dark"] #article-container .tc-table td.tc-col-tpi    { background: rgba(79, 154, 160, .22); }
 
 /* ---------- 自定义螺纹：计算器 ---------- */
 #article-container .tc-calc {

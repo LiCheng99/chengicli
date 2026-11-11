@@ -1,7 +1,7 @@
 /*!
  * pjax-guard.js —— 修 pjax 选择器不匹配导致的「换页退回整页刷新」与「加载遮罩一直转圈」
  *
- * 【问题】themes/fomalhaut/layout/includes/third-party/pjax.pug:6 的 pjaxSelectors 里写死了
+ * 【问题】themes/chengic/layout/includes/third-party/pjax.pug:6 的 pjaxSelectors 里写死了
  *   '#tag-echarts'、'#posts-echart'、'#categories-echarts'，而这三个 id 只存在于文章统计页（/tags/，由主题
  *   layout/includes/page/echarts.pug 渲染）。pjax 的 switches-selectors 在切换前会逐个比对「新文档 / 旧文档里
  *   该选择器的元素个数」，只要有一个不一致就 throw：
@@ -17,7 +17,7 @@
  *      换页后图表照常重建，功能不受影响；
  *   2) 兜底层：pjax:send 后 6 秒仍未收到 pjax:complete、收到 pjax:error、以及页面从 bfcache 恢复时，
  *      都把加载遮罩关掉（preloader.endLoading()），保证任何意外都不会把读者困在加载动画里。
- * 回滚：删掉本文件，并去掉 _config.fomalhaut.yml 里引用它的那一行。
+ * 回滚：删掉本文件，并去掉 _config.chengic.yml 里引用它的那一行。
  */
 (function () {
   'use strict';

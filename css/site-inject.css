@@ -1,7 +1,7 @@
 /* ============================================================================
  * source/css/site-inject.css —— 站点注入样式合集
  * ----------------------------------------------------------------------------
- * 本文件由 _config.fomalhaut.yml 的 inject.head 段抽出（2026-10-03 屎山重构）。
+ * 本文件由 _config.chengic.yml 的 inject.head 段抽出（2026-10-03 屎山重构）。
  * 抽出来的原因：在 YAML 里写 CSS 没有语法高亮、没有补全、缩进错一位就会被静默吞掉；
  * 在一个两千行的配置文件里翻样式更是折磨。现在样式集中在这个文件里，配置里只留一行 <link>。
  *
@@ -19,16 +19,16 @@
  *   是「运行时空槽」：由右下角美化面板的 JS 在运行时写入内容，不能删、不能挪。
  *
  * 【本文件目录】共 16 块（后面的优先级更高）
- *    1. scroll-gap-css     ← 原 _config.fomalhaut.yml:1209-1212
- *    2. annoV2             ← 原 _config.fomalhaut.yml:1216-1295
- *    3. pcLightTheme       ← 原 _config.fomalhaut.yml:1306-1344
- *    4. asideWider         ← 原 _config.fomalhaut.yml:1364-1379
- *    5. listPagination     ← 原 _config.fomalhaut.yml:1437-1437
- *    6. pageWidthLimit     ← 原 _config.fomalhaut.yml:1438-1438
- *    7. rightMenuState     ← 原 _config.fomalhaut.yml:1444-1452
- *    8. webinfoCard        ← 原 _config.fomalhaut.yml:1492-1518
- *    9. ft-hide-self       ← 原 _config.fomalhaut.yml:1522-1526
- *   10. aplayerVolumeFix   ← 原 _config.fomalhaut.yml:1538-1542
+ *    1. scroll-gap-css     ← 原 _config.chengic.yml:1209-1212
+ *    2. annoV2             ← 原 _config.chengic.yml:1216-1295
+ *    3. pcLightTheme       ← 原 _config.chengic.yml:1306-1344
+ *    4. asideWider         ← 原 _config.chengic.yml:1364-1379
+ *    5. listPagination     ← 原 _config.chengic.yml:1437-1437
+ *    6. pageWidthLimit     ← 原 _config.chengic.yml:1438-1438
+ *    7. rightMenuState     ← 原 _config.chengic.yml:1444-1452
+ *    8. webinfoCard        ← 原 _config.chengic.yml:1492-1518
+ *    9. ft-hide-self       ← 原 _config.chengic.yml:1522-1526
+ *   10. aplayerVolumeFix   ← 原 _config.chengic.yml:1538-1542
  *   11. readModeIconGuard  ← 2026-10-04 新增（阅读模式标题风车兜底）
  *   13. cardAnimPerf       ← 2026-10-04 新增（首页卡片箭头 / 置顶角标流光改走 transform）
  *   14. loadingIdle        ← 2026-10-04 新增（加载动画在遮罩隐藏后停掉）
@@ -37,16 +37,16 @@
  *   17. darkModeSpeed      ← 2026-10-11 新增（昼夜切换动画时长调整：覆盖天空/星球/日月互换时长，整屏遮挡 ~1.5s）
  * ========================================================================== */
 
-/* ── 1/12  #scroll-gap-css  ← 原 _config.fomalhaut.yml:1209-1212 ── */
+/* ── 1/12  #scroll-gap-css  ← 原 _config.chengic.yml:1209-1212 ── */
 /* 锚点跳转兜底：给常驻顶栏留出高度。scroll-padding-top 作用于滚动容器的锚点定位， */
 /* 使得「JS 完全没跑 / pjax 换页后点击处理丢失」时，原生锚点跳转也不会把标题顶到常驻顶栏底下。 */
 /* 实测注意：不要再给目标元素加 scroll-margin-top，两者会叠加（70+70=140px）造成偏移过大。 */
 /* JS 版补偿见 inject.bottom 的 scroll-gap-fix（实测落点 70px）。 */
 html { scroll-padding-top: 70px !important; }
 
-/* ── 2/12  #annoV2  ← 原 _config.fomalhaut.yml:1216-1295 ── */
+/* ── 2/12  #annoV2  ← 原 _config.chengic.yml:1216-1295 ── */
 /* 公告栏 · 信息板改版样式（配合 card_announcement.content 的新结构，纯 CSS + 变量） */
-/* 公告栏 · 信息板改版（配合 _config.fomalhaut.yml 的 card_announcement.content）
+/* 公告栏 · 信息板改版（配合 _config.chengic.yml 的 card_announcement.content）
  * 只作用于侧栏 .card-announcement 这一张卡；配色跟着 --theme-color 走，
  * 由它派生三档，每个变量第一行是「不支持 color-mix() 的老浏览器」回退值：
  *   --anno-accent  主题色原色
@@ -179,7 +179,7 @@ background: linear-gradient(135deg, color-mix(in srgb, var(--anno-accent) 88%, v
 /* 原「欢迎信息」块的配色（#welcome-info）已于 2026-10-28 随卡片一起删除，
    卡片位置换成了「每日一言」+ 悬停音乐播放器，样式单独放在 source/css/daily-say.css。 */
 
-/* ── 3/12  #pcLightTheme  ← 原 _config.fomalhaut.yml:1306-1344 ── */
+/* ── 3/12  #pcLightTheme  ← 原 _config.chengic.yml:1306-1344 ── */
 /* 版权卡片 · 白天配色（2026-10-05）：原文那套粉-青-米渐变是主题作者写死的固定值，跟主题色无关； */
 /* 更要紧的是两处彩色小字白天几乎看不见：文章链接 #99a9bf 只有 1.89:1、值行用主题色原色只有 1.71:1 */
 /* （实测自用户截图，WCAG AA 小字要 4.5:1）。注意 #FF1493 放在纯白上也只有 2.13:1 —— 所以光换底色没用， */
@@ -231,14 +231,14 @@ html[data-theme="light"] #post .post-copyright:before {
   color: color-mix(in srgb, var(--theme-color, #FF1493) 40%, #7b8794);
 }
 
-/* ── 4/12  #asideWider  ← 原 _config.fomalhaut.yml:1364-1379 ── */
+/* ── 4/12  #asideWider  ← 原 _config.chengic.yml:1364-1379 ── */
 /* 侧栏宽度（第三轮，2026-10-04）：第二轮把侧栏顶到 .layout 最右边，结果撞上了右侧悬浮工具条， */
 /* 所以这一轮同时处理「宽度」和「右边留够工具条的位置」两件事。 */
 /* 两个必须知道的上游事实： */
 /*  1) 站点自定义 CSS `.aside-content { max-width: 318px; min-width: 300px }`（类选择器）会把侧栏锁死在 318px； */
-/*     元素本身是 #aside-content.aside-content（themes/fomalhaut/layout/includes/widget/index.pug:1）， */
+/*     元素本身是 #aside-content.aside-content（themes/chengic/layout/includes/widget/index.pug:1）， */
 /*     所以要用 ID+类 的选择器才压得住它。站点还有 `.layout { max-width: 1400px }`（覆盖主题的 1200px）。 */
-/*  2) 右侧悬浮工具条 #rightside 是 position: fixed（themes/fomalhaut/source/css/_layout/rightside.styl:1-4 */
+/*  2) 右侧悬浮工具条 #rightside 是 position: fixed（themes/chengic/source/css/_layout/rightside.styl:1-4 */
 /*     是 right: -48px，custom.css:2284-2288 再 translateX(-58px)，按钮宽 38px，见 custom.css:1087-1096）—— */
 /*     换算下来按钮左边缘大约在「窗口右边 −48px」处，所以布局内容必须在它左边收住，不能贴到窗口最右。 */
 /* 第三轮做法：① 压缩整个布局宽度（max-width 取 min(1400px, 100vw - 140px)）；② 侧栏固定 380px， */
@@ -271,14 +271,14 @@ html[data-theme="light"] #post .post-copyright:before {
   .layout:not(.hide-aside) > div:first-child { flex: 1 1 auto; width: auto; min-width: 0; }
 }
 
-/* ── 5/12  #listPagination  ← 原 _config.fomalhaut.yml:1437-1437 ── */
+/* ── 5/12  #listPagination  ← 原 _config.chengic.yml:1437-1437 ── */
 /* 归档 / 标签 / 分类等列表页的翻页按钮：样式对齐首页（卡片圆角 + 悬浮反馈 + 统一尺寸） */
 .layout > div:not(.recent-posts) #pagination .pagination > *{display:inline-block;margin:0 6px;width:2.5em;height:2.5em;line-height:2.5em;text-align:center}.layout > div:not(.recent-posts) #pagination .pagination > *:not(.space){border-radius:8px;background:var(--card-bg);box-shadow:var(--card-box-shadow);transition:all .3s}.layout > div:not(.recent-posts) #pagination .pagination > *:not(.space):hover{background:var(--btn-hover-color);color:var(--btn-color);box-shadow:var(--card-hover-box-shadow)}
 
-/* ── 6/12  #pageWidthLimit  ← 原 _config.fomalhaut.yml:1438-1438 ── */
+/* ── 6/12  #pageWidthLimit  ← 原 _config.chengic.yml:1438-1438 ── */
 .layout:has(#page),.layout:has(#archive),.layout:has(#tag),.layout:has(#category){max-width:1200px}
 
-/* ── 7/12  #rightMenuState  ← 原 _config.fomalhaut.yml:1444-1452 ── */
+/* ── 7/12  #rightMenuState  ← 原 _config.chengic.yml:1444-1452 ── */
 /*  */
 /* 侧边栏「右键模式」按钮：显示"站点自定义右键"当前是开还是关 */
 /*   开 = 跟随主题色（主题默认外观，不动）；关 = 灰色 + 图标上一道斜杠 */
@@ -291,7 +291,7 @@ html[data-theme="dark"][data-rm="off"] #rightside button:has(> i.fa-mouse):hover
 html[data-rm="off"] #rightside button:has(> i.fa-mouse) > i{opacity:.4;}
 html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";position:absolute;left:50%;top:50%;width:20px;height:2px;border-radius:2px;background:#fff;opacity:.95;transform:translate(-50%,-50%) rotate(-45deg);}
 
-/* ── 8/12  #webinfoCard  ← 原 _config.fomalhaut.yml:1492-1518 ── */
+/* ── 8/12  #webinfoCard  ← 原 _config.chengic.yml:1492-1518 ── */
 /* （2026-10-03）不蒜子已弃用，统计源改为 Vercount（见 additional-js.pug）。 */
 /* 原先这两段（bsz-guard 拦截器 / bsz-lazy 延迟兜底）是专为 busuanzi.ibruce.info 写的； */
 /* 其中 bsz-lazy 的 6 秒超时会把 Vercount 已经写好的数字覆盖成「—」，故整段删除。 */
@@ -337,17 +337,14 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
 .card-webinfo .wi-visit-num{font-size:16px;font-weight:600;line-height:1.3;font-variant-numeric:tabular-nums}
 .card-webinfo .wi-visit-label{font-size:11px;opacity:.55;margin-top:2px}
 
-/* ── 9/12  #ft-hide-self  ← 原 _config.fomalhaut.yml:1522-1526 ── */
-/* 页脚「推荐友链⌛」隐藏本站自己那一项（2026-10-03） */
-/* 该列表硬编码在 themes/fomalhaut/layout/includes/footer.pug:33-58，没有任何配置项可管； */
-/* 按 href 精准隐藏（:has() 现代 Chrome 生效，老浏览器不支持时优雅降级为仍显示）。 */
-/* 页脚推荐友链：去掉指向本站（example.com）的那一项 */
-.ft-img-group .img-group-item:has(> a[href*="example.com"]) { display: none !important; }
+/* ── 9/12  原 #ft-hide-self 已随「推荐友链」功能一起删除（2026-11-08）──
+   原来这里有一条 :has() 规则用来隐藏推荐友链里指向本站的那一项；
+   整块小头像格已按需求移除，这条规则与对应的 ft-ad-extra.js 一并删掉。 */
 
-/* ── 10/12  #aplayerVolumeFix  ← 原 _config.fomalhaut.yml:1538-1542 ── */
+/* ── 10/12  #aplayerVolumeFix  ← 原 _config.chengic.yml:1538-1542 ── */
 /* 八音盒 APlayer 音量条「点了看不出变化」修复（2026-10-03） */
 /* 根因：APlayer 渲染出的 .aplayer-volume 自带内联 style="background:<data-theme 的颜色>"， */
-/*   内联样式优先级高于样式表，于是 themes/fomalhaut/source/css/_custom/custom.css:1492 那句 */
+/*   内联样式优先级高于样式表，于是 themes/chengic/source/css/_custom/custom.css:1492 那句 */
 /*   不带 !important 的 background: var(--theme-color) 从来没生效过——填充色一直是 */
 /*   source/music/index.md 里 data-theme="#e3f2f5" 的浅灰蓝； */
 /*   而槽色（custom.css:1488）是 color-mix(--theme-color 18%, #fff)，也是接近白的浅色， */
@@ -363,7 +360,7 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
 /* 阅读模式下的标题小风车兜底。
  * 主题在阅读模式里会把标题内边距整个清空（编译产物 public/css/index.css 里）：
  *   .read-mode #article-container h1 ~ h6 { padding: 0 }   —— 还有一份 :hover 版
- * 但标题前风车图标的负 margin 依然生效（themes/fomalhaut/source/css/_custom/custom.css:925-960，
+ * 但标题前风车图标的负 margin 依然生效（themes/chengic/source/css/_custom/custom.css:925-960，
  *   h1~h6 依次是 -1.55 / -1.35 / -1.22 / -1.05 / -0.9 / -0.9rem），
  * 于是图标被顶到标题盒左侧：桌面端卡片左右各有 40px 内边距还能兜住，
  * 窄屏卡片只剩 14px（.layout > div:first-child:not(.recent-posts) { padding: 36px 14px }），
@@ -439,7 +436,7 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
 }
 
 /* ── 15/15  cardGlassOff  ← 2026-10-04 新增（作者卡去掉实时背景模糊）─────────────
- * 背景：themes/fomalhaut/source/css/_custom/custom.css:3787-3793 在 ≥1200px 给作者卡
+ * 背景：themes/chengic/source/css/_custom/custom.css:3787-3793 在 ≥1200px 给作者卡
  *   的 ::before 加了 backdrop-filter: blur(11px) saturate(1.45)。卡片本身是随页面滚动的，
  *   而它背后的 #web_bg 是 position: fixed 不动的 —— 于是浏览器每一帧都要对「卡片此刻
  *   盖住的那块背景」重做一次高斯模糊。这是侧栏滚动时最贵的一项，弱 GPU 上直接掉帧。
@@ -499,7 +496,7 @@ html[data-rm="off"] #rightside button:has(> i.fa-mouse)::after{content:"";positi
    所以配色抽到这里，daily-say.css 的 #ds-mini 直接引用（本文件先于它加载）。
    ⚠⚠ 第一版（掺主题色）已被作者否掉：粉主题下整块变成「红红的」玻璃，压在有纹理的
    壁纸上又糊成一团。作者给的参照是**侧栏卡片**（日历 / 倒计时 / 公告栏），
-   所以现在不再自己调色，直接抄卡片那三件套（themes/fomalhaut/source/css/_custom/custom.css:446-465）：
+   所以现在不再自己调色，直接抄卡片那三件套（themes/chengic/source/css/_custom/custom.css:446-465）：
      background: var(--trans-light) / var(--trans-dark)   ← 和卡片同一个变量、同一个滑条
      border:     var(--border-style)                      ← 1px 实线，深色主题也不另调
      box-shadow: 卡片那道投影的缩小版
@@ -1331,31 +1328,22 @@ body:has(#article-container .mp-page) .layout {
 
 */
 
-/* ── 页脚「站点运行 X 年 Y 天」（2026-10-31 新增）────────────────────────
-   位置：themes/fomalhaut/layout/includes/footer.pug 的 .copyright 里，
-        紧跟「©2023-2026 By chengicli」之后的 #ftRun。
+/* ── 页脚「站点运行 X年X月X天」（2026-10-31 新增，11-08 改格式，11-09 挪到第三行）──
+   位置：themes/chengic/layout/includes/footer.pug 的 .footer_custom_text 开头（#ftRun），
+        和「已经和女朋友 X年X月X天啦」并排 —— 两个「时长」同行，备案号则回到 © 那行。
    文字由 source/js/modules/footer-time.js 每秒写入（值没变就不写 DOM），规则与
-   「已经和女朋友 X 天啦」一致：
-     · 不满 1 年只显示天数：50 天 → 「50 天」，不出现「0 年」
-     · 满整年省略「0 天」：正好 365 天 → 「1 年」，不是「1 年 0 天」
+   「已经和女朋友 X年X月X天啦」一致：按真实日历拆整年 / 整月 / 剩余天数，
+   为 0 的单位整段省略 —— 3年6月5天、3月26天、118天，不出现「0年0月118天」。
    数字加粗 + 主题色，和 #ftLove 的视觉语言保持一致。 */
-#footer-wrap .copyright #ftRun {
-  margin-left: 10px;
-  font-size: 14px;
+#footer-wrap .footer_custom_text #ftRun {
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
 
-#footer-wrap .copyright #ftRun b {
+#footer-wrap .footer_custom_text #ftRun b {
   margin: 0 2px;
   color: var(--theme-color);
   font-weight: 700;
-}
-
-@media screen and (max-width: 768px) {
-  #footer-wrap .copyright #ftRun {
-    display: block;
-    margin: 4px 0 0;
-  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1692,4 +1680,252 @@ html[data-theme="dark"] .site-card-group {
 /* 系统开了「减少动态效果」时：柱子保持半高，心形照样完整 */
 @media (prefers-reduced-motion: reduce) {
   #footer-wrap .footer_custom_text .ft-love-bar { animation: none !important; transform: scaleY(.62); }
+}
+
+/* ===========================================================================
+ * 页脚 v4 —— 居中、透明、一图流（2026-11-08，第四版）
+ * ---------------------------------------------------------------------------
+ * 前三稿都被作者否了，判断依据统一成一句话：**页脚不能跟壁纸抢**。
+ *   v1 深色蒙版条 + 两个通栏实心大按钮        → 按钮抢戏
+ *   v2 白玻璃卡片                             → 像个"盒子"，和真卡片挤在一起
+ *   v3 扁平排版 + 巨型站点名水印 + 不透明浅底   → 一块白板把壁纸切断，最违和
+ *   v4 不铺底：只留一层向上渐隐的暗场（只压暗、不遮挡），
+ *      文字居中竖排：站点名 / 粉色短线 / 链接行 / 版权·运行时长 / 备案·恋爱 / 站点统计。
+ *
+ * 为什么用渐隐暗场而不是实心底：
+ *   · 站点是"一图流"，壁纸是主角 —— 页脚应当是它的收尾，不是压在它上面的一块板；
+ *   · 暗场是纯 alpha 渐变，从顶部透明渐到 48% 墨色，页脚像"沉"进页面底部，没有硬边；
+ *   · 白字 + 双层轻投影保证在任意壁纸上都读得出来（见下面的 ③）。
+ *
+ * 配色：
+ *   文字三级白（.94 / .70 / .46）+ 极轻文字投影；主题色只出现在：
+ *   顶部短线、链接 hover、#ftRun / #ftLove 的数字、爱心。
+ * 必须保留：站点运行（#ftRun）、域名备案（.ft-icp）、恋爱计时（#ftLove）。
+ * ⚠ 旧结构（.ft-item-1 / .t-top / .btn-xz / .ft-top / .ft-nav / .ft-wordmark）
+ *   已全部从 footer.pug 删除；custom.css:2452 那段老页脚样式不再命中任何元素。
+ * ========================================================================= */
+
+/* ① 干掉原来横贯整屏的深色蒙版（custom.css:529 与 darkmode.styl:43 都设了 #footer:before） */
+#footer { background: transparent !important; }
+html[data-theme] #footer::before { display: none !important; }
+
+/* ② 底部渐隐暗场：::after 铺一层同色三段渐变，越往下越暗，壁纸仍然看得见。
+   ⚠ 这里**不要**加 backdrop-filter + mask：两者叠在同一个元素上时，Chrome 会每帧
+   重新采样背景再套遮罩，页脚区域的文字会跟着"一闪一闪"（2026-11-08 作者报的现象）。
+   所以只用纯 alpha 渐变，零合成开销。
+   ⚠ 渐变首尾必须写同一个 RGB、只改 alpha（rgba(18,20,24,0)），
+   写成 transparent 的话那是"透明黑"，白色渐到它中途会发灰。 */
+html[data-theme] #footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(180deg,
+    rgba(18, 20, 24, 0) 0%,
+    rgba(18, 20, 24, .30) 38%,
+    rgba(18, 20, 24, .48) 100%);
+}
+
+/* 深色主题：壁纸本来就暗，暗场加深一点点，别糊成一块黑 */
+html[data-theme="dark"] #footer::after {
+  background-image: linear-gradient(180deg,
+    rgba(10, 11, 13, 0) 0%,
+    rgba(10, 11, 13, .34) 38%,
+    rgba(10, 11, 13, .54) 100%);
+}
+
+/* ③ 内容层：居中单列，与 .layout 同宽，文字全部白色系 */
+#footer-wrap {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 46px 20px 34px;
+  color: rgba(255, 255, 255, .72);
+  text-align: center;
+  /* 双层投影：近处一层实一点保证边缘，外面一圈散开负责在亮壁纸上兜底 */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 0 10px rgba(0, 0, 0, .35);
+  /* 三级白 + 主题色点缀，下面的规则全部引用这组 token */
+  --ft-fg: rgba(255, 255, 255, .94);
+  --ft-mid: rgba(255, 255, 255, .7);
+  --ft-dim: rgba(255, 255, 255, .46);
+}
+
+@media screen and (min-width: 2000px) {
+  #footer-wrap { max-width: 1500px; }
+}
+
+/* ④ 站点名：字距拉到 0.34em、小号，当 logo 用；不抢戏但给页脚一个"署名"起点 */
+#footer-wrap .ft-sign {
+  color: var(--ft-fg);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .34em;
+  /* letter-spacing 会在末字母后面也留一份，补回来才是视觉居中 */
+  text-indent: .34em;
+}
+
+/* ⑤ 顶部装饰：一条两端渐隐的粉色短线，替掉传统分割线。
+   渐变两头不用 transparent（那是透明黑，会发灰），直接给主题色的 0 alpha 版本，
+   再补一层同色微光，跟站点里霓虹灯的发光语言一致。 */
+#footer-wrap .ft-deco {
+  width: 46px;
+  height: 2px;
+  margin: 14px auto 20px;
+  border-radius: 2px;
+  background: var(--theme-color);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 50%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 50%, transparent);
+  box-shadow: 0 0 10px var(--theme-color);
+}
+
+/* ⑥ 链接行：横排、· 分隔、下划线从左滑入 */
+#footer-wrap .ft-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: .3px;
+}
+
+#footer-wrap .ft-links a {
+  position: relative;
+  color: var(--ft-mid);
+  text-decoration: none !important;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  padding-bottom: 2px;
+  transition: color .22s, background-size .25s;
+}
+
+#footer-wrap .ft-links a + a { margin-left: 26px; }
+
+#footer-wrap .ft-links a + a::before {
+  content: '·';
+  position: absolute;
+  left: -16px;
+  color: var(--ft-dim);
+}
+
+#footer-wrap .ft-links a:hover {
+  color: var(--theme-color);
+  background-size: 100% 1px;
+  /* 主题色微光：和站点标题那套霓虹发光同一个语言，只是不闪 */
+  text-shadow: 0 0 8px color-mix(in srgb, var(--theme-color) 55%, transparent), 0 1px 3px rgba(0, 0, 0, .35);
+  transition: color .22s, background-size .25s, text-shadow .22s;
+}
+
+/* ⑦ 第二行：© + 作者 + 域名备案（.ft-icp，2026-11-09 从 custom_text 挪过来）。
+   用 flex 而不是行内流：三块各当一个整体，窄屏时在块之间换行，
+   而不是断在「By」和作者名、或者「域名正在」「备案中」之间。 */
+#footer-wrap .copyright {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0 7px;
+  margin-top: 18px;
+  color: var(--ft-mid);
+  font-size: 13px;
+  line-height: 1.9;
+  letter-spacing: .3px;
+}
+
+/* 2026-11-11：整行统一成 --ft-mid（70% 白）——「©2023-2026 / By chengicli」
+   原来比备案号亮一档（--ft-fg .94），作者要求三者同色。 */
+#footer-wrap .copyright b {
+  color: var(--ft-mid);
+  font-weight: 600;
+}
+
+#footer-wrap .copyright .ft-by { white-space: nowrap; }
+
+/* 备案号：footer.styl 的 `#footer-wrap a` 是 (1,0,1)，这里用 (1,2,1) 接管颜色。
+   2026-11-11：按作者要求用 --ft-mid（70% 白）——比「©2023-2026 / By chengicli」
+   的 --ft-fg 淡一档，当次要信息；字重与相邻文字一致，只有 hover 才切主题色
+   （与 #ftLove 的数字同色语言）。 */
+#footer-wrap .copyright .ft-icp {
+  color: var(--ft-mid);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s;
+}
+
+#footer-wrap .copyright .ft-icp:hover {
+  color: var(--theme-color);
+  text-decoration: none;
+}
+
+/* ⑧ 第三行：站点运行 + 恋爱计时（#ftRun 在行首；#ftLove 由 love-days.js 接管） */
+#footer-wrap .footer_custom_text {
+  margin-top: 6px;
+  color: var(--ft-mid);
+  font-size: 13px;
+  line-height: 2;
+  letter-spacing: .3px;
+  text-align: center;
+}
+
+/* footer.styl 的 `#footer-wrap a` 会把备案号刷成 --light-grey（浅底上看不见），
+   这里按页脚自己的白字色阶接管；hover 的主题色由 love-days.js 注入的规则负责 */
+#footer-wrap .footer_custom_text a {
+  color: var(--ft-mid);
+  text-decoration: none;
+}
+
+/* 三处不许拦腰折断：运行时长 / 备案号 / 恋爱时长（窄屏最容易断在"月""天"中间） */
+#footer-wrap #ftRun,
+#footer-wrap .ft-icp,
+#footer-wrap #ftLove {
+  white-space: nowrap;
+}
+
+/* ⑨ 第四行「站点统计 + 去归档翻翻」（#workboard）于 2026-11-09 整行删除，
+   对应的 flex 排版与 .ft-arch 样式一并移除。 */
+
+/* ⑩ 响应式：窄屏收紧字号与间距，并给左下角那组固定胶囊（#fps / #ds-mini，
+   贴底 12 + 高 52）让出位置，免得压住最后一行 */
+@media screen and (max-width: 900px) {
+  #footer-wrap {
+    padding: 38px 16px 30px;
+    font-size: 12.5px;
+  }
+
+  #footer-wrap .ft-links { font-size: 12.5px; row-gap: 6px; }
+  #footer-wrap .ft-links a + a { margin-left: 18px; }
+  #footer-wrap .ft-links a + a::before { left: -11px; }
+  #footer-wrap .copyright { margin-top: 14px; font-size: 12.5px; }
+  #footer-wrap .footer_custom_text { font-size: 12.5px; }
+  #footer-wrap .footer_custom_text #ftRun { font-size: 12.5px; }
+}
+
+@media screen and (max-width: 640px) {
+  /* 左右各留 46px：右边是那列固定圆钮（#rightside），底部是左下角胶囊组，
+     不躲开的话最后一行字会钻到它们下面 */
+  #footer-wrap { padding: 32px 46px 86px; }
+  #footer-wrap .ft-sign { font-size: 14px; }
+  #footer-wrap .ft-deco { margin: 12px auto 16px; }
+  #footer-wrap .ft-links a + a { margin-left: 15px; }
+  #footer-wrap .ft-links a + a::before { left: -9px; }
+  /* © 那一行（含"域名正在备案中~"）在 390px 下一行放不下，右边又会顶到固定圆钮，
+     干脆拆成两行：© + 作者一行、备案号一行，各自居中 */
+  #footer-wrap .copyright { font-size: 12px; display: block; }
+  #footer-wrap .copyright .ft-icp { display: block; }
+  /* 拆成块级后 flex 的 gap 失效，这里补回 © 与作者名之间的间距 */
+  #footer-wrap .copyright .ft-by { margin-left: 6px; }
+  /* 第三行（站点运行 + 恋爱时长）窄屏就让它整段自然折行，每段各自 nowrap */
+  #footer-wrap .footer_custom_text { font-size: 12px; }
+}
+
+/* 系统开了「减少动态效果」：下划线滑入保留（纯视觉、无位移），hover 位移全部停掉 */
+@media (prefers-reduced-motion: reduce) {
+  #footer-wrap .ft-links a { transition: color .2s; }
 }

@@ -6388,17 +6388,17 @@ blockquote.pullquote.right {
   color: var(--font-color);
 }
 /* ============================================================================
- * themes/fomalhaut/source/css/_custom/custom.css
- * —— Fomalhaut 主题的「站点自定义样式」总表（主题样式之后的最后一道覆盖层）
+ * themes/chengic/source/css/_custom/custom.css
+ * —— chengic 主题的「站点自定义样式」总表（主题样式之后的最后一道覆盖层）
  * ----------------------------------------------------------------------------
  * 【它是怎么生效的】
- *   themes/fomalhaut/source/css/index.styl 用 `@import '_custom/custom.css'` 把它内联进
+ *   themes/chengic/source/css/index.styl 用 `@import '_custom/custom.css'` 把它内联进
  *   public/css/index.css（站点只请求一个 CSS，没有单独请求）。所以：
  *   · 改完必须重新 hexo generate 才看得到（只改这里不重新生成 = 白改）；
  *   · 它排在主题各 *.styl 之后 → 同特异性下这里的规则赢，多数情况不需要 !important。
  * ----------------------------------------------------------------------------
  * 【改这里的约定】
- *   1. 能用 _config.fomalhaut.yml 的开关解决的，优先走配置；配置里抽出来的注入样式
+ *   1. 能用 _config.chengic.yml 的开关解决的，优先走配置；配置里抽出来的注入样式
  *      统一放 source/css/site-inject.css —— 本文件只放「对主题样式的覆盖」。
  *   2. 新增一节：用「块注释 + 小节标题（用途）」起头，并在下面的目录里补一行。
  *   3. !important 全文 246 处：只在压不过主题内联样式 / Element UI / 运行时 JS 写入时用。
@@ -6488,7 +6488,7 @@ blockquote.pullquote.right {
  *   常规字体 2 款：SourceHanSerif（思源宋体）· LXGWNeoXiHei（霞鹜新晰黑）
  *   代码字体 3 款：JetBrainsMono · FiraCode · SourceCodePro
  *   ⚠ 霞鹜文楷（LXGW WenKai）**不在本文件**：10-29 起改用官方分片版（97 个 unicode-range 分片），
- *     由 _config.fomalhaut.yml 的 inject 段以 <link rel="stylesheet"> 引入，原因见下方「字体引入」一节。 
+ *     由 _config.chengic.yml 的 inject 段以 <link rel="stylesheet"> 引入，原因见下方「字体引入」一节。 
  *   想换成自己的字体：改本文件末尾「字体引入」一节的 src 即可，family 名保持不变最省事。
  * ----------------------------------------------------------------------------
  * 【已知问题 / 坑】（P3 盘点确认的现状；本次只清理死代码，没有改行为）
@@ -6523,7 +6523,7 @@ blockquote.pullquote.right {
  *     保留 -webkit-*（浏览器至今仍当别名识别），也保留 -webkit-backdrop-filter 与
  *     -moz-osx-font-smoothing（前者 Safari 要、后者 Firefox-macOS 要）。
  *   · 本次没有移动、改写任何一条规则，只做了「删死代码 + 加这份索引」。
- *   · 回滚：把 bak/2026-10-03-屎山重构/before/themes/fomalhaut/source/css/_custom/custom.css
+ *   · 回滚：把 bak/2026-10-03-屎山重构/before/themes/chengic/source/css/_custom/custom.css
  *     复制回原位即可。
  * ========================================================================== */
 /* root伪类指定全局颜色 */
@@ -6669,13 +6669,13 @@ blockquote.pullquote.right {
    统一走公共 CDN（jsDelivr 上的 @fontsource/* 包），不依赖任何自建对象存储。
    （霞鹜文楷原来也在这里，10-29 挪到了 inject 段的官方分片版，见下面那段注释。）
    family 名 = 美化设置面板按钮 onclick 传的值 = localStorage.font / codeFont 的值，
-   也是 _config.fomalhaut.yml 里 font-family / code-font-family 引用的名字，改名时这几处要一起改。
+   也是 _config.chengic.yml 里 font-family / code-font-family 引用的名字，改名时这几处要一起改。
    *** 想换成自己的字体：把下面的 src 换成你自己的 woff2 地址即可，family 名保持不变最省事。 *** */
 /* 【10-29 停用】霞鹜文楷的 @font-face 不再写在这里。
    原来的 src 指向 @fontsource/lxgw-wenkai-tc（**繁体字集**），简体独有字「这/个/说/爱/认/识/过/经…」
    一个都缺，浏览器逐字回落到微软雅黑 —— 一句话里两种字形混排，就是「有的字有字体、有的没加载」的真凶。
    现在改用官方分片版 `lxgw-wenkai-webfont`（97 个 unicode-range 分片，family 名是 'LXGW WenKai'），
-   由 _config.fomalhaut.yml 的 inject 段用 <link rel="stylesheet"> 引入，改哪里、为什么，见 docs 第 7.16 节。
+   由 _config.chengic.yml 的 inject 段用 <link rel="stylesheet"> 引入，改哪里、为什么，见 docs 第 7.16 节。
    ⚠ 不要再在这里重新声明 font-family: LXGW —— 那个名字已经没有任何地方引用了，写了也不会被下载。
 @font-face {
   font-family: LXGW;
@@ -6741,7 +6741,7 @@ blockquote.pullquote.right {
 
 /* —— 代码块字体 ——
    pre/code 的字体不写死，改由 --code-font 变量决定
-   （_config.fomalhaut.yml 的 font.code-font-family 写成 var(--code-font, JetBrainsMono), var(--global-font), ...），
+   （_config.chengic.yml 的 font.code-font-family 写成 var(--code-font, JetBrainsMono), var(--global-font), ...），
    面板切换代码字体时只改这个变量，不用重写样式表。 */
 @font-face {
   font-family: JetBrainsMono;
@@ -7523,7 +7523,7 @@ button#go-up:hover #percent {
 /* ─── 已清理（2026-10-03 屎山重构 P3）──────────────────────────────
    删除：侧栏个人信息卡片「动态渐变」整段（50 行，含 3 个 @keyframes Gradient 定义，全都写在注释里）
    原因：早就不用这套渐变，改成了下面的 springBg.png / aurora.webp 背景图；注释里的 keyframes 永远不会生效，却容易让人以为 Gradient 定义在这里
-   恢复：bak/2026-10-03-屎山重构/before/themes/fomalhaut/source/css/_custom/custom.css
+   恢复：bak/2026-10-03-屎山重构/before/themes/chengic/source/css/_custom/custom.css
    ─────────────────────────────────────────────────────────── */
 
 /* 个人信息卡片背景图 */
@@ -8015,7 +8015,7 @@ blockquote {
 /* ─── 已清理（2026-10-03 屎山重构 P3）──────────────────────────────
    删除：.article-sort-item:before { order: 3px solid var(--theme-color) !important; }
    原因：order 是 border 的笔误，浏览器把整条声明当无效丢弃；真正生效的规则是下面 .article-sort-item:before 的 border: 3px solid ...
-   恢复：bak/2026-10-03-屎山重构/before/themes/fomalhaut/source/css/_custom/custom.css
+   恢复：bak/2026-10-03-屎山重构/before/themes/chengic/source/css/_custom/custom.css
    ─────────────────────────────────────────────────────────── */
 .article-sort-item.year:hover:before {
   border-color: var(--theme-color) !important;
@@ -8725,10 +8725,10 @@ li.categoryBar-list-item {
 /* ─── 已清理（2026-10-03 屎山重构 P3）──────────────────────────────
    删除：@keyframes Gradient（11 行）
    原因：全站没有任何 animation 引用它（搜 "animation: Gradient" 无结果），是动态渐变被停用后留下的孤儿
-   恢复：bak/2026-10-03-屎山重构/before/themes/fomalhaut/source/css/_custom/custom.css
+   恢复：bak/2026-10-03-屎山重构/before/themes/chengic/source/css/_custom/custom.css
    ─────────────────────────────────────────────────────────── */
 
-/* By Fomalhaut版权大小 */
+/* By chengic版权大小 */
 .copyright {
   font-size: 16px;
 }
@@ -8849,21 +8849,13 @@ span.card-clock-weather {
   flex-wrap: wrap;
 }
 
-.ft-item-1,
-.ft-item-2 {
-  display: flex;
-  height: 100%;
-  padding: 2px 14px;
-}
-
+/* 2026-11-08：「推荐友链」那一栏 .ft-item-2 整块删除，页脚只剩 .ft-item-1 */
 .ft-item-1 {
+  display: flex;
   flex-direction: column;
   flex: 2;
-}
-
-.ft-item-2 {
-  flex: 1;
-  flex-direction: column;
+  height: 100%;
+  padding: 2px 14px;
 }
 
 .t-top {
@@ -8927,10 +8919,6 @@ span.card-clock-weather {
   color: var(--theme-color) !important;
 }
 
-.ft-item-2 .ft-img-group {
-  width: 100%;
-}
-
 .ft-t {
   font-size: 1.1rem;
   margin-bottom: 20px;
@@ -8942,36 +8930,8 @@ span.card-clock-weather {
   padding-left: 14px;
 }
 
-.ft-item-2 .ft-img-group .img-group-item {
-  display: inline-block;
-  width: 18.4%;
-  margin-right: 14px;
-  margin-bottom: 6px;
-}
-
-.ft-item-2 .ft-img-group .img-group-item a {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-
-.ft-item-2 .ft-img-group .img-group-item a img {
-  width: 100%;
-  max-height: 80px;
-  border-radius: 10px;
-}
-
-.ft-item-2 .ft-img-group .img-group-item a img:hover {
-  scale: 1.1;
-  transition: all 0.3s ease-in-out;
-}
-
 @media screen and (max-width: 768px) {
   .ft-item-1 {
-    flex-basis: 100% !important;
-  }
-
-  .ft-item-2 {
     flex-basis: 100% !important;
   }
 
@@ -9555,14 +9515,14 @@ hr:before {
 /* ─── 已清理（2026-10-03 屎山重构 P3）──────────────────────────────
    删除：TianliGPT 整段样式（189 行：:root --heo-* 变量 + .post-TianliGPT 及配套类）
    原因：该功能已下线（source/site/time/index.md 更新日志记着「去除 TianliGPT」），配置与模板里都搜不到 tianliGPT；这段 --heo-* 变量还会误导人以为是主题变量
-   恢复：bak/2026-10-03-屎山重构/before/themes/fomalhaut/source/css/_custom/custom.css
+   恢复：bak/2026-10-03-屎山重构/before/themes/chengic/source/css/_custom/custom.css
    ─────────────────────────────────────────────────────────── */
 
 
 /* ==========================================================================
    置顶文章角标（首页卡片左上角）
    --------------------------------------------------------------------------
-   配合 themes/fomalhaut/layout/includes/mixins/post-ui.pug 里的
+   配合 themes/chengic/layout/includes/mixins/post-ui.pug 里的
    postStickyBadge 混入使用。字段：文章 Front-Matter 或正文标记
    <!-- sticky --> 都会写入 sticky = 1；sticky: 2 及以上为「强置顶」，颜色更红。
    .recent-post-item 本身是 overflow: hidden，所以角标只能贴在卡片内部
@@ -10028,7 +9988,7 @@ hr:before {
 
 /* 面板打开时，把右下角悬浮工具条 #rightside 压到面板下面。
    WinBox 面板的 z-index 是 99（settings.js 里 WinBox({ index: 99 })），
-   主题的 #rightside 是 z-index:100（themes/fomalhaut/source/css/_layout/rightside.styl:5），
+   主题的 #rightside 是 z-index:100（themes/chengic/source/css/_layout/rightside.styl:5），
    而手机端面板宽 95%、面板最大化时更是整屏 —— 必然重叠，工具条会盖住右对齐的开关。 */
 body:has(#meihuaBox) #rightside {
   z-index: 90;

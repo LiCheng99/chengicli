@@ -13,7 +13,7 @@
  *   ③ 发现插件脚本不在页面里（pjax 场景）就补加载一次再解密
  *   ④ 给 alert 去重，避免密码输错时连弹几十个「密码不对」
  *
- * 卸载：删掉本文件 + 撤回 _config.fomalhaut.yml 里 unlockSecretJs 那行 inject
+ * 卸载：删掉本文件 + 撤回 _config.chengic.yml 里 unlockSecretJs 那行 inject
  * ============================================================ */
 (function () {
   'use strict';
@@ -311,7 +311,7 @@
 
   /**
    * 表格补包一层 .table-wrap。
-   * 主题的 addTableWrap()（themes/fomalhaut/source/js/main.js）只在
+   * 主题的 addTableWrap()（themes/chengic/source/js/main.js）只在
    * DOMContentLoaded / pjax:complete 各跑一次，而加密文章的正文是「解密后」才插进来的：
    * pjax 进文章时那一刻正文还是锁屏，一个 table 都没有，于是这些表格永远拿不到 .table-wrap。
    * 少了它自带的 `margin: 0 0 20px`，表现就是「下载」按钮紧贴甚至压在上方表格下面；

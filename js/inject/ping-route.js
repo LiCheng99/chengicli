@@ -20,7 +20,7 @@
  *
  * 【可调参数】改调用处传入的 opts（见 inject/ping-route-boot.js）或这里的 DEFAULTS。
  *
- * 【回滚】删掉本文件，并去掉 _config.fomalhaut.yml 里引用 boot 脚本的那一行。
+ * 【回滚】删掉本文件，并去掉 _config.chengic.yml 里引用 boot 脚本的那一行。
  * ============================================================================ */
 (function () {
   'use strict';

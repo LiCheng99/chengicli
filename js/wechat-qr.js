@@ -15,7 +15,7 @@
  *      或其它脚本重建后依然生效；脚本执行本身留了 data-wechat-qr 探针便于排查。
  * 依赖：主题 fancybox: true（Fancybox v4）。万一没就绪，用自建遮罩兜底
  *      —— 不能用 window.open：图片在对象存储上时响应头可能是 attachment，新标签页会变成下载。
- * 回滚：删掉 _config.fomalhaut.yml inject.bottom 里的 <script src="/js/wechat-qr.js?..."></script>
+ * 回滚：删掉 _config.chengic.yml inject.bottom 里的 <script src="/js/wechat-qr.js?..."></script>
  *      以及本文件即可，社交图标会退回「直接打开图片」。
  */
 (function () {

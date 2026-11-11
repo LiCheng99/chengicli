@@ -2,7 +2,7 @@
  * open-assets-blank.js —— 让文章里的「下载」按钮在新标签页打开
  *
  * 背景：主题的 <a class="btn-beautify " href="/" 
-  title=""></a> 标签（themes/fomalhaut/scripts/tag/button.js）
+  title=""></a> 标签（themes/chengic/scripts/tag/button.js）
  * 只输出 <a class="btn-beautify" href="...">，没有 target 参数可用，
  * 点图纸 / 程序下载会在当前页跳走，看一半的文章就丢了。
  *
@@ -10,7 +10,7 @@
  * 统一加上 target="_blank" rel="noopener"。
  * 站内跳转类按钮（比如 btn 指向 /categories/）不受影响。
  *
- * 卸载：删掉本文件 + 撤回 _config.fomalhaut.yml inject.bottom 里那一行
+ * 卸载：删掉本文件 + 撤回 _config.chengic.yml inject.bottom 里那一行
  * ============================================================ */
 (function () {
   'use strict';

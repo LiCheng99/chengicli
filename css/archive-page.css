@@ -13,7 +13,7 @@
  *       ≤680px 单列），栅格列一律 minmax(0, 1fr) 配 min-width: 0，
  *       避免长标题把列顶宽（这条是 /site/time/ 时间轴改版踩过的坑）。
  *
- * 卸载：删掉 _config.fomalhaut.yml inject.head 里的引入行即可，无其它依赖。
+ * 卸载：删掉 _config.chengic.yml inject.head 里的引入行即可，无其它依赖。
  * 仓库路径：source/css/archive-page.css
  */
 

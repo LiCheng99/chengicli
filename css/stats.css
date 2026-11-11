@@ -2,7 +2,7 @@
  * 文章统计页（/tags/，即 网站 › 文章统计）专属样式
  * ----------------------------------------------------------------------
  * 1) 这一页没有 markdown 正文：页面主体由主题布局生成
- *    themes/fomalhaut/layout/includes/page/echarts.pug
+ *    themes/chengic/layout/includes/page/echarts.pug
  *      <center><font size="4">标题</font></center>
  *      <div id="posts-echart" style="height:360px">…</div><br>
  *      <div class="tag-cloud-list is-center">…</div>
@@ -13,7 +13,7 @@
  * 3) 配色从主题色 --theme-color 派生（跟随右上角调色盘实时变化），深色模式只覆盖
  *    变量；每个自定义属性第一行是不支持 color-mix() 的老浏览器的回退值。
  * 4) 回滚：删掉本文件与 /js/stats.js，并还原
- *    bak/20261005-stats-redesign/_config.fomalhaut.yml.bak。
+ *    bak/20261005-stats-redesign/_config.chengic.yml.bak。
  * ====================================================================== */
 
 #page:has(#posts-echart) {

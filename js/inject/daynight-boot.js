@@ -22,7 +22,7 @@
  *        同一个算法只留一份实现，免得两边哪天改歪了。
  *
  * 口径（与 source/js/aside-calendar.js 的 sunTimes / geo / setMode 逐字对齐）：
- *   - 坐标优先级：① window.fomalNightConfig.latLng（_config.fomalhaut.yml 里写死的站点坐标）
+ *   - 坐标优先级：① window.fomalNightConfig.latLng（_config.chengic.yml 里写死的站点坐标）
  *     → ② fomal.js 拿到 IP 定位后的 global.ipLoacation → ③ localStorage 'asideCalGeo' 缓存
  *     → ④ 兜底 { lat: 22.5319, lng: 访客时区推的经度 }。head 里跑得太早，②通常还没到。
  *   - 极昼极夜（cosOmega 越界）→ 返回 null，什么都不做，交给主题默认。
@@ -30,7 +30,7 @@
  *
  * 旋钮（2026-10-14 补）：坐标与开关原本只写在 aside-calendar.js 的 CONFIG 里，而那个文件只在
  *   首页存在 —— 「写了坐标」就变成首页按站点坐标、文章页按访客 IP，两处打架；dayNight.enable
- *   也关不干净。现在统一由 _config.fomalhaut.yml 注入的一行 window.fomalNightConfig 决定：
+ *   也关不干净。现在统一由 _config.chengic.yml 注入的一行 window.fomalNightConfig 决定：
  *     window.fomalNightConfig = { enabled: true, latLng: null, themeKey: 'theme' }
  *       enabled  false = 关掉「访客没手动选过就按日出日落自动定深浅」（fomal.js 那段 8 小时
  *                自动切换也读它，见 source/js/modules/settings.js）；
@@ -39,7 +39,7 @@
  *   运行期也能改：window.fomalDayNight.setConfig({ latLng: [22.53, 114.06] }) 会立刻重算一次；
  *   aside-calendar.js 启动时把文件里那几个旧旋钮汇报上来（那边没写的才补），旧配置不失效。
  *
- * 回滚：删掉 _config.fomalhaut.yml 里这两行（配置那行 + 下面这行）即可 ——
+ * 回滚：删掉 _config.chengic.yml 里这两行（配置那行 + 下面这行）即可 ——
  *   - <script>window.fomalNightConfig=…</script>
  *   - <script src="/js/inject/daynight-boot.js?v=20261014-nightboot2"></script>
  *   （首页行为不受影响，aside-calendar.js 自带完整实现；非首页退回主题默认的 light，
@@ -55,7 +55,7 @@
   var FALLBACK_DAY_TO = 19;      // …到晚 7 点（与 aside-calendar.js 的 isDayNow() 一致）
   var DEFAULT_THEME_KEY = 'theme'; // 与主题 head 内联脚本 / shell.js 的 saveToLocal.set('theme', …, 2) 同一个键
 
-  /* ---- 站点旋钮：_config.fomalhaut.yml 注入的 window.fomalNightConfig ----
+  /* ---- 站点旋钮：_config.chengic.yml 注入的 window.fomalNightConfig ----
    * 这个对象是手写在 YAML 里的，写错一个字符不该让整页脚本挂掉 —— 非法值一律按「没写」处理。 */
   function pickLatLng(raw) {
     var c = raw;
@@ -130,7 +130,7 @@
   function timezoneLng() { return -new Date().getTimezoneOffset() / 4; }
 
   function geo() {
-    // _config.fomalhaut.yml 里写死了坐标就用它（语义与 aside-calendar.js 的 CONFIG.sun.latLng 相同：
+    // _config.chengic.yml 里写死了坐标就用它（语义与 aside-calendar.js 的 CONFIG.sun.latLng 相同：
     // 「写了就用它」，只是现在每页都认，不再是只有首页的卡片认）
     if (CFG.latLng) return { lat: CFG.latLng[0], lng: CFG.latLng[1], src: 'config' };
     var ip = global.ipLoacation;                 // fomal.js（defer）到位后才会有，通常比本脚本晚

@@ -9,7 +9,7 @@
  *   · 美化模块（1753-2925）—— 包括：localStorage 设置读写、设置面板 HTML 拼装（createWinbox/winboxNeedSize/winResize/toggleWinbox）、各开关的实时生效逻辑、滑条增强等
  * ----------------------------------------------------------------------------
  * 整个站点最大的一块：点右下角齿轮弹出的设置面板，管背景图、字体、主题色、侧栏宽度等一大堆外观开关。
- * 加载方式：_config.fomalhaut.yml 的 inject.bottom 列表里以 <script defer> 引用。
+ * 加载方式：_config.chengic.yml 的 inject.bottom 列表里以 <script defer> 引用。
  * ----------------------------------------------------------------------------
  * 【本文件目录】共 62 个顶层声明（行号可能随后续编辑漂移，找不到就 Ctrl+F 搜函数名）
  *    110  FONT_LIST
@@ -619,7 +619,12 @@ var curFontColor = localStorage.getItem("fontColor") || "";
 // 文字颜色：不再逐个列容器（永远列不全，页脚 div / 分页 / 菜单都漏过）。
 // 改成「全量打标记 + 精确排除」：除排除清单外，所有元素加 .fc-auto，统一吃 var(--fc-cur)。
 // 排除的是「不能改颜色的」——实底按钮/徽章/悬浮键（白字压主题色）和代码块（有语法高亮）。
-var FC_KEEP = "a.btn-xz,.btn-xz,.a-chip,#ai-chat-btn,#rightside>div>button,.page-number.current,pre,code,kbd,figure.highlight";
+// 2026-11-08：页脚（#footer-wrap）整块加进排除清单 —— 它压在页面底部的渐隐暗场上，
+// 文字用的是自己的三级白（site-inject.css「页脚 v4」一节），必须保持浅色：
+// 一旦被刷成访客选的深色字色，就是深字压深底、整块消失。顺带也让页脚躲开
+// paintFontColor() 每秒给全站元素写内联 color 的那波重排。
+// （a.btn-xz / .btn-xz 是历史兜底，footer.pug 里已经不用了。）
+var FC_KEEP = "#footer-wrap,a.btn-xz,.btn-xz,.a-chip,#ai-chat-btn,#rightside>div>button,.page-number.current,pre,code,kbd,figure.highlight";
 
 function paintFontColor() {
   if (!curFontColor || !document.body) return;
@@ -844,7 +849,7 @@ function initRangeJump() {
 
 
 // 每12小时强制切换一次夜间模式
-// 2026-10-14：这是「自动决定深浅色」的另一半，所以也听 _config.fomalhaut.yml 里
+// 2026-10-14：这是「自动决定深浅色」的另一半，所以也听 _config.chengic.yml 里
 // window.fomalNightConfig.enabled 那个总开关 —— 关掉自动模式时这一段同样不许动手。
 var autoNightOff = !!(window.fomalDayNight && window.fomalDayNight.config
   && window.fomalDayNight.config.enabled === false);
@@ -932,7 +937,7 @@ function bgValToUrl(s) {
 // 更换背景(自己的代码)
 restoreAppearanceBackground();
 // 默认背景（「恢复默认设置」reset() 会调这里；刷新后 localStorage 里没存自定义背景时也走这里）
-// 四张图与 _config.fomalhaut.yml 的 inject.head #defineBg 逐字一致，改一处必须同步另一处：
+// 四张图与 _config.chengic.yml 的 inject.head #defineBg 逐字一致，改一处必须同步另一处：
 //   --default-bg      PC 日间    /Background-wallpaper/computer-Daytime-background.webp
 //   --darkmode-bg     PC 夜间    /Background-wallpaper/computer-Night-background.webp
 //   --mobileday-bg    移动端日间  /Background-wallpaper/phone-Daytime-background.webp
@@ -1178,7 +1183,7 @@ function createWinbox() {
   winResize();
   window.addEventListener("resize", winResize);
 
-  // 面板 HTML。改这里的约定（样式全在 themes/fomalhaut/source/css/_custom/custom.css 的「美化面板」一节）：
+  // 面板 HTML。改这里的约定（样式全在 themes/chengic/source/css/_custom/custom.css 的「美化面板」一节）：
   //  · 每段「文字 + 开关」用 <label class="opt"> 包住 —— 点文字也能切开关，窄屏换行时开关不会跟自己的文字分家；
   //  · 背景滤镜使用 bf-panel 双层布局，独立样式在 source/css/site-inject.css；
   //  · 主题色那一行是 .colorRow：桌面一行铺开，手机端换成等宽网格（@media max-width:768px）。

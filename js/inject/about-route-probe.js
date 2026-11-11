@@ -10,7 +10,7 @@
          不进首屏关键路径；失败重试 1 次（1.5s 间隔）。
    生效范围：找不到 .ab2 线路卡时整段直接 return —— 别的页面零开销、零报错。
    可调参数：页面里在引入本文件之前写 window.__FOMAL_AB2_PROBE__ = {...} 覆盖。
-   回滚：删掉 _config.fomalhaut.yml → inject.bottom 里那一行
+   回滚：删掉 _config.chengic.yml → inject.bottom 里那一行
          <script defer src="/js/inject/about-route-probe.js?v=20261004"></script>
          再删掉本文件即可（无需清 public/，但要重新 hexo g）。
    ========================================================================== */

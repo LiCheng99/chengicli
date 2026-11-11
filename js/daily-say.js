@@ -15,9 +15,9 @@
  * 【歌单必须是公开歌单】私密歌单（接口返回 songlist 为空）谁都取不到。
  *       QQ 音乐里「歌单 → 编辑 → 隐私设置 → 公开」。
  * ---------------------------------------------------------------------------
- * 结构：模板里的骨架在 themes/fomalhaut/layout/includes/widget/card_announcement.pug，
+ * 结构：模板里的骨架在 themes/chengic/layout/includes/widget/card_announcement.pug，
  *       播放器面板由本文件建在 <body> 末尾（fixed 定位，不受卡片 overflow 影响）。
- *       样式在 source/css/daily-say.css。改完记得把 _config.fomalhaut.yml 里这行的 ?v= 提一版。
+ *       样式在 source/css/daily-say.css。改完记得把 _config.chengic.yml 里这行的 ?v= 提一版。
  */
 ;(function () {
   'use strict';

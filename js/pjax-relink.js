@@ -14,7 +14,7 @@
  *   页脚「听点音乐」这类运行期补进去的链接同理，只是以前没人点到。
  *
  * 【根因 2】/categories/ 是 redirect 存根页（source/categories/index.md → redirect_to: /tags/，
- *   模板 themes/fomalhaut/layout/includes/page/redirect.pug）。页脚「文章分类」虽然被 pjax 绑定了，
+ *   模板 themes/chengic/layout/includes/page/redirect.pug）。页脚「文章分类」虽然被 pjax 绑定了，
  *   但存根页被换进来后，它内联的 location.replace("/tags/") 立刻执行 → 强制整页跳到 /tags/，
  *   同样把播放器一起刷掉。
  *
@@ -26,7 +26,7 @@
  *   两条合起来：磁贴、页脚补的链接、以后任何新注入的站内链接都自动走 pjax，音乐不再被打断。
  *
  * 新增存根页时：在下面 REDIRECTS 里补一行 '/旧路径/': '/新路径/'。
- * 回滚：删掉本文件，并去掉 _config.fomalhaut.yml 里引用它的那一行。
+ * 回滚：删掉本文件，并去掉 _config.chengic.yml 里引用它的那一行。
  */
 (function () {
   'use strict';

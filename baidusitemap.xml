@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.lichengic.com/posts/canon-r50.html</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://www.lichengic.com/posts/beginner.html</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
     <loc>https://www.lichengic.com/posts/4axis-a-shortest-path.html</loc>
     <lastmod>2026-11-07</lastmod>
   </url>
@@ -17,23 +25,15 @@
     <lastmod>2026-11-05</lastmod>
   </url>
   <url>
-    <loc>https://www.lichengic.com/posts/6061-t6-cutting.html</loc>
+    <loc>https://www.lichengic.com/posts/hexo-blog-architecture.html</loc>
     <lastmod>2026-11-05</lastmod>
   </url>
   <url>
-    <loc>https://www.lichengic.com/posts/hexo-blog-architecture.html</loc>
+    <loc>https://www.lichengic.com/posts/6061-t6-cutting.html</loc>
     <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://www.lichengic.com/posts/r50-metal-parts.html</loc>
     <lastmod>2026-11-05</lastmod>
-  </url>
-  <url>
-    <loc>https://www.lichengic.com/posts/canon-r50.html</loc>
-    <lastmod>2026-11-01</lastmod>
-  </url>
-  <url>
-    <loc>https://www.lichengic.com/posts/beginner.html</loc>
-    <lastmod>2026-11-01</lastmod>
   </url>
 </urlset> 

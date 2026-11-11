@@ -9,7 +9,7 @@
  *   · 控制台输出字符画（1067-1145）—— F12 控制台里的 ASCII 字符画 + 三条 %c 彩色提示（用 console.warn 而非 log，避免被下面的策略静音）
  * ----------------------------------------------------------------------------
  * 打开 F12 才会看到的那几行 ASCII 艺术字和"你已打开控制台"提示。
- * 加载方式：_config.fomalhaut.yml 的 inject.bottom 列表里以 <script defer> 引用。
+ * 加载方式：_config.chengic.yml 的 inject.bottom 列表里以 <script defer> 引用。
  * ----------------------------------------------------------------------------
  * 【本文件目录】共 3 个顶层声明（行号可能随后续编辑漂移，找不到就 Ctrl+F 搜函数名）
  *     25  now1
@@ -43,7 +43,7 @@ function createtime1() {
     "站点已经",
     dnum,
     "天啦!",
-    // 版权年份跟着走：2023 是建站年（与 _config.fomalhaut.yml 的 footer.owner.since 保持一致），
+    // 版权年份跟着走：2023 是建站年（与 _config.chengic.yml 的 footer.owner.since 保持一致），
     // 结束年份取运行时的当前年份，省得每年手改一次。
     "©2023-" + new Date().getFullYear() + " By chengicli",
   ];

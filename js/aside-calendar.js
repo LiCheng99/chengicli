@@ -15,7 +15,7 @@
  *                本周 [====== 56.65% ======   ] 还剩 3 天
  *
  * 依赖：lunar.js 暴露的全局 solar2lunar() 与 calendarFormatter.lunar2solar()（必须在本文件之前加载，
- *       加载顺序见 _config.fomalhaut.yml 的 inject.bottom；缺了也能跑，只是没有农历那行）
+ *       加载顺序见 _config.chengic.yml 的 inject.bottom；缺了也能跑，只是没有农历那行）
  * 样式：source/css/aside-calendar.css
  *
  * 要改东西？看下面 CONFIG 一段就够了：
@@ -324,12 +324,12 @@
   // 下面这几个函数现在优先委托 window.fomalDayNight（算法在仓库里只留一份，免得两边改歪），
   // 取不到时（脚本被拦、旧缓存、单独引本文件的场景）继续用本文件自带的实现兜底。
   // 本文件顶部的 CONFIG.sun.latLng / dayNight.enable / dayNight.themeKey 仍然有效：启动时由
-  // syncSharedConfig() 报给共享实现（_config.fomalhaut.yml 里写明的那几项以那边为准）。
+  // syncSharedConfig() 报给共享实现（_config.chengic.yml 里写明的那几项以那边为准）。
   function sharedApi() { return (global && global.fomalDayNight) || null; }
 
   // 2026-10-14：本文件这几个旋钮现在归共享实现统一执行（它每页都在跑，文章页也认），所以在第一次
   // 判定之前把它们汇报上去 —— 否则「卡片按站点坐标显示日出日落、模式却按访客 IP 切换」两边打架。
-  // _config.fomalhaut.yml 里写明的项以那边为准，这里只在那边还是默认值时才补。
+  // _config.chengic.yml 里写明的项以那边为准，这里只在那边还是默认值时才补。
   function syncSharedConfig() {
     var fdn = sharedApi();
     if (!fdn || typeof fdn.setConfig !== 'function' || !fdn.config) return;

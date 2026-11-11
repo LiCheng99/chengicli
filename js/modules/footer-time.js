@@ -1,73 +1,102 @@
 /* ============================================================================
- * modules/footer-time.js —— 页脚计时器
+ * modules/footer-time.js —— 页脚「站点运行」计时器
  * ----------------------------------------------------------------------------
  * 本文件由 source/js/fomal.js 拆出（2026-10-03 屎山重构）。
  * 【重要】这里故意不套 IIFE：主题 pug 模板里有大量内联 onclick="xxx()"，
  *        以及别的脚本会直接调全局函数，所以本文件里的声明必须留在全局作用域。
  * ----------------------------------------------------------------------------
- * 包含的模块（括号内为拆分前在 fomal.js 里的行号）：
- *   · 页脚计时器（计时主体）（1650-1693）—— createtime()：每秒刷新两处页脚文字
- *       ① #ftRun —— 页脚第一行「©2023-2026 By chengicli」后面：站点运行 X 年 Y 天（只写年/天，见函数内注释）
- *       ② #workboard —— 页脚第二块：旅行者 1 号当前距离地球
+ * 只负责一处：#ftRun —— 「站点运行 X年X月X天」，2026-11-09 起从 © 那行挪到
+ * 页脚第三行（.footer_custom_text 开头），和「已经和女朋友 X年X月X天啦」并排；
+ * 按真实日历拆整年 / 整月 / 剩余天数，为 0 的单位整段省略（见 FT_YMD）。
+ *
+ * 2026-11-08：原来这里还会每秒往 #workboard 写「旅行者 1 号当前距离地球…」，
+ * 那个页面已经删除，visitor 也看不到意义，已整段移除。依赖的 data/voyager1.js
+ * 也一并从 inject.bottom 摘掉了。
+ * 2026-11-09：#workboard 那一行「共 N 篇文章 · … 去归档翻翻」整块从页脚删掉，
+ * 现在页脚只剩三条线，本文件依旧只写 #ftRun。
+ *
+ * #ftRun 始终在页脚 .copyright 里；因为按 id 找元素，页脚结构怎么调整都不影响。
+ * 加载方式：_config.chengic.yml 的 inject.bottom 列表里以 <script defer> 引用。
  * ----------------------------------------------------------------------------
- * 依赖 data/voyager1.js 的距离模型（vgDist / vgFmt / vgAU / vgLight）。
- * 加载方式：_config.fomalhaut.yml 的 inject.bottom 列表里以 <script defer> 引用。
- * ----------------------------------------------------------------------------
- * 【本文件目录】共 2 个顶层声明（行号可能随后续编辑漂移，找不到就 Ctrl+F 搜函数名）
- *     23  now
- *     24  createtime()
+ * 【本文件目录】顶层声明（行号可能随后续编辑漂移，找不到就 Ctrl+F 搜函数名）
+ *     FT_YMD                     年/月/天 拆分与拼串
+ *     now / FT_GRT / createtime()
+ *     FT_RUN_EL / FT_RUN_KEY     上次写入的节点与日期键（同一天不重复写 DOM）
  * ========================================================================== */
 
 /* ------------------------------ 页脚计时器（计时主体） ------------------------------ */
-/* 原 fomal.js 1650-1693 行，原样搬运，未改逻辑 */
-var now = new Date();
-function createtime() {
-  // 当前时间
-  now.setTime(now.getTime() + 1000);
-  // 旅行者1号距离：JPL Horizons 数据离线拟合模型（见文件中的 vgDist 模型块）
-  var vgd = vgDist(Date.now());          // 几何距离（千米）
-  var dis = vgFmt(vgd);                  // 千分位格式
-  var unit = (vgd / vgAU).toFixed(6);    // 天文单位（1 AU = 149597870.7 km）
-  var lt = vgLight(vgd);                 // 信号单程光行时
-  // 网站诞生时间
-  var grt = new Date("05/03/2023 11:50:35");
-  // 年按“满周年”算：2023-05-03 → 2027-05-03 记 4 年，周年之后再数剩余的天数
-  var years = now.getFullYear() - grt.getFullYear(),
-    anniv = new Date(grt.getTime());
-  anniv.setFullYear(grt.getFullYear() + years);
-  if (anniv.getTime() > now.getTime()) {
-    years--;
-    anniv.setFullYear(grt.getFullYear() + years);
-  }
-  var ynum = years,
-    rest = now.getTime() - anniv.getTime(); // 满周年之后经过的毫秒数
-  var dnum = Math.floor(rest / 86400000);
+/* 原 fomal.js 1650-1693 行拆出；2026-11-08 把「年 + 天」改成「年 / 月 / 天」 */
+/* 日历「年 / 月 / 天」拆分器。
+ * 与 source/js/love-days.js 里的 addClamped / diffYMD / fmtYMD 是同一套算法，
+ * 改规则要两边同步；这里包成单个全局 FT_YMD，避免污染全局命名空间。 */
+var FT_YMD = (function () {
+  var DAY = 86400000;
 
-  // 站点运行：只显示「年 + 天
-  //   不满 1 年   → 只写「X 天」（50 天就显示 50 天，不出现「0 年」）
-  //   刚好满整年 → 省略「0 天」，写「X 年」而不是「X 年 0 天」
-  //   目标元素 #ftRun 在 themes/fomalhaut/layout/includes/footer.pug 的 .copyright 里
-  var runEl = document.getElementById("ftRun");
-  if (runEl) {
-    var runParts = [];
-    if (ynum > 0) runParts.push("<b>" + ynum + "</b> 年");
-    if (dnum > 0 || ynum === 0) runParts.push("<b>" + dnum + "</b> 天");
-    var runTxt = "站点运行 " + runParts.join(" ");
-    if (runEl.innerHTML !== runTxt) runEl.innerHTML = runTxt; // 只在跨天/跨年时才写 DOM
+  /** 加 n 年 / n 月；月末溢出夹到当月最后一天（1/31 + 1 月 = 2/28，闰年 2/29）。 */
+  function addClamped(d, yDelta, mDelta) {
+    var x = new Date(d.getTime());
+    var day = x.getDate();
+    x.setDate(1);
+    x.setFullYear(x.getFullYear() + yDelta, x.getMonth() + mDelta, 1);
+    var last = new Date(x.getFullYear(), x.getMonth() + 1, 0).getDate();
+    x.setDate(Math.min(day, last));
+    return x;
   }
-  // 想恢复就把下面这段注释放开，并把再下面 currentTimeHtml 里的 boardBadge + 加回去。
-  // var boardBadge = isRestDay(new Date())
-  //   ? `<img class='boardsign' src='/assets/badge/Fomalhaut-rest.svg' title='放假啦，光明正大地摸鱼~'>`
-  //   : `<img class='boardsign' src='/assets/badge/Fomalhaut-work.svg' title='上班偷偷摸鱼，别被发现~'>`;
-  // 页脚 #workboard 这块现在只剩旅行者 1 号（站点运行时间已挪到第一行版权后面，见上面的 #ftRun）
-  let currentTimeHtml =
-    `<div style="font-size:13px;font-weight:bold">旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位（信号单程需 ${lt}）🚀</div>`;
-  document.getElementById("workboard") &&
-    (document.getElementById("workboard").innerHTML = currentTimeHtml);
+
+  /** 从「原始起点」加 N 年 / M 月来数整年整月，剩下的才是天数；不按 30 天折算。
+   *  不从上一个游标再 +1 月，避免 1/31 → 2/28 → 3/28 这种月末夹取后的日期漂移。 */
+  function diff(start, end) {
+    var y = 0, m = 0;
+    while (addClamped(start, y + 1, 0) <= end) y++;
+    while (addClamped(start, y, m + 1) <= end) m++;
+    var cursor = addClamped(start, y, m);
+    return { years: y, months: m, days: Math.floor((end - cursor) / DAY) };
+  }
+
+  /** 只拼非零段；数字用 <b> 包住，样式见 site-inject.css 的 #ftRun b。 */
+  function fmt(p) {
+    var parts = [];
+    if (p.years)  parts.push("<b>" + p.years + "</b>年");
+    if (p.months) parts.push("<b>" + p.months + "</b>月");
+    if (p.days || !parts.length) parts.push("<b>" + p.days + "</b>天");
+    return parts.join("");
+  }
+
+  return { diff: diff, fmt: fmt };
+})();
+
+var now = new Date();
+var FT_GRT = new Date("05/03/2023 11:50:35");   // 网站诞生时间
+var FT_RUN_EL = null;                            // 上次写过的 #ftRun 节点
+var FT_RUN_KEY = "";                             // 上次写入时的日期键（年-月-日）
+
+function createtime() {
+  // 当前时间：直接取（原来靠 now.setTime(+1000) 累加，页面开久了会漂）
+  now.setTime(Date.now());
+
+  // 站点运行：按真实日历拆「整年 / 整月 / 剩余天数」，为 0 的单位整段省略
+  //   3年6月5天 / 3月26天 / 118天 / 3年（满整年整月）/ 0天
+  //   绝不出现「0年0月118天」。目标元素 #ftRun 在页脚 .copyright 里。
+  var runEl = document.getElementById("ftRun");
+  if (!runEl) return;
+
+  // 2026-11-08：这个数字一天只变一次，没必要每秒都去读 innerHTML 比字符串。
+  // 原来每秒读一次，页脚又压在渐隐遮罩上，作者反馈「站点运行」那一行会一闪一闪；
+  // 现在只比对日期键，同一天同一个元素直接返回，跨天才重新拼字符串写 DOM。
+  var key = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+  if (runEl === FT_RUN_EL && key === FT_RUN_KEY && runEl.innerHTML) return;
+
+  var runTxt = "站点运行 " + FT_YMD.fmt(FT_YMD.diff(FT_GRT, now));
+  if (runEl.innerHTML !== runTxt) runEl.innerHTML = runTxt;
+  // pjax 换页会把 #ftRun 换成新节点，所以要记住节点本身，内容被清空时也重写
+  FT_RUN_EL = runEl;
+  FT_RUN_KEY = key;
 }
-// 先立即渲染一次（否则 #ftRun / #workboard 首屏会空 1 秒），再按 1000ms 周期刷新
+
+// 先立即渲染一次（否则 #ftRun 首屏会空 1 秒），之后每秒只做一次日期比对，
+// 跨天（0 点）时才会真正改 DOM
 createtime();
-setInterval(() => {
+setInterval(function () {
   createtime();
 }, 1000);
 

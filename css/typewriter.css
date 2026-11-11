@@ -5,7 +5,7 @@
  * 只有 #subtitle 被 JS 打上 .st-type 时才生效；美化面板关掉打字效果、
  * 或脚本没加载，整块不命中，页面退回主题原样。
  * 配色不写死：光标用 currentColor，跟随 #site-subtitle 的 --light-grey。
- * 回滚：删掉 _config.fomalhaut.yml inject.head 里的这一行 <link> 即可。
+ * 回滚：删掉 _config.chengic.yml inject.head 里的这一行 <link> 即可。
  * ========================================================================== */
 
 /* 每个字符一个 inline-block 小盒子，才能做 transform；空格用 white-space:pre 保住 */
